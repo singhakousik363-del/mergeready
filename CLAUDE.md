@@ -21,6 +21,9 @@ Built solo for the FirstCommit hackathon (Devpost), deadline 30 Sep 2026.
 
 ## Tech
 - Next.js (App Router) + TypeScript + Tailwind
+- This project uses Next.js 16. Its APIs may differ from your training
+  data. Before writing Next.js-specific code (routes, config, layout),
+  check the docs in node_modules/next/dist/docs.
 - GitHub REST API via Octokit (server-side, token in GITHUB_TOKEN)
 - Gemini API via @google/genai (key in GEMINI_API_KEY)
 - Vitest for tests of every check function
@@ -48,4 +51,6 @@ remind me of this list first.
 - Never add features, libraries or files I didn't approve.
 
 ## Current status
-Day 0: repo created, no code yet.
+Day 0: Next.js 16 scaffold done (TypeScript, Tailwind, Vitest).
+Empty folders: lib/github, lib/rules, lib/checks, app/api/analyze.
+No feature code yet.
