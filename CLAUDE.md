@@ -51,6 +51,5 @@ remind me of this list first.
 - Never add features, libraries or files I didn't approve.
 
 ## Current status
-Day 0: Next.js 16 scaffold done (TypeScript, Tailwind, Vitest).
-Empty folders: lib/github, lib/rules, lib/checks, app/api/analyze.
-No feature code yet.
+Day 1: parseUrl.ts done with 7 passing tests.
+Next: fetch CONTRIBUTING.md and PR template from GitHub.
