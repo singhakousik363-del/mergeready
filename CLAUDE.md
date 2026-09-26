@@ -38,6 +38,25 @@ OUT of scope: login, GitHub App/bot, code quality review, i18n,
 anything not listed above. If I ask for something out of scope,
 remind me of this list first.
 
+## Quality bar (no compromises)
+- Real-world first: every check must work on real repos, not just
+  mock data. Test fixtures should use real CONTRIBUTING files and
+  PR templates from popular repos.
+- Never crash: handle rate limits, private/missing repos, 404s,
+  huge files, repos with no guidelines, and bad AI output. Every
+  failure shows a clear, friendly message.
+- AI output is untrusted: validate Gemini JSON with zod, retry once,
+  then fall back gracefully.
+- TypeScript strict, no `any`, lint clean.
+- Security: tokens only on the server, never logged or sent to the
+  browser. Validate all user input.
+- Fast: cache GitHub responses; show progress steps while loading.
+- Accessible, mobile-first UI with good contrast and keyboard support.
+- Before saying a step is done: run tests, lint and build, and show
+  me the results.
+- Be honest: if something is weak, fragile, or a shortcut, tell me
+  directly instead of hiding it.
+
 ## How to work with me (very important)
 - I am a first-year student and must be able to explain every line
   to hackathon judges. Explain decisions in simple Bengali (Banglish ok).
