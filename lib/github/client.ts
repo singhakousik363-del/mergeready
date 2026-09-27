@@ -19,6 +19,11 @@ export function assertValidRepo(owner: string, repo: string): void {
     }
 }
 
+// A GitHub username follows the same rules as an owner name
+export function isValidLogin(name: string): boolean {
+    return OWNER_PATTERN.test(name);
+}
+
 export function assertValidNumber(number: number): void {
     // isSafeInteger also rejects NaN, 1.5 and numbers too big to be exact
     if (!Number.isSafeInteger(number) || number <= 0) throw new InvalidNumberError();
@@ -28,6 +33,9 @@ type ClientOptions = {
     // Tests pass a fake fetch and a short timeout; the app uses the defaults
     fetch?: typeof fetch;
     timeoutMs?: number;
+    // Cancels every request made with this client, e.g. when the whole
+    // analysis runs out of time
+    signal?: AbortSignal;
 };
 
 export function createOctokit(options: ClientOptions = {}): Octokit {
@@ -37,7 +45,7 @@ export function createOctokit(options: ClientOptions = {}): Octokit {
     return new Octokit({
         auth: token,
         userAgent: "mergeready",
-        request: { fetch: withTimeout(options.fetch ?? fetch, options.timeoutMs ?? GITHUB_TIMEOUT_MS) },
+        request: { fetch: withTimeout(options.fetch ?? fetch, options.timeoutMs ?? GITHUB_TIMEOUT_MS, options.signal) },
         // Octokit prints every failed request (like 404s) with log.error.
         // We catch and handle every error ourselves, so keep the console quiet.
         // warn stays on: GitHub uses it to announce deprecated APIs.
@@ -47,12 +55,15 @@ export function createOctokit(options: ClientOptions = {}): Octokit {
 
 // Wraps fetch so each request gets its own timer. (One shared timer made
 // when the client is created would cancel every request after 10s total.)
-export function withTimeout(baseFetch: typeof fetch, timeoutMs: number): typeof fetch {
+// clientSignal (optional) cancels all requests at once.
+export function withTimeout(baseFetch: typeof fetch, timeoutMs: number, clientSignal?: AbortSignal): typeof fetch {
     return (input, init) => {
-        const timeout = AbortSignal.timeout(timeoutMs);
-        // Keep any cancel signal the caller already passed in
-        const signal = init?.signal ? AbortSignal.any([init.signal, timeout]) : timeout;
-        return baseFetch(input, { ...init, signal });
+        // Cancel when ANY of these fires: this request's timer, the caller's
+        // own signal, or the client-wide signal
+        const signals = [AbortSignal.timeout(timeoutMs)];
+        if (init?.signal) signals.push(init.signal);
+        if (clientSignal) signals.push(clientSignal);
+        return baseFetch(input, { ...init, signal: AbortSignal.any(signals) });
     };
 }
 

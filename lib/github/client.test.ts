@@ -1,10 +1,12 @@
 import { afterEach, describe, it, expect, vi } from "vitest";
-import { assertValidNumber, assertValidRepo, createOctokit, fetchPages, parseLastPage } from "./client";
+import { assertValidNumber, assertValidRepo, createOctokit, fetchPages, isValidLogin, parseLastPage } from "./client";
 import { GitHubTimeoutError, MissingTokenError, toGitHubError } from "./errors";
 
-// A fetch that never answers; it only fails when the request is cancelled
+// A fetch that never answers; it only fails when the request is cancelled.
+// Like the real fetch, it fails at once if the signal was already cancelled.
 const hangingFetch: typeof fetch = (_input, init) =>
     new Promise((_resolve, reject) => {
+        if (init?.signal?.aborted) return reject(init.signal.reason);
         init?.signal?.addEventListener("abort", () => reject(init.signal?.reason));
     });
 
@@ -32,6 +34,17 @@ describe("createOctokit", () => {
         const error = await octokit.rest.repos.get({ owner: "acme", repo: "app" }).catch((e: unknown) => e);
 
         expect(toGitHubError(error)).toBeInstanceOf(GitHubTimeoutError);
+    });
+
+    it("cancels every request when the client-wide signal fires", async () => {
+        vi.stubEnv("GITHUB_TOKEN", "test-token");
+        const controller = new AbortController();
+        const octokit = createOctokit({ fetch: hangingFetch, timeoutMs: 10_000, signal: controller.signal });
+
+        const pending = octokit.rest.repos.get({ owner: "acme", repo: "app" }).catch((e: unknown) => e);
+        controller.abort(new Error("out of time"));
+
+        expect(await pending).toBeInstanceOf(Error);
     });
 
     it("gives every request its own timer", async () => {
@@ -131,6 +144,14 @@ describe("input checks", () => {
         expect(() => assertValidRepo("stdlib-js", "stdlib")).not.toThrow();
         expect(() => assertValidRepo("acme", "..")).toThrow(expect.objectContaining({ code: "INVALID_REPO" }));
         expect(() => assertValidRepo("../etc", "app")).toThrow(expect.objectContaining({ code: "INVALID_REPO" }));
+    });
+
+    it("checks GitHub usernames", () => {
+        expect(isValidLogin("AdeshDeshmukh")).toBe(true);
+        expect(isValidLogin("mann-xo")).toBe(true);
+        expect(isValidLogin("-bad")).toBe(false);
+        expect(isValidLogin("a".repeat(40))).toBe(false);
+        expect(isValidLogin("x@y")).toBe(false);
     });
 
     it("only accepts positive whole numbers", () => {
