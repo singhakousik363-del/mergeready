@@ -14,7 +14,7 @@ type State =
     | { kind: "idle" }
     | { kind: "loading" }
     | { kind: "error"; message: string; retryAfterSeconds: number | null }
-    | { kind: "done"; data: AnalyzeResponse };
+    | { kind: "done"; data: AnalyzeResponse; shareUrl: string };
 
 // The interactive part of the page: form, loading, error and results
 export function Analyzer() {
@@ -52,10 +52,11 @@ export function Analyzer() {
             setAnnouncement(`Check failed: ${result.message}`);
             return;
         }
-        setState({ kind: "done", data: result.data });
-        setAnnouncement(`Results ready. ${summarize(result.data)}`);
         // Shareable address, without reloading the page
-        window.history.replaceState(null, "", buildShareSearch({ url: checkUrl, username: checkUser }));
+        const search = buildShareSearch({ url: checkUrl, username: checkUser });
+        window.history.replaceState(null, "", search);
+        setState({ kind: "done", data: result.data, shareUrl: `${window.location.origin}/${search}` });
+        setAnnouncement(`Results ready. ${summarize(result.data)}`);
     }, []);
 
     // A shared link (?url=...&user=...) fills the form and runs the check once
@@ -103,7 +104,7 @@ export function Analyzer() {
                     onRetry={() => void run(url, username)}
                 />
             )}
-            {state.kind === "done" && <Results data={state.data} headingRef={resultsHeadingRef} />}
+            {state.kind === "done" && <Results data={state.data} shareUrl={state.shareUrl} headingRef={resultsHeadingRef} />}
         </>
     );
 }
