@@ -1,8 +1,7 @@
 import type { Octokit } from "@octokit/rest";
-import { createOctokit } from "./client";
+import { assertValidRepo, createOctokit } from "./client";
 import { findDocLinks, findExternalGuide, type RepoName } from "./docLinks";
 import {
-    InvalidRepoError,
     MissingTokenError,
     RateLimitError,
     GitHubError,
@@ -56,11 +55,6 @@ type FileResult =
 
 type DirEntry = { name: string; path: string; type: string };
 
-// GitHub rules: owner = letters/digits/hyphens (max 39, no leading hyphen),
-// repo = letters/digits/. _ - (max 100)
-const OWNER_PATTERN = /^[A-Za-z0-9][A-Za-z0-9-]{0,38}$/;
-const REPO_PATTERN = /^[A-Za-z0-9._-]{1,100}$/;
-
 // GitHub looks in these folders, in this order ("" = repo root)
 const SEARCH_DIRS = [".github", "", "docs"];
 const CONTRIBUTING_NAME = /^contributing(\.(md|markdown|rst|txt))?$/i;
@@ -73,9 +67,7 @@ export async function fetchGuidelines(
     options: FetchOptions = {}
 ): Promise<Guidelines> {
     // 1. Validate user input before sending it anywhere
-    if (!OWNER_PATTERN.test(owner) || !REPO_PATTERN.test(repo) || repo === "." || repo === "..") {
-        throw new InvalidRepoError();
-    }
+    assertValidRepo(owner, repo);
 
     const octokit = options.octokit ?? createOctokit();
 

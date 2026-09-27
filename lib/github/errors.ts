@@ -1,7 +1,10 @@
 export type GitHubErrorCode =
     | "MISSING_TOKEN"
     | "INVALID_REPO"
+    | "INVALID_NUMBER"
     | "REPO_NOT_FOUND"
+    | "ISSUE_NOT_FOUND"
+    | "PR_NOT_FOUND"
     | "RATE_LIMITED"
     | "GITHUB_TIMEOUT"
     | "GITHUB_UNAVAILABLE";
@@ -36,6 +39,30 @@ export class RepoNotFoundError extends GitHubError {
     constructor() {
         super("REPO_NOT_FOUND", "Repo not found. It may not exist, or it may be private.");
         this.name = "RepoNotFoundError";
+    }
+}
+
+export class InvalidNumberError extends GitHubError {
+    constructor() {
+        super("INVALID_NUMBER", "Issue and PR numbers must be positive whole numbers.");
+        this.name = "InvalidNumberError";
+    }
+}
+
+export class IssueNotFoundError extends GitHubError {
+    constructor(message: string) {
+        super("ISSUE_NOT_FOUND", message);
+        this.name = "IssueNotFoundError";
+    }
+}
+
+export class PullRequestNotFoundError extends GitHubError {
+    constructor(number: number) {
+        super(
+            "PR_NOT_FOUND",
+            `Pull request #${number} was not found. If it is an issue, paste the issue link instead.`
+        );
+        this.name = "PullRequestNotFoundError";
     }
 }
 

@@ -70,7 +70,8 @@ remind me of this list first.
 - Never add features, libraries or files I didn't approve.
 
 ## Current status
-Day 2: guidelines fetching complete incl. linked docs. Next: fetch issue and PR data.
+Day 2: GitHub data layer done (guidelines, linked docs, issue, PR,
+new-contributor detection). Next: Gemini rule extraction.
 
 ## Known limitations
 - Linked docs: only one level deep, max 3 files / 150KB, picked by
@@ -83,3 +84,20 @@ Day 2: guidelines fetching complete incl. linked docs. Next: fetch issue and PR 
   branch, and branch names with "/" give a wrong path (skipped as 404).
 - Timeout is per request; a total time budget for the whole analysis
   will be added in the API route.
+- Fine-grained tokens hide cross-referenced timeline events. Use a
+  classic token with no scopes.
+- Issue timeline: max 3 pages. With more, page 1 + the last 2 pages
+  are read and the middle is skipped (with a warning).
+- Open PRs for an issue come from "cross-referenced" events, so a PR
+  that only mentions the issue is listed too. PRs linked by hand in the
+  sidebar ("connected" events) are missed: REST doesn't say which PR.
+- Repo activity uses pushed_at, which bots also update.
+- New contributor = 0 merged PRs via the search API (30 requests/min).
+  OWNER/MEMBER/COLLABORATOR and bots are never new. If search fails,
+  falls back to author_association (often "NONE" even for a first PR),
+  with a warning. Search index can lag behind very recent merges.
+- PR commits: GitHub lists at most 250. Files: first 300. A warning
+  shows when more exist.
+- Linked issues: only closing keywords (fixes/closes/resolves) for the
+  same repo; GitHub only honours them when the PR targets the default
+  branch (targetsDefaultBranch). "Fixes #1, #2" links only #1, like GitHub.
