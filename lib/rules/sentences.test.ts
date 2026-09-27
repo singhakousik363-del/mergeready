@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { parseMarkdownBlocks, splitSentences, toPlainText, type Block } from "./sentences";
+import { lineUrl, parseMarkdownBlocks, splitSentences, toPlainText, type Block } from "./sentences";
 
 // Real excerpt from https://github.com/nodejs/node/blob/main/doc/contributing/pull-requests.md
 // (lines 150-156 and 196-205 of the file, with "..." lines removed)
@@ -216,5 +216,17 @@ describe("toPlainText", () => {
         expect(toPlainText("Keep snake_case and *.md <br> <https://example.com>")).toBe(
             "Keep snake_case and *.md https://example.com"
         );
+    });
+});
+
+describe("lineUrl", () => {
+    it("links to a line of the plain (not rendered) file", () => {
+        expect(lineUrl("https://github.com/nodejs/node/blob/main/CONTRIBUTING.md", 81)).toBe(
+            "https://github.com/nodejs/node/blob/main/CONTRIBUTING.md?plain=1#L81"
+        );
+    });
+
+    it("returns the input when it isn't a URL", () => {
+        expect(lineUrl("not a url", 3)).toBe("not a url");
     });
 });

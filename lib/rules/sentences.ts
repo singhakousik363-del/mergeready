@@ -226,6 +226,20 @@ export function splitSentences(parts: Part[]): Sentence[] {
     return sentences;
 }
 
+// Links to one line of a file on GitHub. "?plain=1" is needed because GitHub
+// shows markdown files rendered, and rendered pages have no line anchors.
+// https://github.com/o/r/blob/main/X.md -> https://github.com/o/r/blob/main/X.md?plain=1#L42
+export function lineUrl(fileUrl: string, line: number): string {
+    try {
+        const url = new URL(fileUrl);
+        url.searchParams.set("plain", "1");
+        url.hash = `L${line}`;
+        return url.toString();
+    } catch {
+        return fileUrl;
+    }
+}
+
 // Removes markdown so patterns can match the words:
 // "Use the `Fixes:` prefix, see [guide](./x.md)" -> "Use the Fixes: prefix, see guide"
 export function toPlainText(markdown: string): string {

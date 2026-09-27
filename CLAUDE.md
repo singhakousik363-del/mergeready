@@ -32,6 +32,13 @@ Built solo for the FirstCommit hackathon (Devpost), deadline 30 Sep 2026.
   required; "type of change"/"select one"/"check one"/"choose" -> pick
   at least one; "optional"/"if applicable"/"check all that apply" ->
   optional; unclear -> unknown (manual item, never a failure).
+  When signals conflict: pick-one > optional > required. Only the
+  nearest heading counts (a "### AI Assistance" Yes/No group under
+  "## Checklist" must not become required). A visible line right above
+  the boxes starting with "If ..." makes that group optional.
+- A template section is optional when it says "optional", "if
+  applicable", "remove/delete this section", or its first sentence
+  starts with "If ...".
 
 ## Tech
 - Next.js (App Router) + TypeScript + Tailwind

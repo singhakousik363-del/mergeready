@@ -31,7 +31,15 @@ export type ConventionalCommitsDetails = {
 };
 
 export type PrTemplateDetails =
-    | { kind: "section"; heading: string }
+    | {
+          kind: "section";
+          heading: string;
+          // The template's own text under the heading (comments removed), so a
+          // check can tell whether the author replaced it with real content
+          templateText: string;
+          // e.g. "Remove this section if this PR is NOT a breaking change"
+          optional: boolean;
+      }
     | {
           kind: "checkbox";
           text: string;
