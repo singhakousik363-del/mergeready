@@ -1,0 +1,52 @@
+name: Conventional Commitlint
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  commitlint:
+    name: Commitlint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build packages
+        run: pnpm build
+
+      - name: Print versions
+        run: |
+          git --version
+          node --version
+          npm --version
+          pnpm --version
+          node @commitlint/cli/cli.js --version
+
+      - name: Validate current commit (last commit) with commitlint
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        run: node @commitlint/cli/cli.js --last --verbose
+
+      - name: Validate PR commits with commitlint
+        if: github.event_name == 'pull_request'
+        run: node @commitlint/cli/cli.js --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose

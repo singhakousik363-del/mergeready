@@ -45,7 +45,9 @@ Built solo for the FirstCommit hackathon (Devpost), deadline 30 Sep 2026.
 - This project uses Next.js 16. Its APIs may differ from your training
   data. Before writing Next.js-specific code (routes, config, layout),
   check the docs in node_modules/next/dist/docs.
-- GitHub REST API via Octokit (server-side, token in GITHUB_TOKEN)
+- GitHub REST API via Octokit (server-side, token in GITHUB_TOKEN);
+  config files come from one GraphQL query (octokit.graphql)
+- `yaml` package to parse YAML config files (parse only)
 - Vitest for tests of every check function
 - Deployed on Vercel
 - Never hardcode secrets. Use .env.local and keep it in .gitignore.

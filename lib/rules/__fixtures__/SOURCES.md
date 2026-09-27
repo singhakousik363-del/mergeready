@@ -14,3 +14,11 @@ in tests. Copyright stays with each project; licenses below.
 | node-pull-requests.md | https://github.com/nodejs/node/blob/main/doc/contributing/pull-requests.md | 51376380627ef1ec1db20fb53a0547e2a23995f0 | MIT (see repo LICENSE) |
 | commitlint-contributing.md | https://github.com/conventional-changelog/commitlint/blob/master/.github/CONTRIBUTING.md | 9741cee8f521b70c0fb154c1fdb398dbcc056359 | MIT |
 | p5-contributing.md | https://github.com/processing/p5.js/blob/main/CONTRIBUTING.md | 9e2cf0bf2a240c4605996331c25c6e9f1ee29d40 | LGPL-2.1 |
+| commitlint-package.json | https://github.com/conventional-changelog/commitlint/blob/master/package.json | 9741cee8f521b70c0fb154c1fdb398dbcc056359 | MIT |
+| commitlint-workflow.yml | https://github.com/conventional-changelog/commitlint/blob/master/.github/workflows/commitlint.yml | 9741cee8f521b70c0fb154c1fdb398dbcc056359 | MIT |
+| qiankun-commitlint.config.js.txt | https://github.com/umijs/qiankun/blob/next/commitlint.config.js (".txt" so ESLint skips it) | 9ad06c696b446bf8f6c085edb118a560f00fa2c1 | MIT |
+| oh-my-posh-commitlintrc.yml | https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/.commitlintrc.yml | 03d192436d9550eabc5b48a8c08f1a5b441da410 | MIT |
+| vite-semantic-pull-request.yml | https://github.com/vitejs/vite/blob/main/.github/workflows/semantic-pull-request.yml | bc598a6a8a6b7d6e157e9f19c16911cff8d2360c | MIT |
+| flyte-dco.yml | https://github.com/flyteorg/flyte/blob/main/.github/dco.yml | 15dc7d4a922bb34d4ee1cac23347bda7f88757ee | Apache-2.0 |
+| moby-dco-workflow.yml | https://github.com/moby/moby/blob/master/.github/workflows/.dco.yml | 9bda9531b406bdd9245c111c051a0076bb89912b | Apache-2.0 |
+| carbon-dco-workflow.yml | https://github.com/carbon-design-system/carbon/blob/main/.github/workflows/dco.yml | 7e8c8f7db6dd2ed98c4947b78b37614f43eda920 | Apache-2.0 |
