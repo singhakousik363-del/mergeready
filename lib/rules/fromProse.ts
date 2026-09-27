@@ -41,14 +41,16 @@ const TOPICS: { type: ProseRuleType; pattern: RegExp }[] = [
 ];
 
 // Words that make a sentence an obligation
+// ("required?" also covers "we require" and "is required"; "need to" covers "you'll need to")
 const OBLIGATION =
-    /\b(?:must|should|shall|required?|requires|need(?:s)? to|have to|has to|make sure|ensure|please|always|expected to|enforced|mandatory)\b/i;
+    /\b(?:must|should|shall|required?|requires|need(?:s)? to|have to|has to|make sure|be sure to|remember to|(?:don['’]t|do not) forget to|ensure|please|always|expected to|enforced|mandatory)\b/i;
 // Instructions often start with a verb: "Add tests for...", "Use the Fixes: prefix"
 const IMPERATIVE =
     /^(?:add|include|write|use|sign|link|reference|follow|make|ensure|comment|ask|assign|get|keep|provide|update|mention|wait)\b/i;
 // "not required", "if applicable", "Bot generated commits are exempt from this requirement"
+// (docs often use a curly apostrophe: don’t)
 const NEGATION =
-    /\b(?:not (?:required|necessary|mandatory|needed)|no need|(?:don't|do not|doesn't|does not) need|optional|if applicable|exempt)\b/i;
+    /\b(?:not (?:required|necessary|mandatory|needed)|no need|(?:don['’]t|do not|doesn['’]t|does not) need|optional|if applicable|exempt)\b/i;
 
 const PR_TITLE = /\b(?:PR|pull request) titles?\b/i;
 

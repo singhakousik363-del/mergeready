@@ -120,6 +120,33 @@ describe("extractProseRules: small cases", () => {
         expect(title.details).toEqual({ appliesTo: "pr-title", allowedTypes: null });
     });
 
+    describe("obligation phrases", () => {
+        // [phrase, sentence, expected rule type]
+        const cases: [string, string, string][] = [
+            // Real line 22 of https://github.com/prometheus/prometheus/blob/main/CONTRIBUTING.md
+            ["be sure to", "Be sure to sign off on the [DCO](https://github.com/probot/dco#how-it-works).", "dco-signoff"],
+            ["remember to", "Remember to add tests for any new behaviour.", "tests-changed"],
+            ["don't forget to", "Don't forget to reference the related issue in your PR description.", "linked-issue"],
+            ["don’t forget to (curly apostrophe)", "Don’t forget to sign off your commits.", "dco-signoff"],
+            ["you'll need to", "You'll need to sign off each commit with git commit -s.", "dco-signoff"],
+            ["we require", "We require Conventional Commits for every commit message.", "conventional-commits"],
+            ["is required", "A Signed-off-by line is required on every commit.", "dco-signoff"],
+            ["always", "Pull requests that fix a bug always come with tests.", "tests-changed"],
+        ];
+
+        for (const [phrase, sentence, type] of cases) {
+            it(`"${phrase}"`, () => {
+                expect(rulesFor(sentence).map((r) => r.type)).toEqual([type]);
+            });
+        }
+
+        it("does not match negations, even ones that look like obligations", () => {
+            expect(rulesFor("You don't need to sign off your commits.")).toEqual([]);
+            expect(rulesFor("You don’t need to sign off your commits.")).toEqual([]);
+            expect(rulesFor("Tests are not required for documentation changes.")).toEqual([]);
+        });
+    });
+
     it("skips negated sentences", () => {
         expect(rulesFor("A DCO sign-off is not required.")).toEqual([]);
     });
