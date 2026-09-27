@@ -192,3 +192,11 @@ prose). Next (28 Sep): checks in /lib/checks, API route, UI.
   commits are the last N. Only the PR's first linked issue is checked
   for assignment. Template sections are matched by heading text, so a
   renamed heading counts as missing.
+- API cache and rate limit live in each server instance's memory. On
+  Vercel, instances don't share memory and new ones start empty: the
+  cache only helps while an instance is warm, and the per-IP limit can
+  be exceeded by spreading requests over instances. Results stay
+  correct. A shared store (Upstash/Vercel KV) or a Vercel Firewall rate
+  limit rule would fix this; not done (new service). Two requests that
+  share one in-flight fetch also share its failure. The IP comes from
+  x-forwarded-for (set by Vercel; can be faked on other hosts).
