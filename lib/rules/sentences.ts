@@ -20,7 +20,9 @@ export type Block =
           // Text after the "-" (and after "[ ]" for checkboxes)
           parts: Part[];
       }
-    | { kind: "comment"; parts: Part[] };
+    | { kind: "comment"; parts: Part[] }
+    // Only with { keepCode: true }: the lines inside a ``` block
+    | { kind: "code"; parts: Part[] };
 
 // raw = exact text (lines joined with a space), used as the sourceQuote.
 // text = same sentence with markdown removed, used for pattern matching.
@@ -43,9 +45,17 @@ const QUOTE_MARKER = /^(?:\s*>\s?)+/;
 // "[!TIP]", "[!IMPORTANT]" (GitHub alert labels inside a blockquote)
 const ALERT_LABEL = /^\\?\[!\w+\]$/;
 
-export function parseMarkdownBlocks(markdown: string): Block[] {
+type ParseOptions = {
+    // Code blocks are skipped by default (rules are never inside code).
+    // A PR description needs them: a "Usage examples" section may be only code.
+    keepCode?: boolean;
+};
+
+export function parseMarkdownBlocks(markdown: string, options: ParseOptions = {}): Block[] {
     const lines = markdown.split(/\r?\n/);
     const blocks: Block[] = [];
+    // Lines of the ``` block we are inside (only collected with keepCode)
+    let code: Part[] = [];
 
     // The paragraph or list item we are still adding lines to
     let current: Block | null = null;
@@ -150,7 +160,13 @@ export function parseMarkdownBlocks(markdown: string): Block[] {
                     closing[1][0] === fence.char &&
                     closing[1].length >= fence.length &&
                     rest.trim() === closing[1];
-                if (isClosing) fence = null;
+                if (isClosing) {
+                    fence = null;
+                    if (options.keepCode && code.length > 0) blocks.push({ kind: "code", parts: code });
+                    code = [];
+                } else if (options.keepCode) {
+                    addPart(code, rest, line);
+                }
                 break;
             }
 
@@ -169,8 +185,9 @@ export function parseMarkdownBlocks(markdown: string): Block[] {
         }
     }
 
-    // A comment that is never closed: keep what we have instead of losing it
+    // A comment or code block that is never closed: keep what we have instead of losing it
     if (comment && comment.length > 0) blocks.push({ kind: "comment", parts: comment });
+    if (options.keepCode && code.length > 0) blocks.push({ kind: "code", parts: code });
     finishCurrent();
     return blocks;
 }

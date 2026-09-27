@@ -23,7 +23,9 @@ type Section = { heading: HeadingBlock | null; body: Block[] };
 // to tick, and a linked-issue rule when it has a "Fixes #" style field.
 // fileUrl = the template's GitHub page, used to link each rule to its line.
 export function extractTemplateRules(template: string, fileUrl: string): Rule[] {
-    const blocks = parseMarkdownBlocks(template);
+    // Code is kept so templateText matches what a PR description really contains
+    // (e.g. a usage example). Everything below that reads instructions skips it.
+    const blocks = parseMarkdownBlocks(template, { keepCode: true });
     const rules: Rule[] = [];
     let groupId = 0;
 
@@ -62,6 +64,7 @@ export function extractTemplateRules(template: string, fileUrl: string): Rule[] 
                     details: {
                         kind: "checkbox",
                         text,
+                        heading: section.heading?.text ?? null,
                         groupId,
                         // "- [ ] Screenshots (if applicable)" is optional on its own
                         requirement: OPTIONAL.test(text) ? "optional" : groupRequirement,
@@ -119,7 +122,8 @@ function findCheckboxGroups(body: Block[]): { intro: Block[]; boxes: ListItemBlo
     return groups;
 }
 
-function classifyGroup(headingText: string, intro: Block[]): CheckboxRequirement {
+function classifyGroup(headingText: string, allIntro: Block[]): CheckboxRequirement {
+    const intro = withoutCode(allIntro);
     const signals = [headingText, ...intro.map(blockText)].join(" ");
 
     if (PICK_ONE.test(signals)) return "pick-at-least-one";
@@ -134,7 +138,8 @@ function classifyGroup(headingText: string, intro: Block[]): CheckboxRequirement
     return "unknown";
 }
 
-function isOptionalSection(body: Block[]): boolean {
+function isOptionalSection(allBody: Block[]): boolean {
+    const body = withoutCode(allBody);
     const text = body.map(blockText).join(" ");
     if (OPTIONAL.test(text) || REMOVE_SECTION.test(text)) return true;
     // "If your PR contains a breaking change, ..." as the first sentence
@@ -145,7 +150,7 @@ function isOptionalSection(body: Block[]): boolean {
 // The first "Fixes #" field wins; without one, the first plain request to
 // link the issue. "If it fixes an issue, link it" is conditional, so it's skipped.
 function findIssueRule(blocks: Block[], fileUrl: string): Rule | null {
-    const sentences = blocks.flatMap((b) => splitSentences(b.parts));
+    const sentences = withoutCode(blocks).flatMap((b) => splitSentences(b.parts));
     const match =
         sentences.find((s) => ISSUE_FIELD.test(s.text)) ??
         sentences.find((s) => ISSUE_REQUEST.test(s.text) && !STARTS_WITH_IF.test(s.text));
@@ -157,6 +162,10 @@ function findIssueRule(blocks: Block[], fileUrl: string): Rule | null {
         sourceQuote: match.raw,
         sourceUrl: lineUrl(fileUrl, match.line),
     };
+}
+
+function withoutCode(blocks: Block[]): Block[] {
+    return blocks.filter((b) => b.kind !== "code");
 }
 
 function blockText(block: Block): string {

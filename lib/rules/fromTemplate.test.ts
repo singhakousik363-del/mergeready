@@ -93,14 +93,15 @@ describe("extractTemplateRules: conventional-changelog/commitlint", () => {
         expect(checklist.every((c) => c.requirement === "optional")).toBe(true);
     });
 
-    it("skips the code example and the conditional issue request", () => {
+    it("keeps the code example in templateText and skips the conditional issue request", () => {
         expect(sections(rules).map((s) => s.heading)).toEqual([
             "Description",
             "Motivation and Context",
             "Usage examples",
             "How Has This Been Tested?",
         ]);
-        expect(sections(rules)[2].templateText).not.toContain("module.exports");
+        // Code is part of the template's text, so a PR that leaves it unchanged can be spotted
+        expect(sections(rules)[2].templateText).toContain("module.exports = {};");
         // Only "If it fixes an open issue, please link to the issue here." (in a comment)
         expect(rules.some((r) => r.type === "linked-issue")).toBe(false);
     });

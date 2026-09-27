@@ -145,6 +145,19 @@ describe("parseMarkdownBlocks", () => {
         expect(blocks[2]).toMatchObject({ text: "Pull Requests", level: 2 });
     });
 
+    it("keeps code blocks only when asked (keepCode)", () => {
+        const markdown = "## Usage\n\n```js\nmodule.exports = {};\n```\n";
+        expect(parseMarkdownBlocks(markdown).map((b) => b.kind)).toEqual(["heading"]);
+        expect(parseMarkdownBlocks(markdown, { keepCode: true })).toEqual([
+            { kind: "heading", level: 2, text: "Usage", parts: [{ raw: "Usage", line: 1 }] },
+            { kind: "code", parts: [{ raw: "module.exports = {};", line: 4 }] },
+        ]);
+        // A code block that never closes is kept too
+        expect(parseMarkdownBlocks("```\nnpm test", { keepCode: true })).toEqual([
+            { kind: "code", parts: [{ raw: "npm test", line: 2 }] },
+        ]);
+    });
+
     it("handles a comment in the middle of a line", () => {
         const blocks = parseMarkdownBlocks("Before <!-- note --> after");
         expect(texts(blocks)).toEqual(["Before", "note", "after"]);

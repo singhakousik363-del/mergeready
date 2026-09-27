@@ -44,6 +44,8 @@ export type PrTemplateDetails =
     | {
           kind: "checkbox";
           text: string;
+          // The nearest heading above the boxes, e.g. "Type of change" (null if none)
+          heading: string | null;
           // Boxes next to each other share a group, e.g. all "Type of change" boxes
           groupId: number;
           requirement: CheckboxRequirement;
