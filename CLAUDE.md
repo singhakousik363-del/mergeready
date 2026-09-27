@@ -77,4 +77,5 @@ Next: fetch issue and PR data (assignees, comments, open PRs, commits, files).
 - CONTRIBUTING files that only link to other docs (nodejs/node,
   facebook/react) give little to analyse. Planned fix on 28 Sep:
   follow same-repo .md links about pull requests/commits, max 3 files.
-- No timeout on GitHub requests yet. Octokit logs 404s to console.
+- Timeout is per request; a total time budget for the whole analysis
+  will be added in the API route.

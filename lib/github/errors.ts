@@ -3,6 +3,7 @@ export type GitHubErrorCode =
     | "INVALID_REPO"
     | "REPO_NOT_FOUND"
     | "RATE_LIMITED"
+    | "GITHUB_TIMEOUT"
     | "GITHUB_UNAVAILABLE";
 
 // Base class: every GitHub problem has a short `code` (for our code)
@@ -50,6 +51,13 @@ export class RateLimitError extends GitHubError {
     }
 }
 
+export class GitHubTimeoutError extends GitHubError {
+    constructor() {
+        super("GITHUB_TIMEOUT", "GitHub took too long to respond. Please try again.");
+        this.name = "GitHubTimeoutError";
+    }
+}
+
 export class GitHubUnavailableError extends GitHubError {
     constructor() {
         super("GITHUB_UNAVAILABLE", "Couldn't reach GitHub right now. Please try again.");
@@ -76,6 +84,14 @@ function getHeader(err: unknown, name: string): string | null {
     return typeof value === "string" || typeof value === "number" ? String(value) : null;
 }
 
+// AbortSignal.timeout() fails fetch with a "TimeoutError".
+// Octokit wraps that inside its own error, so check the `cause` too.
+function isTimeout(err: unknown): boolean {
+    if (!(err instanceof Error)) return false;
+    if (err.name === "TimeoutError") return true;
+    return err.cause instanceof Error && err.cause.name === "TimeoutError";
+}
+
 function isRateLimit(err: unknown, status: number | null): boolean {
     if (status === 429) return true;
     if (status !== 403) return false;
@@ -98,6 +114,7 @@ function getResetTime(err: unknown): Date | null {
 // Turn any error from Octokit into one of our friendly error types.
 export function toGitHubError(err: unknown): GitHubError {
     if (err instanceof GitHubError) return err;
+    if (isTimeout(err)) return new GitHubTimeoutError();
 
     const status = getHttpStatus(err);
     if (isRateLimit(err, status)) return new RateLimitError(getResetTime(err));

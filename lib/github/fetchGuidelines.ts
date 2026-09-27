@@ -1,4 +1,5 @@
-import { Octokit } from "@octokit/rest";
+import type { Octokit } from "@octokit/rest";
+import { createOctokit } from "./client";
 import {
     InvalidRepoError,
     MissingTokenError,
@@ -84,12 +85,6 @@ export async function fetchGuidelines(
         },
         warnings,
     };
-}
-
-function createOctokit(): Octokit {
-    const token = process.env.GITHUB_TOKEN;
-    if (!token) throw new MissingTokenError();
-    return new Octokit({ auth: token, userAgent: "mergeready" });
 }
 
 async function getProfileLocations(
