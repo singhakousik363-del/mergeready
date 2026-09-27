@@ -39,10 +39,12 @@ export function failStatus(confidence: Confidence): "fail" | "warn" {
     return confidence === "config" || confidence === "template" ? "fail" : "warn";
 }
 
-// All rules of one type, strongest first
-export function rulesOfType<T extends RuleType>(rules: Rule[], type: T): Extract<Rule, { type: T }>[] {
+// All rules of one type, strongest first.
+// (Rule & { type: T }, not Extract: one Rule member covers four types at once,
+// and Extract would drop it.)
+export function rulesOfType<T extends RuleType>(rules: Rule[], type: T): (Rule & { type: T })[] {
     return rules
-        .filter((rule): rule is Extract<Rule, { type: T }> => rule.type === type)
+        .filter((rule): rule is Rule & { type: T } => rule.type === type)
         .sort((a, b) => CONFIDENCE_RANK[a.confidence] - CONFIDENCE_RANK[b.confidence]);
 }
 
