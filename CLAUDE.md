@@ -93,8 +93,9 @@ remind me of this list first.
 
 ## Current status
 Day 2: GitHub data layer done (guidelines, linked docs, issue, PR,
-new-contributor detection). Decided: no AI API. Next: deterministic
-rule extraction in /lib/rules.
+new-contributor detection). Day 3: deterministic rule extraction done
+(/lib/rules: config files, PR template, prose, "read this yourself"
+sections; scripts/try-rules.ts). Next: checks in /lib/checks.
 
 ## Known limitations
 - Linked docs: only one level deep, max 3 files / 150KB, picked by
@@ -124,3 +125,24 @@ rule extraction in /lib/rules.
 - Linked issues: only closing keywords (fixes/closes/resolves) for the
   same repo; GitHub only honours them when the PR targets the default
   branch (targetsDefaultBranch). "Fixes #1, #2" links only #1, like GitHub.
+- Rule extraction (prose): English only, keyword patterns. Rules phrased
+  in unusual ways are missed; weak matches happen (e.g. a how-to step
+  "Add tests to the package test file(s)"). Every rule shows its quote
+  so the user can judge.
+- commitlint JS configs are read with regex, never run. Configs built
+  with require()/variables (stdlib-js/stdlib) give a warning and no rule.
+  Default type lists for config-conventional/angular and the semantic PR
+  action are copied by hand. Sub-folder (monorepo) configs are not read.
+- DCO: the DCO GitHub App is invisible without .github/dco.yml (most
+  CNCF repos), and dco.yml doesn't prove the app is installed. Comment
+  "signatures" (carbon's cla-assistant "DCO") are not commit sign-off.
+- Workflows: only `uses:` action names and `run:` lines with
+  "commitlint" or "Signed-off-by" count. Custom validators like node's
+  core-validate-commit are not recognised. All workflow files are
+  downloaded in the one GraphQL query (stdlib: ~500KB, ~3s).
+- PR templates: HTML comments are not parsed as markdown (node's
+  template is one big comment, so it gives no rules). "check only 1"
+  becomes pick-at-least-one (no exactly-one). "the boxes that apply"
+  without "all" is not optional (home-assistant's Checklist = required).
+- "Read this yourself": max 6 sections x 4000 chars, linked by line.
+  Setext headings (underlined with ===) are not recognised.
