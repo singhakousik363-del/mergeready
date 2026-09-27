@@ -1,7 +1,7 @@
 // Words the UI shows. Kept in one place (and tested) so every screen says
 // the same thing, and so the UI never shows a status by colour alone.
 import type { CheckStatus, EvidenceRule, Stage } from "../checks/types";
-import type { Confidence, RuleType } from "../rules/types";
+import type { CheckboxRequirement, Confidence, Rule, RuleType } from "../rules/types";
 
 export const STAGE_LABEL: Record<Stage, string> = {
     issue: "Issue",
@@ -67,5 +67,29 @@ function fileName(url: string): string | null {
         return last ? decodeURIComponent(last) : null;
     } catch {
         return null;
+    }
+}
+
+const REQUIREMENT_LABEL: Record<CheckboxRequirement, string> = {
+    required: "must be ticked",
+    "pick-at-least-one": "pick at least one in its group",
+    optional: "optional",
+    unknown: "the template doesn't say",
+};
+
+// One line about what a rule asks for, for the "Rules we found" panel
+export function ruleDetail(rule: Rule): string {
+    switch (rule.type) {
+        case "conventional-commits": {
+            const where = rule.details.appliesTo === "pr-title" ? "the PR title" : "every commit message";
+            const types = rule.details.allowedTypes ? `; types: ${rule.details.allowedTypes.join(", ")}` : "";
+            return `Applies to ${where}${types}`;
+        }
+        case "pr-template":
+            return rule.details.kind === "section"
+                ? `Section "${rule.details.heading}"${rule.details.optional ? " (optional)" : ""}`
+                : `Checkbox "${rule.details.text}": ${REQUIREMENT_LABEL[rule.details.requirement]}`;
+        default:
+            return RULE_TYPE_LABEL[rule.type];
     }
 }

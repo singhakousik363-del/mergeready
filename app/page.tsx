@@ -1,4 +1,5 @@
 import { Analyzer } from "./_components/Analyzer";
+import { HowItWorks } from "./_components/HowItWorks";
 
 // The page itself is rendered on the server (fast first paint, readable
 // without JavaScript). Only <Analyzer> runs in the browser.
@@ -23,6 +24,19 @@ export default function Home() {
             </header>
 
             <Analyzer />
+            <HowItWorks />
+
+            <footer className="mt-16 border-t border-line pt-6 text-sm text-muted">
+                Built for the FirstCommit hackathon ·{" "}
+                <a
+                    href="https://github.com/singhakousik363-del/mergeready"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-2"
+                >
+                    Source on GitHub<span className="sr-only"> (opens in a new tab)</span>
+                </a>
+            </footer>
         </main>
     );
 }

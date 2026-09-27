@@ -2,7 +2,11 @@ import type { RefObject } from "react";
 import type { AnalyzeResponse } from "@/lib/server/analyze";
 import { CopyButton } from "./CopyButton";
 import { JourneyMap } from "./JourneyMap";
+import { PrDescription } from "./PrDescription";
+import { ReadYourself } from "./ReadYourself";
+import { RulesPanel } from "./RulesPanel";
 import { StageSection } from "./StageSection";
+import { Warnings } from "./Warnings";
 
 type Props = {
     data: AnalyzeResponse;
@@ -44,10 +48,15 @@ export function Results({ data, shareUrl, headingRef }: Props) {
             </div>
 
             <JourneyMap journey={data.journey} />
+            <Warnings warnings={data.warnings} />
 
             {data.stages.map((group, index) => (
                 <StageSection key={group.stage} group={group} index={index} />
             ))}
+
+            <PrDescription description={data.prDescription} kind={data.kind} />
+            <ReadYourself sections={data.sections} />
+            <RulesPanel rules={data.rules} />
         </section>
     );
 }

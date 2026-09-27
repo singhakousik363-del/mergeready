@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { RULE_TYPE_LABEL, SOURCE_GROUPS, STAGE_LABEL, STATUS_LABEL, sourceLabel } from "./labels";
+import { RULE_TYPE_LABEL, SOURCE_GROUPS, STAGE_LABEL, STATUS_LABEL, ruleDetail, sourceLabel } from "./labels";
 
 describe("labels", () => {
     it("every status has a word (never colour alone)", () => {
@@ -52,5 +52,35 @@ describe("sourceLabel (real rules from try-rules)", () => {
             sourceLabel({ confidence: "prose", sourceQuote: "Your commit must contain the `Signed-off-by` line", sourceUrl: "https://github.com/nodejs/node/blob/main/doc/contributing/pull-requests.md?plain=1#L201" })
         ).toBe("Docs: pull-requests.md");
         expect(sourceLabel({ confidence: "prose", sourceQuote: "x", sourceUrl: "not a url" })).toBe("CONTRIBUTING text");
+    });
+});
+
+describe("ruleDetail", () => {
+    const base = { confidence: "template" as const, sourceQuote: "x", sourceUrl: "y" };
+
+    it("describes commit format rules", () => {
+        expect(ruleDetail({ ...base, type: "conventional-commits", details: { appliesTo: "pr-title", allowedTypes: null } })).toBe(
+            "Applies to the PR title"
+        );
+        expect(ruleDetail({ ...base, type: "conventional-commits", details: { appliesTo: "commits", allowedTypes: ["feat", "fix"] } })).toBe(
+            "Applies to every commit message; types: feat, fix"
+        );
+    });
+
+    it("describes template sections and checkboxes", () => {
+        expect(ruleDetail({ ...base, type: "pr-template", details: { kind: "section", heading: "Disclosure", templateText: "", optional: true } })).toBe(
+            'Section "Disclosure" (optional)'
+        );
+        expect(
+            ruleDetail({
+                ...base,
+                type: "pr-template",
+                details: { kind: "checkbox", text: "Yes", heading: "AI Assistance", groupId: 2, requirement: "unknown" },
+            })
+        ).toBe('Checkbox "Yes": the template doesn\'t say');
+    });
+
+    it("uses the rule type name for the rest", () => {
+        expect(ruleDetail({ ...base, type: "dco-signoff", details: null })).toBe("DCO sign-off");
     });
 });

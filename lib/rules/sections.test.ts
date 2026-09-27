@@ -52,6 +52,18 @@ describe("findRelevantSections: real docs", () => {
         expect(sections.map((s) => s.heading)).toContain("Developer's Certificate of Origin 1.1");
     });
 
+    it("brings along the link targets a section uses, from the end of the file (stdlib-js/stdlib)", () => {
+        const sections = findRelevantSections([{ text: fixture("stdlib-contributing.md"), fileUrl: FILE_URL }]);
+        const commit = sections.find((s) => s.heading === "Step 5: Commit");
+
+        // The section says "follow the Git [style guide][stdlib-style-guides-git]";
+        // the "[stdlib-style-guides-git]: https://..." line is ~200 lines further down
+        expect(commit?.references).toContainEqual({
+            label: "stdlib-style-guides-git",
+            url: "https://github.com/stdlib-js/stdlib/blob/develop/docs/style-guides/git",
+        });
+    });
+
     it("finds the 'Get Assigned' section (processing/p5.js)", () => {
         expect(headingsIn(fixture("p5-contributing.md"))[0]).toBe("Get Assigned Before Working on an Issue");
     });
@@ -97,7 +109,7 @@ describe("findRelevantSections: rules", () => {
             { text: "## Sign-off\n\nUse git commit -s.", fileUrl: other },
         ]);
         expect(sections).toEqual([
-            { heading: "Sign-off", text: "## Sign-off\n\nUse git commit -s.", sourceUrl: `${other}?plain=1#L1`, truncated: false },
+            { heading: "Sign-off", text: "## Sign-off\n\nUse git commit -s.", sourceUrl: `${other}?plain=1#L1`, truncated: false, references: [] },
         ]);
     });
 

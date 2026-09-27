@@ -10,6 +10,9 @@ export type GuideSection = {
     sourceUrl: string;
     // true when text was cut at MAX_SECTION_CHARS
     truncated: boolean;
+    // Targets of reference-style links used in the text ("[guide][g]" needs
+    // "[g]: https://..."), which usually sit at the END of the file, outside the section
+    references: { label: string; url: string }[];
 };
 
 export const MAX_SECTIONS = 6;
@@ -27,11 +30,15 @@ const SKIP = /^(?:table of )?contents$/i;
 
 type Candidate = GuideSection & { score: number; docIndex: number; line: number };
 
+// "[stdlib-doctest]: https://github.com/..." (optionally with a "title")
+const REFERENCE_DEFINITION = /^\s{0,3}\[([^\]]+)\]:\s*<?(\S+?)>?(?:\s+["'(].*)?\s*$/;
+
 export function findRelevantSections(docs: ProseDoc[]): GuideSection[] {
     const candidates: Candidate[] = [];
 
     docs.forEach((doc, docIndex) => {
         const lines = doc.text.split(/\r?\n/);
+        const definitions = readDefinitions(lines);
         const headings = parseMarkdownBlocks(doc.text).flatMap((b) =>
             b.kind === "heading" ? [{ text: b.text, level: b.level, line: b.parts[0].line }] : []
         );
@@ -57,11 +64,13 @@ export function findRelevantSections(docs: ProseDoc[]): GuideSection[] {
             if (truncated && hasSubsections) return;
 
             insideUntil = endLine;
+            const shownText = truncated ? text.slice(0, MAX_SECTION_CHARS) : text;
             candidates.push({
                 heading: heading.text,
-                text: truncated ? text.slice(0, MAX_SECTION_CHARS) : text,
+                text: shownText,
                 sourceUrl: lineUrl(doc.fileUrl, heading.line),
                 truncated,
+                references: referencesUsed(shownText, definitions),
                 score,
                 docIndex,
                 line: heading.line,
@@ -74,5 +83,26 @@ export function findRelevantSections(docs: ProseDoc[]): GuideSection[] {
         .sort((a, b) => b.score - a.score || a.docIndex - b.docIndex || a.line - b.line)
         .slice(0, MAX_SECTIONS)
         .sort((a, b) => a.docIndex - b.docIndex || a.line - b.line);
-    return chosen.map(({ heading, text, sourceUrl, truncated }) => ({ heading, text, sourceUrl, truncated }));
+    return chosen.map(({ heading, text, sourceUrl, truncated, references }) => ({ heading, text, sourceUrl, truncated, references }));
+}
+
+// Every "[label]: url" in the file. Labels don't care about letter case.
+function readDefinitions(lines: string[]): Map<string, { label: string; url: string }> {
+    const definitions = new Map<string, { label: string; url: string }>();
+    for (const line of lines) {
+        const match = REFERENCE_DEFINITION.exec(line);
+        const key = match?.[1].toLowerCase();
+        if (match && key && !definitions.has(key)) definitions.set(key, { label: match[1], url: match[2] });
+    }
+    return definitions;
+}
+
+// The definitions whose "[label]" appears in the text
+function referencesUsed(text: string, definitions: Map<string, { label: string; url: string }>): { label: string; url: string }[] {
+    const used: { label: string; url: string }[] = [];
+    for (const match of text.matchAll(/\[([^\]]+)\]/g)) {
+        const definition = definitions.get(match[1].toLowerCase());
+        if (definition && !used.includes(definition)) used.push(definition);
+    }
+    return used;
 }
