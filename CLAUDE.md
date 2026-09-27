@@ -103,10 +103,8 @@ remind me of this list first.
 - Never add features, libraries or files I didn't approve.
 
 ## Current status
-Day 2: GitHub data layer done (guidelines, linked docs, issue, PR,
-new-contributor detection). Day 3: deterministic rule extraction done
-(/lib/rules: config files, PR template, commit history, prose, "read
-this yourself" sections; scripts/try-rules.ts). Next: checks in /lib/checks.
+Day 2 done: rule extraction complete (config, template, history,
+prose). Next (28 Sep): checks in /lib/checks, API route, UI.
 
 ## Known limitations
 - Linked docs: only one level deep, max 3 files / 150KB, picked by
