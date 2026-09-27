@@ -4,6 +4,7 @@ import { describe, it, expect } from "vitest";
 import { extractRules } from "./extractRules";
 import type { Guidelines } from "../github/fetchGuidelines";
 import type { ConfigFiles } from "../github/fetchConfigFiles";
+import type { RecentCommits } from "../github/fetchRecentCommits";
 
 // Real files, see __fixtures__/SOURCES.md
 function fixture(name: string): string {
@@ -22,10 +23,16 @@ function guidelines(parts: Partial<Guidelines>): Guidelines {
 }
 
 const NO_CONFIG: ConfigFiles = { files: [], warnings: [] };
+const NO_HISTORY: RecentCommits = { commits: [], warnings: [] };
+
+// Most tests don't need commit history
+function run(g: Guidelines, config: ConfigFiles, history: RecentCommits = NO_HISTORY) {
+    return extractRules(g, config, history, "https://github.com/acme/app");
+}
 
 describe("extractRules: conventional-changelog/commitlint (all three sources)", () => {
     const repo = "https://github.com/conventional-changelog/commitlint/blob/master";
-    const result = extractRules(
+    const result = run(
         guidelines({
             contributing: fixture("commitlint-contributing.md"),
             prTemplate: fixture("commitlint-pr-template.md"),
@@ -87,7 +94,7 @@ describe("extractRules: conventional-changelog/commitlint (all three sources)", 
 
 describe("extractRules: nodejs/node (rules live in a linked doc)", () => {
     const repo = "https://github.com/nodejs/node/blob/main";
-    const result = extractRules(
+    const result = run(
         guidelines({
             contributing: fixture("node-contributing.md"),
             prTemplate: fixture("node-pr-template.md"),
@@ -122,7 +129,7 @@ describe("extractRules: nodejs/node (rules live in a linked doc)", () => {
 
 describe("extractRules: warnings", () => {
     it("passes on config warnings", () => {
-        const result = extractRules(guidelines({}), {
+        const result = run(guidelines({}), {
             files: [{ path: "package.json", text: "{ broken", url: "https://github.com/a/b/blob/main/package.json" }],
             warnings: ["Couldn't read config files (commitlint, DCO, workflows): GitHub took too long to respond."],
         });
@@ -134,7 +141,7 @@ describe("extractRules: warnings", () => {
     });
 
     it("says so when the repo has no guideline files at all", () => {
-        expect(extractRules(guidelines({}), NO_CONFIG)).toEqual({
+        expect(run(guidelines({}), NO_CONFIG)).toEqual({
             rules: [],
             sections: [],
             warnings: [
@@ -144,7 +151,7 @@ describe("extractRules: warnings", () => {
     });
 
     it("asks the user to read the docs when files exist but no rules were found", () => {
-        const result = extractRules(
+        const result = run(
             guidelines({
                 contributing: "# Contributing\n\nThanks for helping!",
                 sources: { contributing: "https://github.com/a/b/blob/main/CONTRIBUTING.md", prTemplate: null },
@@ -154,5 +161,48 @@ describe("extractRules: warnings", () => {
         expect(result.warnings).toEqual([
             "No rules were found automatically. Please read the guideline sections below yourself.",
         ]);
+    });
+});
+
+describe("extractRules: commit history", () => {
+    // 20 human commits that follow Conventional Commits and are signed off
+    const habits: RecentCommits = {
+        commits: Array.from({ length: 20 }, (_, i) => ({
+            sha: `sha${i}`,
+            message: `fix: bug ${i}\n\nSigned-off-by: Jane Doe <jane@example.com>`,
+            isMerge: false,
+            isBot: false,
+        })),
+        warnings: [],
+    };
+
+    it("puts history rules after template rules and before prose rules", () => {
+        const result = run(
+            guidelines({
+                contributing: "Please add tests.",
+                prTemplate: "## Checklist\n\n- [ ] I have added tests",
+                sources: {
+                    contributing: "https://github.com/acme/app/blob/main/CONTRIBUTING.md",
+                    prTemplate: "https://github.com/acme/app/blob/main/.github/PULL_REQUEST_TEMPLATE.md",
+                },
+            }),
+            NO_CONFIG,
+            habits
+        );
+        expect(result.rules.map((r) => [r.confidence, r.type])).toEqual([
+            ["template", "pr-template"],
+            ["history", "conventional-commits"],
+            ["history", "dco-signoff"],
+            ["prose", "tests-changed"],
+        ]);
+        expect(result.rules[1].sourceUrl).toBe("https://github.com/acme/app/commits/sha0");
+    });
+
+    it("passes on history warnings", () => {
+        const result = run(guidelines({}), NO_CONFIG, {
+            commits: [],
+            warnings: ["Couldn't read recent commits: GitHub took too long to respond. Please try again."],
+        });
+        expect(result.warnings[0]).toBe("Couldn't read recent commits: GitHub took too long to respond. Please try again.");
     });
 });

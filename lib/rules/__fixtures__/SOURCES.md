@@ -22,3 +22,13 @@ in tests. Copyright stays with each project; licenses below.
 | flyte-dco.yml | https://github.com/flyteorg/flyte/blob/main/.github/dco.yml | 15dc7d4a922bb34d4ee1cac23347bda7f88757ee | Apache-2.0 |
 | moby-dco-workflow.yml | https://github.com/moby/moby/blob/master/.github/workflows/.dco.yml | 9bda9531b406bdd9245c111c051a0076bb89912b | Apache-2.0 |
 | carbon-dco-workflow.yml | https://github.com/carbon-design-system/carbon/blob/main/.github/workflows/dco.yml | 7e8c8f7db6dd2ed98c4947b78b37614f43eda920 | Apache-2.0 |
+
+Commit lists: the newest 50 commits from `GET /repos/{owner}/{repo}/commits?per_page=50`,
+trimmed to sha, message, author name, login/type and parents.
+
+| File | Repo | Newest commit | License |
+|---|---|---|---|
+| stdlib-commits.json | https://github.com/stdlib-js/stdlib | 0695f035b77cb48eb223ed45f430e1e94cfe2554 | Apache-2.0 |
+| node-commits.json | https://github.com/nodejs/node | a2a064c76afe42fedf061d976de8dff69ef2feaf | MIT (see repo LICENSE) |
+| prometheus-commits.json | https://github.com/prometheus/prometheus | ea954809ceafceb53ecfa295ab0947753929de9e | Apache-2.0 |
+| vite-commits.json | https://github.com/vitejs/vite | bc598a6a8a6b7d6e157e9f19c16911cff8d2360c | MIT |

@@ -3,6 +3,7 @@
 // Prints every rule with its quote and link, so you can check them by hand.
 import { fetchConfigFiles } from "../lib/github/fetchConfigFiles";
 import { fetchGuidelines } from "../lib/github/fetchGuidelines";
+import { fetchRecentCommits } from "../lib/github/fetchRecentCommits";
 import { GitHubError } from "../lib/github/errors";
 import { extractRules } from "../lib/rules/extractRules";
 import type { Rule } from "../lib/rules/types";
@@ -27,9 +28,16 @@ function describeDetails(rule: Rule): string {
 async function showRules(owner: string, repo: string): Promise<void> {
     const started = Date.now();
     // Independent requests: run them at the same time
-    const [guidelines, configFiles] = await Promise.all([fetchGuidelines(owner, repo), fetchConfigFiles(owner, repo)]);
-    const result = extractRules(guidelines, configFiles);
-    console.log(`  (fetched in ${Date.now() - started}ms; ${configFiles.files.length} config/workflow files read)`);
+    const [guidelines, configFiles, history] = await Promise.all([
+        fetchGuidelines(owner, repo),
+        fetchConfigFiles(owner, repo),
+        fetchRecentCommits(owner, repo),
+    ]);
+    const result = extractRules(guidelines, configFiles, history, `https://github.com/${owner}/${repo}`);
+    console.log(
+        `  (fetched in ${Date.now() - started}ms; ${configFiles.files.length} config/workflow files, ` +
+            `${history.commits.length} recent commits read)`
+    );
 
     console.log(`  RULES: ${result.rules.length}`);
     for (const rule of result.rules) {

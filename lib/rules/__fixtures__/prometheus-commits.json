@@ -1,0 +1,950 @@
+[
+ {
+  "sha": "ea954809ceafceb53ecfa295ab0947753929de9e",
+  "commit": {
+   "message": "Merge pull request #19712 from kgeckhart/kgeckhart/checkpoint-metadata-batch-write\n\nperf(tsdb/wlog): batch the metadata records a checkpoint writes",
+   "author": {
+    "name": "Bartlomiej Plotka"
+   }
+  },
+  "author": {
+   "login": "bwplotka",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "270db29150547af8dc2f7695382068525c95361c"
+   },
+   {
+    "sha": "8e7b1f19622a174ce5af6dc218cd7514983fbfaf"
+   }
+  ]
+ },
+ {
+  "sha": "270db29150547af8dc2f7695382068525c95361c",
+  "commit": {
+   "message": "Merge pull request #19830 from sandy2008/promql-parser-custom-functions\n\npromql/parser: allow custom functions via parser.Options",
+   "author": {
+    "name": "Julien"
+   }
+  },
+  "author": {
+   "login": "roidelapluie",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "a0e6979d8d906f7cf3da331f7e962177e07a40e4"
+   },
+   {
+    "sha": "f57e5afb6e3996bb72d8c0a6edaf75c16147710d"
+   }
+  ]
+ },
+ {
+  "sha": "f57e5afb6e3996bb72d8c0a6edaf75c16147710d",
+  "commit": {
+   "message": "promql/parser: allow custom functions via parser.Options\n\n#17977 replaced the package-level parser flags with parser.Options and,\nin doing so, removed parser.WithFunctions (added in #12170). Since then\nthe only way for a downstream PromQL engine to parse its own functions\nis to add them to the global parser.Functions map, which also makes\nthem parseable by every other parser in the process, including the one\nused by the Prometheus engine.\n\nAdd a Functions field to parser.Options. When set, it replaces the\ndefault function set for that parser, as WithFunctions did; when nil,\nthe default parser.Functions set is used. NewParser copies the map so\nlater changes by the caller cannot affect or race with parsing, and\nRegisterFeatures now reports the functions the parser actually accepts.\n\nTestParseCustomFunctions used the internal newParserWithFunctions\nhelper and added its function to the global Functions map, leaking it\ninto the other tests of the package. It now uses the public API with\nits own map, and the helper is removed.\n\nSigned-off-by: Sandy Chen <Yuxuan.Chen@morganstanley.com>",
+   "author": {
+    "name": "Sandy Chen"
+   }
+  },
+  "author": {
+   "login": "sandy2008",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "a0e6979d8d906f7cf3da331f7e962177e07a40e4"
+   }
+  ]
+ },
+ {
+  "sha": "a0e6979d8d906f7cf3da331f7e962177e07a40e4",
+  "commit": {
+   "message": "UI: Fix overeager autocompletion after closing parenthesis (#19825)\n\nCurrently when you type `rate(foo[5m])`, there is immediately an autocompletion\ndropdown suggesting all binary operators. Similar for aggregation op modifiers\nif an aggregation doesn't have a modifier yet. This changes it such that the\ndropdown only opens in this case if the user explicitly requests it\n(Ctrl+Space).\n\nSigned-off-by: Julius Volz <julius.volz@gmail.com>",
+   "author": {
+    "name": "Julius Volz"
+   }
+  },
+  "author": {
+   "login": "juliusv",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "f03f0e4b5b5f18ca02056b3510f82803475883da"
+   }
+  ]
+ },
+ {
+  "sha": "f03f0e4b5b5f18ca02056b3510f82803475883da",
+  "commit": {
+   "message": "Merge pull request #19816 from roidelapluie/roidelapluie/fix-integral\n\npromql: fix integral overflow and absence example",
+   "author": {
+    "name": "Julien"
+   }
+  },
+  "author": {
+   "login": "roidelapluie",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "854c40d28b0dfbdb01f6915f55e64ce0b7932824"
+   },
+   {
+    "sha": "e71425d03a2832d80438f1fa450e82018c5b00d4"
+   }
+  ]
+ },
+ {
+  "sha": "854c40d28b0dfbdb01f6915f55e64ce0b7932824",
+  "commit": {
+   "message": "Merge pull request #19748 from dashpole/om2-parser-fixes\n\nmodel/textparse: fix OpenMetrics 2.0 lexer, labels, metadata, and parser options",
+   "author": {
+    "name": "Julien"
+   }
+  },
+  "author": {
+   "login": "roidelapluie",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "ae12f1afea9837adad6fd6ee750b83b0b17541e6"
+   },
+   {
+    "sha": "4436331733e9ce4dc7457fa83db3c2d52455b3c4"
+   }
+  ]
+ },
+ {
+  "sha": "4436331733e9ce4dc7457fa83db3c2d52455b3c4",
+  "commit": {
+   "message": "Address review comment: only reject carriage return at line ending in metadata lines\n\nSigned-off-by: David Ashpole <dashpole@google.com>",
+   "author": {
+    "name": "David Ashpole"
+   }
+  },
+  "author": {
+   "login": "dashpole",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "ae543a5877522a51b08be4c74ed52ee38a175151"
+   }
+  ]
+ },
+ {
+  "sha": "ae543a5877522a51b08be4c74ed52ee38a175151",
+  "commit": {
+   "message": "model/textparse: fix OpenMetrics 2.0 lexer, labels, metadata, and parser options\n\nSigned-off-by: David Ashpole <dashpole@google.com>",
+   "author": {
+    "name": "David Ashpole"
+   }
+  },
+  "author": {
+   "login": "dashpole",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "ae12f1afea9837adad6fd6ee750b83b0b17541e6"
+   }
+  ]
+ },
+ {
+  "sha": "ae12f1afea9837adad6fd6ee750b83b0b17541e6",
+  "commit": {
+   "message": "Merge pull request #19746 from Suhail98/om2-composite-numeric-validation\n\nmodel/textparse: validate numeric fields in OM2 composite values",
+   "author": {
+    "name": "Bartlomiej Plotka"
+   }
+  },
+  "author": {
+   "login": "bwplotka",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "5f325dd18c88077d00a0e54554b3433696a24664"
+   },
+   {
+    "sha": "a264838212045081c59a14fce66851a786ceae54"
+   }
+  ]
+ },
+ {
+  "sha": "5f325dd18c88077d00a0e54554b3433696a24664",
+  "commit": {
+   "message": "storage/remote: fix data race between SetClient and in-flight sends (#19796)\n\n* storage/remote: fix data race between SetClient and in-flight sends\n\nSigned-off-by: Paul Rogers <paul.rogers@grafana.com>",
+   "author": {
+    "name": "Paul Rogers"
+   }
+  },
+  "author": {
+   "login": "paul1r",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "2911b66538385236d591b151c83f0f0b9946043e"
+   }
+  ]
+ },
+ {
+  "sha": "2911b66538385236d591b151c83f0f0b9946043e",
+  "commit": {
+   "message": "Merge pull request #19556 from janeblower/logging/drop-client-go-from-util-logging\n\nlogging: move Kube deprecation warning logger to cmd/prometheus",
+   "author": {
+    "name": "Bryan Boreham"
+   }
+  },
+  "author": {
+   "login": "bboreham",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "970b878cc775271673e82c029344807f05662ddb"
+   },
+   {
+    "sha": "ed9864e139df8baf93e8ff1d6af7879d3f997be6"
+   }
+  ]
+ },
+ {
+  "sha": "970b878cc775271673e82c029344807f05662ddb",
+  "commit": {
+   "message": "tsdb: preserve mapped chunks across replayed series references (#19805)\n\n* tsdb: preserve mapped chunks across replayed series references\n\nMerge persisted chunk inventories when WAL references resolve to the same\nseries, instead of replacing previously attached mapped chunks. Use the\nstartup disk reference boundary to discard chunks rebuilt from obsolete\nWAL history while preserving chunks already persisted before replay.\n\nCover mapped OOO samples under either or both references, repeated restarts,\nin-order chunk duplication, and healthy mapped chunks after WAL repair,\nacross both appender APIs and all sample types.\n\nFixes #19804\n\n---------\n\nSigned-off-by: Dan Mattheiss <dan.mattheiss@grafana.com>",
+   "author": {
+    "name": "Dan Mattheiss"
+   }
+  },
+  "author": {
+   "login": "dmatth1",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "1a221c811e490eb79e8bb97a2984fe1592b7c3d7"
+   }
+  ]
+ },
+ {
+  "sha": "8e7b1f19622a174ce5af6dc218cd7514983fbfaf",
+  "commit": {
+   "message": "tsdb/wlog: exercise the mid-loop flush and assert metadata batch sizes in checkpoint test\n\nSigned-off-by: Kyle Eckhart <kgeckhart@users.noreply.github.com>",
+   "author": {
+    "name": "Kyle Eckhart"
+   }
+  },
+  "author": {
+   "login": "kgeckhart",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "717aeadd2c7125f4f440580b581bca6425e0fa61"
+   }
+  ]
+ },
+ {
+  "sha": "717aeadd2c7125f4f440580b581bca6425e0fa61",
+  "commit": {
+   "message": "perf(tsdb/wlog): batch the metadata records a checkpoint writes\n\nSigned-off-by: Kyle Eckhart <kgeckhart@users.noreply.github.com>",
+   "author": {
+    "name": "Kyle Eckhart"
+   }
+  },
+  "author": {
+   "login": "kgeckhart",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "57d06a1b26af16efa674b0993eba75ea22e33d2d"
+   }
+  ]
+ },
+ {
+  "sha": "1a221c811e490eb79e8bb97a2984fe1592b7c3d7",
+  "commit": {
+   "message": "Merge pull request #19809 from leaanthony/perf/jaro-winkler-allocations-pr\n\nperf(search): reduce allocations in Jaro-Winkler matching",
+   "author": {
+    "name": "Julien"
+   }
+  },
+  "author": {
+   "login": "roidelapluie",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "702e0fb3bb266ebf6d56ad1aa919a2c6029628c9"
+   },
+   {
+    "sha": "b42062c8799f3313fb8ebcf2122ae2ef02ae60fd"
+   }
+  ]
+ },
+ {
+  "sha": "702e0fb3bb266ebf6d56ad1aa919a2c6029628c9",
+  "commit": {
+   "message": "Merge pull request #19755 from shoemoney/fix/azure-sd-nil-tag-value\n\ndiscovery/azure: skip tags with a nil value",
+   "author": {
+    "name": "Julien"
+   }
+  },
+  "author": {
+   "login": "roidelapluie",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "57d06a1b26af16efa674b0993eba75ea22e33d2d"
+   },
+   {
+    "sha": "4c7783f24a5c2ff63c1f32b399f7b676cabd4041"
+   }
+  ]
+ },
+ {
+  "sha": "e71425d03a2832d80438f1fa450e82018c5b00d4",
+  "commit": {
+   "message": "promql: fix integral overflow and absence example\n\nSigned-off-by: Julien Pivotto <291750+roidelapluie@users.noreply.github.com>",
+   "author": {
+    "name": "Julien Pivotto"
+   }
+  },
+  "author": {
+   "login": "roidelapluie",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "57d06a1b26af16efa674b0993eba75ea22e33d2d"
+   }
+  ]
+ },
+ {
+  "sha": "57d06a1b26af16efa674b0993eba75ea22e33d2d",
+  "commit": {
+   "message": "Merge pull request #14440 from jjo/jjo/add-integral-function\n\npromql: implement `integral()` function",
+   "author": {
+    "name": "Julien"
+   }
+  },
+  "author": {
+   "login": "roidelapluie",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "ac6c4bfbea4ffa6c8354f7c1fd8878f989362a5d"
+   },
+   {
+    "sha": "76dce274fa60123a6966a15dd0f5566dc8bee4f2"
+   }
+  ]
+ },
+ {
+  "sha": "ac6c4bfbea4ffa6c8354f7c1fd8878f989362a5d",
+  "commit": {
+   "message": "Merge pull request #19729 from roidelapluie/roidelapluie/lex-duration-keyword-state\n\npromql/parser: fix duration keyword state in subquery lexing",
+   "author": {
+    "name": "Julien"
+   }
+  },
+  "author": {
+   "login": "roidelapluie",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "48c07c16fda480e1cd42cdebcc875c41cb6c9c95"
+   },
+   {
+    "sha": "68c94e2f87e393e5dcb8bcb4df40b5fa33f44ef1"
+   }
+  ]
+ },
+ {
+  "sha": "4c7783f24a5c2ff63c1f32b399f7b676cabd4041",
+  "commit": {
+   "message": "discovery/azure: use label name type in nil tag assertion\n\nSigned-off-by: Jeremy Schoemaker <jeremy@shoemoney.com>",
+   "author": {
+    "name": "Jeremy Schoemaker"
+   }
+  },
+  "author": {
+   "login": "shoemoney",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "0fac43a48cbe6908fac1c9f6a1c18b7b9de6b7ea"
+   }
+  ]
+ },
+ {
+  "sha": "48c07c16fda480e1cd42cdebcc875c41cb6c9c95",
+  "commit": {
+   "message": "Merge pull request #19814 from roidelapluie/roidelapluie/ignorewal\n\nagent: ignore unknown WAL record types",
+   "author": {
+    "name": "Julien"
+   }
+  },
+  "author": {
+   "login": "roidelapluie",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "9d6d1b4d50e4a2945a5085d5073b600050fc6de2"
+   },
+   {
+    "sha": "184e4a51a9008217a83e2b94f76091da62c7794d"
+   }
+  ]
+ },
+ {
+  "sha": "9d6d1b4d50e4a2945a5085d5073b600050fc6de2",
+  "commit": {
+   "message": "Merge pull request #19749 from aknuds1/arve/fix-streamed-remote-read-errors\n\nstorage/remote: abort failed streamed read responses",
+   "author": {
+    "name": "Julien"
+   }
+  },
+  "author": {
+   "login": "roidelapluie",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "9f159f6df198280b757163ec555ffde0c8bfe8e0"
+   },
+   {
+    "sha": "741bb0853aa1ed063392af430e82724627b25a8c"
+   }
+  ]
+ },
+ {
+  "sha": "184e4a51a9008217a83e2b94f76091da62c7794d",
+  "commit": {
+   "message": "agent: ignore unknown WAL record types\n\nSigned-off-by: Julien Pivotto <291750+roidelapluie@users.noreply.github.com>",
+   "author": {
+    "name": "Julien Pivotto"
+   }
+  },
+  "author": {
+   "login": "roidelapluie",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "3da2514eff5ce503de2e8f355cae8ca58a2a35ed"
+   }
+  ]
+ },
+ {
+  "sha": "9f159f6df198280b757163ec555ffde0c8bfe8e0",
+  "commit": {
+   "message": "Merge pull request #19734 from duricanikolic/yuri/min-valid-time-fix\n\ntsdb: persist WAL truncation mint to fix minValidTime underestimation on restart",
+   "author": {
+    "name": "Bartlomiej Plotka"
+   }
+  },
+  "author": {
+   "login": "bwplotka",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "605ea20826de3b4a9eb0dc1752246bc58c79d00f"
+   },
+   {
+    "sha": "9c4a1ce35bc72dbadedf8f6628b4d6bf79269f33"
+   }
+  ]
+ },
+ {
+  "sha": "b42062c8799f3313fb8ebcf2122ae2ef02ae60fd",
+  "commit": {
+   "message": "perf(search): reduce allocations in Jaro-Winkler matching\n\nReuse pooled match buffers for larger inputs and keep matchers safe for concurrent Unicode scoring. Add allocation, long-input, and concurrency regression coverage.\n\nCheck pooled scores against the pre-pooling implementation across input sizes that straddle the pool threshold, test workspace reuse directly, including growing past a shrunk length within capacity, and add a benchmark that scores 10,000 long candidates with one matcher.\n\nCo-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>\nSigned-off-by: Lea Anthony <lea.anthony@grafana.com>",
+   "author": {
+    "name": "Lea Anthony"
+   }
+  },
+  "author": {
+   "login": "leaanthony",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "1d6fe3787e0f0e4f1e0f3cd4e0e12e43079cdc3c"
+   }
+  ]
+ },
+ {
+  "sha": "9c4a1ce35bc72dbadedf8f6628b4d6bf79269f33",
+  "commit": {
+   "message": "drop redundant else after early return in Checkpoint's min-valid-time read-back\n\nSigned-off-by: Yuri Nikolic <durica.nikolic@grafana.com>",
+   "author": {
+    "name": "Yuri Nikolic"
+   }
+  },
+  "author": {
+   "login": "duricanikolic",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "aea4ffce8bac84c8b597030412ccfa80538e364d"
+   }
+  ]
+ },
+ {
+  "sha": "aea4ffce8bac84c8b597030412ccfa80538e364d",
+  "commit": {
+   "message": "make forceCheckpointAt's retry loop actually wait for a new checkpoint, not just any\n\nSigned-off-by: Yuri Nikolic <durica.nikolic@grafana.com>",
+   "author": {
+    "name": "Yuri Nikolic"
+   }
+  },
+  "author": {
+   "login": "duricanikolic",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "c6ee373fdcdc7e928b66191f1f930074cf758200"
+   }
+  ]
+ },
+ {
+  "sha": "c6ee373fdcdc7e928b66191f1f930074cf758200",
+  "commit": {
+   "message": "add table test pinning down open()'s min-valid-time max() and its corrupt-checkpoint fallback\n\nSigned-off-by: Yuri Nikolic <durica.nikolic@grafana.com>",
+   "author": {
+    "name": "Yuri Nikolic"
+   }
+  },
+  "author": {
+   "login": "duricanikolic",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "88e681434df7f51877a65ee5f82c53ffc0f748ff"
+   }
+  ]
+ },
+ {
+  "sha": "88e681434df7f51877a65ee5f82c53ffc0f748ff",
+  "commit": {
+   "message": "wlog: exercise MinValidTime checkpoint records in watcher startup tests\n\nSigned-off-by: Yuri Nikolic <durica.nikolic@grafana.com>",
+   "author": {
+    "name": "Yuri Nikolic"
+   }
+  },
+  "author": {
+   "login": "duricanikolic",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "f28e5005156b59a0e663908f9f19437932cc8dd5"
+   }
+  ]
+ },
+ {
+  "sha": "f28e5005156b59a0e663908f9f19437932cc8dd5",
+  "commit": {
+   "message": "keep the persisted min valid time from regressing across restarts\n\nSigned-off-by: Yuri Nikolic <durica.nikolic@grafana.com>",
+   "author": {
+    "name": "Yuri Nikolic"
+   }
+  },
+  "author": {
+   "login": "duricanikolic",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "3f8523d16d7f85983aff34fce2f80953ffbd501f"
+   }
+  ]
+ },
+ {
+  "sha": "3f8523d16d7f85983aff34fce2f80953ffbd501f",
+  "commit": {
+   "message": "move writeMinValidTime rationale comment to its own call site\n\nSigned-off-by: Yuri Nikolic <durica.nikolic@grafana.com>",
+   "author": {
+    "name": "Yuri Nikolic"
+   }
+  },
+  "author": {
+   "login": "duricanikolic",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "f29308d67acaa1822791ff79c9069478caa42fcf"
+   }
+  ]
+ },
+ {
+  "sha": "f29308d67acaa1822791ff79c9069478caa42fcf",
+  "commit": {
+   "message": "Update wal.md documentation\n\nSigned-off-by: Yuri Nikolic <durica.nikolic@grafana.com>",
+   "author": {
+    "name": "Yuri Nikolic"
+   }
+  },
+  "author": {
+   "login": "duricanikolic",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "99d006e6c20e156e0e925fd87bd94816e2f8e9cb"
+   }
+  ]
+ },
+ {
+  "sha": "605ea20826de3b4a9eb0dc1752246bc58c79d00f",
+  "commit": {
+   "message": "Merge pull request #19742 from roidelapluie/roidelapluie/duration-expr-position-range\n\npromql/parser: fix source range of duration function calls",
+   "author": {
+    "name": "Julien"
+   }
+  },
+  "author": {
+   "login": "roidelapluie",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "99d11d849a4d937715aaa013f1d67fa096d639f4"
+   },
+   {
+    "sha": "898a6c58ba399b507649bab67d63918d0046fdda"
+   }
+  ]
+ },
+ {
+  "sha": "99d11d849a4d937715aaa013f1d67fa096d639f4",
+  "commit": {
+   "message": "Merge pull request #19743 from roidelapluie/roidelapluie/subquery-step-expr-printing\n\npromql/parser: prefer StepExpr when printing a subquery step",
+   "author": {
+    "name": "Julien"
+   }
+  },
+  "author": {
+   "login": "roidelapluie",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "dc54060dbe3fea84d0bfb75a40fec28e1b44632f"
+   },
+   {
+    "sha": "617624b8ed2540797afbe6e209053a7350a5930c"
+   }
+  ]
+ },
+ {
+  "sha": "dc54060dbe3fea84d0bfb75a40fec28e1b44632f",
+  "commit": {
+   "message": "fix(deps): update module google.golang.org/api to v0.299.0 (#19783)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "renovate[bot]"
+   }
+  },
+  "author": {
+   "login": "renovate[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "c84343b71b6c96f1ab23f741d23d84ed3ff73f71"
+   }
+  ]
+ },
+ {
+  "sha": "c84343b71b6c96f1ab23f741d23d84ed3ff73f71",
+  "commit": {
+   "message": "fix(deps): update module golang.org/x/time to v0.16.0 (#19782)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "renovate[bot]"
+   }
+  },
+  "author": {
+   "login": "renovate[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "0aa0d60f5b72636921fbdcf4cc91846cfe9c6118"
+   }
+  ]
+ },
+ {
+  "sha": "0aa0d60f5b72636921fbdcf4cc91846cfe9c6118",
+  "commit": {
+   "message": "fix(deps): update module google.golang.org/grpc to v1.84.0 (#19784)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "renovate[bot]"
+   }
+  },
+  "author": {
+   "login": "renovate[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "bd3f1b921d1c3b965583a880dd411abdb184ccf4"
+   }
+  ]
+ },
+ {
+  "sha": "bd3f1b921d1c3b965583a880dd411abdb184ccf4",
+  "commit": {
+   "message": "fix(deps): update dependency react-resize-detector to v9 (#19792)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "renovate[bot]"
+   }
+  },
+  "author": {
+   "login": "renovate[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "bd6e362d3d2d369cee9d01aa83e9d11e58d00805"
+   }
+  ]
+ },
+ {
+  "sha": "bd6e362d3d2d369cee9d01aa83e9d11e58d00805",
+  "commit": {
+   "message": "fix(deps): update module github.com/bufbuild/buf to v1.73.0 (#19773)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "renovate[bot]"
+   }
+  },
+  "author": {
+   "login": "renovate[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "14cf4f854d7120b2348116586d0f3fd28744f284"
+   }
+  ]
+ },
+ {
+  "sha": "14cf4f854d7120b2348116586d0f3fd28744f284",
+  "commit": {
+   "message": "fix(deps): update module go.uber.org/atomic to v1.12.0 (#19780)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "renovate[bot]"
+   }
+  },
+  "author": {
+   "login": "renovate[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "21538072f6ae5f5da093834fe2be717bdd2b51a3"
+   }
+  ]
+ },
+ {
+  "sha": "21538072f6ae5f5da093834fe2be717bdd2b51a3",
+  "commit": {
+   "message": "fix(deps): update module golang.org/x/oauth2 to v0.37.0 (#19781)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "renovate[bot]"
+   }
+  },
+  "author": {
+   "login": "renovate[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "2c8ab95911b534092260f03ce139ebbc5f4f24fc"
+   }
+  ]
+ },
+ {
+  "sha": "2c8ab95911b534092260f03ce139ebbc5f4f24fc",
+  "commit": {
+   "message": "fix(deps): update dependency http-proxy-middleware to v4 (#19786)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "renovate[bot]"
+   }
+  },
+  "author": {
+   "login": "renovate[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "f4e91f3ae9b31ec125e77e08bd310c1bad956fb6"
+   }
+  ]
+ },
+ {
+  "sha": "f4e91f3ae9b31ec125e77e08bd310c1bad956fb6",
+  "commit": {
+   "message": "fix(deps): update dependency react-resize-detector to v8 (#19789)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "renovate[bot]"
+   }
+  },
+  "author": {
+   "login": "renovate[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "908e69a24b37eca4827a6e05297f5242372bfad3"
+   }
+  ]
+ },
+ {
+  "sha": "908e69a24b37eca4827a6e05297f5242372bfad3",
+  "commit": {
+   "message": "fix(deps): update github.com/prometheus/client_golang/exp digest to 45322d1 (#19791)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "renovate[bot]"
+   }
+  },
+  "author": {
+   "login": "renovate[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "8efd85ff9efa9e9a4458ef058179f9e23cb3c188"
+   }
+  ]
+ },
+ {
+  "sha": "8efd85ff9efa9e9a4458ef058179f9e23cb3c188",
+  "commit": {
+   "message": "fix(deps): update github.com/hashicorp/nomad/api digest to 70519e8 (#19798)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "renovate[bot]"
+   }
+  },
+  "author": {
+   "login": "renovate[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "0cf37da2ed1252787d2d9b897d10d0a76ef6b8fb"
+   }
+  ]
+ },
+ {
+  "sha": "0cf37da2ed1252787d2d9b897d10d0a76ef6b8fb",
+  "commit": {
+   "message": "fix(deps): update google.golang.org/genproto/googleapis/api digest to b142276 (#19799)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "renovate[bot]"
+   }
+  },
+  "author": {
+   "login": "renovate[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "13060e5f2754f2a06880c28c0b974d32f747aee8"
+   }
+  ]
+ },
+ {
+  "sha": "13060e5f2754f2a06880c28c0b974d32f747aee8",
+  "commit": {
+   "message": "chore(deps): update react app (#19800)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "renovate[bot]"
+   }
+  },
+  "author": {
+   "login": "renovate[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "d59d4348ca5f1bfdc259a199734982d165659b28"
+   }
+  ]
+ },
+ {
+  "sha": "d59d4348ca5f1bfdc259a199734982d165659b28",
+  "commit": {
+   "message": "chore(deps): update mantine ui (#19801)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "renovate[bot]"
+   }
+  },
+  "author": {
+   "login": "renovate[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "d0f112a9073869b6e12cdf2a00474084d6372c7d"
+   }
+  ]
+ },
+ {
+  "sha": "d0f112a9073869b6e12cdf2a00474084d6372c7d",
+  "commit": {
+   "message": "Merge pull request #19754 from aknuds1/arve/remove-obsolete-go-module-directives\n\nbuild: remove obsolete Go module replace and exclude directives",
+   "author": {
+    "name": "Julien"
+   }
+  },
+  "author": {
+   "login": "roidelapluie",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "632d5c950ee21e1944975b9a53d0e78fc7551007"
+   },
+   {
+    "sha": "d58bf6dfde06e9910cfcf1f4717258050be8d6aa"
+   }
+  ]
+ },
+ {
+  "sha": "632d5c950ee21e1944975b9a53d0e78fc7551007",
+  "commit": {
+   "message": "fix(deps): update module github.com/hashicorp/consul/api to v1.34.5 (#19765)\n\n* fix(deps): update module github.com/hashicorp/consul/api to v1.34.5\n\n---------\n\nSigned-off-by: Arve Knudsen <arve.knudsen@gmail.com>\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "renovate[bot]"
+   }
+  },
+  "author": {
+   "login": "renovate[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "968b09cd293d1f97c5bde8d6ba4cb680ac739158"
+   }
+  ]
+ }
+]

@@ -1,0 +1,902 @@
+[
+ {
+  "sha": "0695f035b77cb48eb223ed45f430e1e94cfe2554",
+  "commit": {
+   "message": "fix: prevent wrapping backtick-delimited text mid-span\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15588\nReviewed-by: Athan Reines <kgryte@gmail.com>\nCloses: https://github.com/stdlib-js/metr-issue-tracker/issues/1380",
+   "author": {
+    "name": "Muhammad Haris"
+   }
+  },
+  "author": {
+   "login": "headlessNode",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "7e39d3b67bcea412c305babd05b36bc47816ef64"
+   }
+  ]
+ },
+ {
+  "sha": "7e39d3b67bcea412c305babd05b36bc47816ef64",
+  "commit": {
+   "message": "feat: add `blas/ext/base/gfill-less-than-equal`\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/14389\nReviewed-by: Athan Reines <kgryte@gmail.com>\nCloses: https://github.com/stdlib-js/metr-issue-tracker/issues/369",
+   "author": {
+    "name": "Muhammad Haris"
+   }
+  },
+  "author": {
+   "login": "headlessNode",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "707016d56b82ddb6e47ef8252682f05ec2c67cb0"
+   }
+  ]
+ },
+ {
+  "sha": "707016d56b82ddb6e47ef8252682f05ec2c67cb0",
+  "commit": {
+   "message": "feat: add `blas/ext/base/glast-index-less-than-equal`\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/14387\nReviewed-by: Athan Reines <kgryte@gmail.com>\nCloses: https://github.com/stdlib-js/metr-issue-tracker/issues/349",
+   "author": {
+    "name": "Muhammad Haris"
+   }
+  },
+  "author": {
+   "login": "headlessNode",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "30258cebbeb092d5a3c2efbce2e9a01328c39218"
+   }
+  ]
+ },
+ {
+  "sha": "30258cebbeb092d5a3c2efbce2e9a01328c39218",
+  "commit": {
+   "message": "test: migrate `stats/incr/mpcorr2` to ULP-based assertions\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15586\nReviewed-by: Athan Reines <kgryte@gmail.com>\nRef: https://github.com/stdlib-js/stdlib/issues/11352",
+   "author": {
+    "name": "Athan"
+   }
+  },
+  "author": {
+   "login": "kgryte",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "bc6f5d02d61f4885202f3421952d90bd4eb2730d"
+   }
+  ]
+ },
+ {
+  "sha": "bc6f5d02d61f4885202f3421952d90bd4eb2730d",
+  "commit": {
+   "message": "test: migrate `math/base/tools/continued-fraction` to ULP-based assertions\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15573\nCo-authored-by: Athan Reines <kgryte@gmail.com>\nReviewed-by: Athan Reines <kgryte@gmail.com>\nSigned-off-by: Athan Reines <kgryte@gmail.com>\nRef: https://github.com/stdlib-js/stdlib/issues/11352",
+   "author": {
+    "name": "Philipp Burckhardt"
+   }
+  },
+  "author": {
+   "login": "Planeshifter",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "748a9c8ba229d8396a549febba5919fb2c920e34"
+   }
+  ]
+ },
+ {
+  "sha": "748a9c8ba229d8396a549febba5919fb2c920e34",
+  "commit": {
+   "message": "fix: avoid overflow/underflow in C implementation of `truncated-normal/pdf`\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15576\nReviewed-by: Athan Reines <kgryte@gmail.com>\nCloses: https://github.com/stdlib-js/metr-issue-tracker/issues/1376\nRef: https://github.com/stdlib-js/stdlib/pull/14446\nRef: https://github.com/stdlib-js/stdlib/pull/15426",
+   "author": {
+    "name": "Karan Anand"
+   }
+  },
+  "author": {
+   "login": "anandkaranubc",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "864fee653901caaf3cee6fc46e002fd0386306ae"
+   }
+  ]
+ },
+ {
+  "sha": "864fee653901caaf3cee6fc46e002fd0386306ae",
+  "commit": {
+   "message": "test: migrate `stats/base/dists/frechet/quantile` to ULP-based assertions\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15574\nReviewed-by: Athan Reines <kgryte@gmail.com>\nRef: https://github.com/stdlib-js/stdlib/issues/11352",
+   "author": {
+    "name": "Athan"
+   }
+  },
+  "author": {
+   "login": "kgryte",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "5b8d7294b7ea3a484b4e6b138bae89dd7cb1877c"
+   }
+  ]
+ },
+ {
+  "sha": "5b8d7294b7ea3a484b4e6b138bae89dd7cb1877c",
+  "commit": {
+   "message": "test: tighten fixture tolerances in `stats/base/dists/lognormal/pdf`\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15577\nReviewed-by: Athan Reines <kgryte@gmail.com>\nCloses: https://github.com/stdlib-js/metr-issue-tracker/issues/1377\nRef: https://github.com/stdlib-js/stdlib/pull/14446\nRef: https://github.com/stdlib-js/stdlib/pull/15426",
+   "author": {
+    "name": "Karan Anand"
+   }
+  },
+  "author": {
+   "login": "anandkaranubc",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "ee0f8b81c2f2a317660ec9b8296516037cc66e3d"
+   }
+  ]
+ },
+ {
+  "sha": "ee0f8b81c2f2a317660ec9b8296516037cc66e3d",
+  "commit": {
+   "message": "docs: update Markdown equation elements",
+   "author": {
+    "name": "stdlib-bot"
+   }
+  },
+  "author": {
+   "login": "stdlib-bot",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "d175fd63bd070783ff6c4a2b2b9bf1922e1da687"
+   }
+  ]
+ },
+ {
+  "sha": "d175fd63bd070783ff6c4a2b2b9bf1922e1da687",
+  "commit": {
+   "message": "docs: update Markdown equation SVGs",
+   "author": {
+    "name": "stdlib-bot"
+   }
+  },
+  "author": {
+   "login": "stdlib-bot",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "3a2019acac9f9a66da82af2ec52dc16ffee648b4"
+   }
+  ]
+ },
+ {
+  "sha": "3a2019acac9f9a66da82af2ec52dc16ffee648b4",
+  "commit": {
+   "message": "feat: update `blas/ext/base/ndarray` TypeScript declarations\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15579\nReviewed-by: Athan Reines <kgryte@gmail.com>",
+   "author": {
+    "name": "stdlib-bot"
+   }
+  },
+  "author": {
+   "login": "stdlib-bot",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "ba57e1b2d89d295cdb7a7a964e61d368af63f660"
+   }
+  ]
+ },
+ {
+  "sha": "ba57e1b2d89d295cdb7a7a964e61d368af63f660",
+  "commit": {
+   "message": "feat: update `blas/ext` TypeScript declarations\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15580\nReviewed-by: Athan Reines <kgryte@gmail.com>",
+   "author": {
+    "name": "stdlib-bot"
+   }
+  },
+  "author": {
+   "login": "stdlib-bot",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "fcf7dc067b75cb36247d5e1ecd260a111928595e"
+   }
+  ]
+ },
+ {
+  "sha": "fcf7dc067b75cb36247d5e1ecd260a111928595e",
+  "commit": {
+   "message": "feat: update `fft/base/fftpack/ndarray` TypeScript declarations\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15583\nReviewed-by: Athan Reines <kgryte@gmail.com>",
+   "author": {
+    "name": "stdlib-bot"
+   }
+  },
+  "author": {
+   "login": "stdlib-bot",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "8e0799ea1f7bb35806f5b3b15da7a02677b7bc0d"
+   }
+  ]
+ },
+ {
+  "sha": "8e0799ea1f7bb35806f5b3b15da7a02677b7bc0d",
+  "commit": {
+   "message": "feat: update `fft/base/fftpack/ndarray/float64` TypeScript declarations\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15582\nReviewed-by: Athan Reines <kgryte@gmail.com>",
+   "author": {
+    "name": "stdlib-bot"
+   }
+  },
+  "author": {
+   "login": "stdlib-bot",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "f67a19ad507316f14a9e6078c9983732fa46446d"
+   }
+  ]
+ },
+ {
+  "sha": "f67a19ad507316f14a9e6078c9983732fa46446d",
+  "commit": {
+   "message": "docs: update namespace table of contents\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15584\nReviewed-by: Athan Reines <kgryte@gmail.com>",
+   "author": {
+    "name": "stdlib-bot"
+   }
+  },
+  "author": {
+   "login": "stdlib-bot",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "8288ac5269b72fcc5f53a1e5c129f25ab6e13d15"
+   }
+  ]
+ },
+ {
+  "sha": "8288ac5269b72fcc5f53a1e5c129f25ab6e13d15",
+  "commit": {
+   "message": "test: migrate `stats/incr/nanmmape` to ULP-based assertions\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15569\nReviewed-by: Athan Reines <kgryte@gmail.com>\nRef: https://github.com/stdlib-js/stdlib/issues/11352",
+   "author": {
+    "name": "Athan"
+   }
+  },
+  "author": {
+   "login": "kgryte",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "4a73a48c1f28816538ad016f5b43f6a96de31523"
+   }
+  ]
+ },
+ {
+  "sha": "4a73a48c1f28816538ad016f5b43f6a96de31523",
+  "commit": {
+   "message": "test: migrate `simulate/iter/triangle-wave` to ULP-based assertions\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15571\nReviewed-by: Athan Reines <kgryte@gmail.com>\nRef: https://github.com/stdlib-js/stdlib/issues/11352",
+   "author": {
+    "name": "Athan"
+   }
+  },
+  "author": {
+   "login": "kgryte",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "cda4adf8fd6a9b577c449d4ac1c5adfd8f98a72b"
+   }
+  ]
+ },
+ {
+  "sha": "cda4adf8fd6a9b577c449d4ac1c5adfd8f98a72b",
+  "commit": {
+   "message": "chore: clean-up\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15565\nReviewed-by: Athan Reines <kgryte@gmail.com>",
+   "author": {
+    "name": "Philipp Burckhardt"
+   }
+  },
+  "author": {
+   "login": "Planeshifter",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "ffb0d36b48c9ed56ed92628fd4c9a5c2cafd33ae"
+   }
+  ]
+ },
+ {
+  "sha": "ffb0d36b48c9ed56ed92628fd4c9a5c2cafd33ae",
+  "commit": {
+   "message": "docs: add Git note\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15568\nReviewed-by: Athan Reines <kgryte@gmail.com>\nRef: https://github.com/stdlib-js/stdlib/pull/15489",
+   "author": {
+    "name": "Philipp Burckhardt"
+   }
+  },
+  "author": {
+   "login": "Planeshifter",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "a8b875bfb05205c2845a4814a175a2cbfe59d15a"
+   }
+  ]
+ },
+ {
+  "sha": "a8b875bfb05205c2845a4814a175a2cbfe59d15a",
+  "commit": {
+   "message": "chore: clean-up\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15566\nReviewed-by: Athan Reines <kgryte@gmail.com>",
+   "author": {
+    "name": "Philipp Burckhardt"
+   }
+  },
+  "author": {
+   "login": "Planeshifter",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "05ed6e856f1a438383cd761b9b743d26e3f9554d"
+   }
+  ]
+ },
+ {
+  "sha": "05ed6e856f1a438383cd761b9b743d26e3f9554d",
+  "commit": {
+   "message": "feat: add `math/base/special/fast/acoshf`\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/8984\nCo-authored-by: Athan Reines <kgryte@gmail.com>\nCo-authored-by: Karan Anand <anandkarancompsci@gmail.com>\nReviewed-by: Athan Reines <kgryte@gmail.com>\nReviewed-by: Karan Anand <anandkarancompsci@gmail.com>\nSigned-off-by: Athan Reines <kgryte@gmail.com>\nSigned-off-by: Nakul Krishnakumar <nakulkrishnakumar86@gmail.com>\nRef: https://github.com/stdlib-js/stdlib/issues/649\nCloses: https://github.com/stdlib-js/metr-issue-tracker/issues/1307",
+   "author": {
+    "name": "Nakul Krishnakumar"
+   }
+  },
+  "author": {
+   "login": "nakul-krishnakumar",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "dc4565a34719e6bb918598db213f4aefa0ab0e55"
+   }
+  ]
+ },
+ {
+  "sha": "dc4565a34719e6bb918598db213f4aefa0ab0e55",
+  "commit": {
+   "message": "feat: add `math/base/special/exp10f`\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15118\nCo-authored-by: Athan Reines <kgryte@gmail.com>\nCo-authored-by: Karan Anand <anandkarancompsci@gmail.com>\nReviewed-by: Athan Reines <kgryte@gmail.com>\nReviewed-by: Karan Anand <anandkarancompsci@gmail.com>\nSigned-off-by: Athan Reines <kgryte@gmail.com>\nRef: https://github.com/stdlib-js/stdlib/issues/649\nCloses: https://github.com/stdlib-js/metr-issue-tracker/issues/1318",
+   "author": {
+    "name": "Aashrith-Vellampalli"
+   }
+  },
+  "author": {
+   "login": "Aashrith-Vellampalli",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "75a4fb6f2047634e174128581a45f8d5ca2229fc"
+   }
+  ]
+ },
+ {
+  "sha": "75a4fb6f2047634e174128581a45f8d5ca2229fc",
+  "commit": {
+   "message": "test: migrate `stats/base/dists/cosine/quantile` to ULP-based assertions\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15563\nReviewed-by: Athan Reines <kgryte@gmail.com>\nRef: https://github.com/stdlib-js/stdlib/issues/11352",
+   "author": {
+    "name": "Athan"
+   }
+  },
+  "author": {
+   "login": "kgryte",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "46e7defa875f829220eec20bd205250839adff3e"
+   }
+  ]
+ },
+ {
+  "sha": "46e7defa875f829220eec20bd205250839adff3e",
+  "commit": {
+   "message": "feat: add `math/base/special/fast/asinhf`\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/8987\nCo-authored-by: Athan Reines <kgryte@gmail.com>\nCo-authored-by: Karan Anand <anandkarancompsci@gmail.com>\nReviewed-by: Athan Reines <kgryte@gmail.com>\nReviewed-by: Karan Anand <anandkarancompsci@gmail.com>\nSigned-off-by: Athan Reines <kgryte@gmail.com>\nSigned-off-by: Nakul Krishnakumar <nakulkrishnakumar86@gmail.com>\nCloses: https://github.com/stdlib-js/metr-issue-tracker/issues/1306\nRef: https://github.com/stdlib-js/stdlib/issues/649",
+   "author": {
+    "name": "Nakul Krishnakumar"
+   }
+  },
+  "author": {
+   "login": "nakul-krishnakumar",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "d469158af09e6fdecf2d62bffc51de59a11ed96d"
+   }
+  ]
+ },
+ {
+  "sha": "d469158af09e6fdecf2d62bffc51de59a11ed96d",
+  "commit": {
+   "message": "feat: add `float32` to namespace\n\n---\ntype: pre_commit_static_analysis_report\ndescription: Results of running static analysis checks when committing changes.\nreport:\n  - task: lint_filenames\n    status: passed\n  - task: lint_editorconfig\n    status: passed\n  - task: lint_markdown_pkg_readmes\n    status: na\n  - task: lint_markdown_docs\n    status: na\n  - task: lint_markdown\n    status: na\n  - task: lint_package_json\n    status: na\n  - task: lint_repl_help\n    status: na\n  - task: lint_javascript_src\n    status: passed\n  - task: lint_javascript_cli\n    status: na\n  - task: lint_javascript_examples\n    status: na\n  - task: lint_javascript_tests\n    status: na\n  - task: lint_javascript_benchmarks\n    status: na\n  - task: lint_python\n    status: na\n  - task: lint_r\n    status: na\n  - task: lint_c_src\n    status: na\n  - task: lint_c_examples\n    status: na\n  - task: lint_c_benchmarks\n    status: na\n  - task: lint_c_tests_fixtures\n    status: na\n  - task: lint_shell\n    status: na\n  - task: lint_typescript_declarations\n    status: passed\n  - task: lint_typescript_tests\n    status: na\n  - task: lint_license_headers\n    status: passed\n---",
+   "author": {
+    "name": "Athan"
+   }
+  },
+  "author": {
+   "login": "kgryte",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "80a562cd66aa27ff96ba0c4793efd0734e14844a"
+   }
+  ]
+ },
+ {
+  "sha": "80a562cd66aa27ff96ba0c4793efd0734e14844a",
+  "commit": {
+   "message": "feat: add `fft/base/fftpack/ndarray/float32` namespace\n\n---\ntype: pre_commit_static_analysis_report\ndescription: Results of running static analysis checks when committing changes.\nreport:\n  - task: lint_filenames\n    status: passed\n  - task: lint_editorconfig\n    status: passed\n  - task: lint_markdown_pkg_readmes\n    status: passed\n  - task: lint_markdown_docs\n    status: na\n  - task: lint_markdown\n    status: na\n  - task: lint_package_json\n    status: passed\n  - task: lint_repl_help\n    status: na\n  - task: lint_javascript_src\n    status: passed\n  - task: lint_javascript_cli\n    status: na\n  - task: lint_javascript_examples\n    status: passed\n  - task: lint_javascript_tests\n    status: passed\n  - task: lint_javascript_benchmarks\n    status: na\n  - task: lint_python\n    status: na\n  - task: lint_r\n    status: na\n  - task: lint_c_src\n    status: na\n  - task: lint_c_examples\n    status: na\n  - task: lint_c_benchmarks\n    status: na\n  - task: lint_c_tests_fixtures\n    status: na\n  - task: lint_shell\n    status: na\n  - task: lint_typescript_declarations\n    status: passed\n  - task: lint_typescript_tests\n    status: passed\n  - task: lint_license_headers\n    status: passed\n---",
+   "author": {
+    "name": "Athan"
+   }
+  },
+  "author": {
+   "login": "kgryte",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "25aba1c20f9ed8e1e63993ff7dc32ed81b5e748d"
+   }
+  ]
+ },
+ {
+  "sha": "25aba1c20f9ed8e1e63993ff7dc32ed81b5e748d",
+  "commit": {
+   "message": "chore: update keywords\n\n---\ntype: pre_commit_static_analysis_report\ndescription: Results of running static analysis checks when committing changes.\nreport:\n  - task: lint_filenames\n    status: passed\n  - task: lint_editorconfig\n    status: passed\n  - task: lint_markdown_pkg_readmes\n    status: na\n  - task: lint_markdown_docs\n    status: na\n  - task: lint_markdown\n    status: na\n  - task: lint_package_json\n    status: passed\n  - task: lint_repl_help\n    status: na\n  - task: lint_javascript_src\n    status: na\n  - task: lint_javascript_cli\n    status: na\n  - task: lint_javascript_examples\n    status: na\n  - task: lint_javascript_tests\n    status: na\n  - task: lint_javascript_benchmarks\n    status: na\n  - task: lint_python\n    status: na\n  - task: lint_r\n    status: na\n  - task: lint_c_src\n    status: na\n  - task: lint_c_examples\n    status: na\n  - task: lint_c_benchmarks\n    status: na\n  - task: lint_c_tests_fixtures\n    status: na\n  - task: lint_shell\n    status: na\n  - task: lint_typescript_declarations\n    status: passed\n  - task: lint_typescript_tests\n    status: na\n  - task: lint_license_headers\n    status: passed\n---",
+   "author": {
+    "name": "Athan"
+   }
+  },
+  "author": {
+   "login": "kgryte",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "0a0744ce140bfd70e4252a1269157e15e8b66b14"
+   }
+  ]
+ },
+ {
+  "sha": "0a0744ce140bfd70e4252a1269157e15e8b66b14",
+  "commit": {
+   "message": "feat: add `rfftf` to namespace\n\n---\ntype: pre_commit_static_analysis_report\ndescription: Results of running static analysis checks when committing changes.\nreport:\n  - task: lint_filenames\n    status: passed\n  - task: lint_editorconfig\n    status: passed\n  - task: lint_markdown_pkg_readmes\n    status: na\n  - task: lint_markdown_docs\n    status: na\n  - task: lint_markdown\n    status: na\n  - task: lint_package_json\n    status: na\n  - task: lint_repl_help\n    status: na\n  - task: lint_javascript_src\n    status: passed\n  - task: lint_javascript_cli\n    status: na\n  - task: lint_javascript_examples\n    status: na\n  - task: lint_javascript_tests\n    status: na\n  - task: lint_javascript_benchmarks\n    status: na\n  - task: lint_python\n    status: na\n  - task: lint_r\n    status: na\n  - task: lint_c_src\n    status: na\n  - task: lint_c_examples\n    status: na\n  - task: lint_c_benchmarks\n    status: na\n  - task: lint_c_tests_fixtures\n    status: na\n  - task: lint_shell\n    status: na\n  - task: lint_typescript_declarations\n    status: passed\n  - task: lint_typescript_tests\n    status: na\n  - task: lint_license_headers\n    status: passed\n---",
+   "author": {
+    "name": "Athan"
+   }
+  },
+  "author": {
+   "login": "kgryte",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "29b06dd1de7b7217ad1710f81d36b32e79e2cdf7"
+   }
+  ]
+ },
+ {
+  "sha": "29b06dd1de7b7217ad1710f81d36b32e79e2cdf7",
+  "commit": {
+   "message": "feat: add `fillRange` to namespace\n\n---\ntype: pre_commit_static_analysis_report\ndescription: Results of running static analysis checks when committing changes.\nreport:\n  - task: lint_filenames\n    status: passed\n  - task: lint_editorconfig\n    status: passed\n  - task: lint_markdown_pkg_readmes\n    status: na\n  - task: lint_markdown_docs\n    status: na\n  - task: lint_markdown\n    status: na\n  - task: lint_package_json\n    status: na\n  - task: lint_repl_help\n    status: na\n  - task: lint_javascript_src\n    status: passed\n  - task: lint_javascript_cli\n    status: na\n  - task: lint_javascript_examples\n    status: na\n  - task: lint_javascript_tests\n    status: na\n  - task: lint_javascript_benchmarks\n    status: na\n  - task: lint_python\n    status: na\n  - task: lint_r\n    status: na\n  - task: lint_c_src\n    status: na\n  - task: lint_c_examples\n    status: na\n  - task: lint_c_benchmarks\n    status: na\n  - task: lint_c_tests_fixtures\n    status: na\n  - task: lint_shell\n    status: na\n  - task: lint_typescript_declarations\n    status: passed\n  - task: lint_typescript_tests\n    status: na\n  - task: lint_license_headers\n    status: passed\n---",
+   "author": {
+    "name": "Athan"
+   }
+  },
+  "author": {
+   "login": "kgryte",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "81c7584d9b608e638c80dcfd2e5de08d7032da15"
+   }
+  ]
+ },
+ {
+  "sha": "81c7584d9b608e638c80dcfd2e5de08d7032da15",
+  "commit": {
+   "message": "feat: add `_tools/repl-txt/wrap-text`\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15489#pullrequestreview-5325550826\nCo-authored-by: Athan Reines <kgryte@gmail.com>\nReviewed-by: Athan Reines <kgryte@gmail.com>\nSigned-off-by: Athan Reines <kgryte@gmail.com> \nCloses: https://github.com/stdlib-js/metr-issue-tracker/issues/1356",
+   "author": {
+    "name": "Muhammad Haris"
+   }
+  },
+  "author": {
+   "login": "headlessNode",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "33b0476aa0e6785097ad8744271151b07690df57"
+   }
+  ]
+ },
+ {
+  "sha": "33b0476aa0e6785097ad8744271151b07690df57",
+  "commit": {
+   "message": "test: migrate `stats/incr/mhmean` to ULP-based assertions\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15561\nReviewed-by: Athan Reines <kgryte@gmail.com>\nRef: https://github.com/stdlib-js/stdlib/issues/11352",
+   "author": {
+    "name": "Philipp Burckhardt"
+   }
+  },
+  "author": {
+   "login": "Planeshifter",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "25aa58ae7756fbb2460bb9f423fa9467b3f9acf2"
+   }
+  ]
+ },
+ {
+  "sha": "25aa58ae7756fbb2460bb9f423fa9467b3f9acf2",
+  "commit": {
+   "message": "feat: add `ndarray/base/kernels/generic/ternary-strided1d/blocked`\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15558\nReviewed-by: Athan Reines <kgryte@gmail.com>",
+   "author": {
+    "name": "Kaustubh Patange"
+   }
+  },
+  "author": {
+   "login": "MeKaustubh07",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "45e130fcc846626c9335fe8aeba50ab22df37b0b"
+   }
+  ]
+ },
+ {
+  "sha": "45e130fcc846626c9335fe8aeba50ab22df37b0b",
+  "commit": {
+   "message": "feat: add `fft/base/fftpack/ndarray/float32/rfftf`\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15540\nReviewed-by: Athan Reines <kgryte@gmail.com>\nCloses: https://github.com/stdlib-js/metr-issue-tracker/issues/1368",
+   "author": {
+    "name": "Gunj Joshi"
+   }
+  },
+  "author": {
+   "login": "gunjjoshi",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "836f90b94d3bed822e8994b58e01b795ec414480"
+   }
+  ]
+ },
+ {
+  "sha": "836f90b94d3bed822e8994b58e01b795ec414480",
+  "commit": {
+   "message": "docs: fix descriptions\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15560\nReviewed-by: Athan Reines <kgryte@gmail.com>",
+   "author": {
+    "name": "Philipp Burckhardt"
+   }
+  },
+  "author": {
+   "login": "Planeshifter",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "f22d513b4276c34b98dd541239c6ddb850e32102"
+   }
+  ]
+ },
+ {
+  "sha": "f22d513b4276c34b98dd541239c6ddb850e32102",
+  "commit": {
+   "message": "chore: fix JavaScript lint errors\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15557\nReviewed-by: Athan Reines <kgryte@gmail.com>\nCloses: https://github.com/stdlib-js/stdlib/issues/15547",
+   "author": {
+    "name": "Aarush Jain"
+   }
+  },
+  "author": {
+   "login": "Aarushjain2401",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "5ebbb6a4f2bd516554edd41c29ef1164f2b1d337"
+   }
+  ]
+ },
+ {
+  "sha": "5ebbb6a4f2bd516554edd41c29ef1164f2b1d337",
+  "commit": {
+   "message": "feat: add `fft/base/fftpack/ndarray/float64/rfftf`\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15539\nReviewed-by: Athan Reines <kgryte@gmail.com>\nCloses: https://github.com/stdlib-js/metr-issue-tracker/issues/1367",
+   "author": {
+    "name": "Gunj Joshi"
+   }
+  },
+  "author": {
+   "login": "gunjjoshi",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "71a87cf23466f2e738f8f2e6336cd48e7b0ef606"
+   }
+  ]
+ },
+ {
+  "sha": "71a87cf23466f2e738f8f2e6336cd48e7b0ef606",
+  "commit": {
+   "message": "feat: add `blas/ext/fill-range`\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15544\nCo-authored-by: Athan Reines <kgryte@gmail.com>\nReviewed-by: Athan Reines <kgryte@gmail.com>\nSigned-off-by: Athan Reines <kgryte@gmail.com> \nCloses: https://github.com/stdlib-js/metr-issue-tracker/issues/1369",
+   "author": {
+    "name": "Muhammad Haris"
+   }
+  },
+  "author": {
+   "login": "headlessNode",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "fa7647de29cc95acd359e7e9ecca04ae0ebc1be8"
+   }
+  ]
+ },
+ {
+  "sha": "fa7647de29cc95acd359e7e9ecca04ae0ebc1be8",
+  "commit": {
+   "message": "chore: clean-up\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15555\nReviewed-by: Athan Reines <kgryte@gmail.com>",
+   "author": {
+    "name": "Philipp Burckhardt"
+   }
+  },
+  "author": {
+   "login": "Planeshifter",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "14e0d1c1e330ac5f7ecdd3d82db2996698932fdd"
+   }
+  ]
+ },
+ {
+  "sha": "14e0d1c1e330ac5f7ecdd3d82db2996698932fdd",
+  "commit": {
+   "message": "test: migrate `stats/incr/nanpcorrdist` to ULP-based assertions\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15556\nReviewed-by: Athan Reines <kgryte@gmail.com>\nRef: https://github.com/stdlib-js/stdlib/issues/11352",
+   "author": {
+    "name": "Athan"
+   }
+  },
+  "author": {
+   "login": "kgryte",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "3123493188b01521af78e736f51181abce9c9133"
+   }
+  ]
+ },
+ {
+  "sha": "3123493188b01521af78e736f51181abce9c9133",
+  "commit": {
+   "message": "feat: add `cuany`, `cuevery`, and `cunone` to namespace\n\n---\ntype: pre_commit_static_analysis_report\ndescription: Results of running static analysis checks when committing changes.\nreport:\n  - task: lint_filenames\n    status: passed\n  - task: lint_editorconfig\n    status: passed\n  - task: lint_markdown_pkg_readmes\n    status: na\n  - task: lint_markdown_docs\n    status: na\n  - task: lint_markdown\n    status: na\n  - task: lint_package_json\n    status: na\n  - task: lint_repl_help\n    status: na\n  - task: lint_javascript_src\n    status: passed\n  - task: lint_javascript_cli\n    status: na\n  - task: lint_javascript_examples\n    status: na\n  - task: lint_javascript_tests\n    status: na\n  - task: lint_javascript_benchmarks\n    status: na\n  - task: lint_python\n    status: na\n  - task: lint_r\n    status: na\n  - task: lint_c_src\n    status: na\n  - task: lint_c_examples\n    status: na\n  - task: lint_c_benchmarks\n    status: na\n  - task: lint_c_tests_fixtures\n    status: na\n  - task: lint_shell\n    status: na\n  - task: lint_typescript_declarations\n    status: passed\n  - task: lint_typescript_tests\n    status: na\n  - task: lint_license_headers\n    status: passed\n---",
+   "author": {
+    "name": "Athan"
+   }
+  },
+  "author": {
+   "login": "kgryte",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "7454963025edd4622b01fce0bd0895dbd45b95bf"
+   }
+  ]
+ },
+ {
+  "sha": "7454963025edd4622b01fce0bd0895dbd45b95bf",
+  "commit": {
+   "message": "feat: add `indexOfFalsy`, `indexOfNotEqual`, and `lastIndexOfFalsy` to namespace\n\n---\ntype: pre_commit_static_analysis_report\ndescription: Results of running static analysis checks when committing changes.\nreport:\n  - task: lint_filenames\n    status: passed\n  - task: lint_editorconfig\n    status: passed\n  - task: lint_markdown_pkg_readmes\n    status: na\n  - task: lint_markdown_docs\n    status: na\n  - task: lint_markdown\n    status: na\n  - task: lint_package_json\n    status: na\n  - task: lint_repl_help\n    status: na\n  - task: lint_javascript_src\n    status: passed\n  - task: lint_javascript_cli\n    status: na\n  - task: lint_javascript_examples\n    status: na\n  - task: lint_javascript_tests\n    status: na\n  - task: lint_javascript_benchmarks\n    status: na\n  - task: lint_python\n    status: na\n  - task: lint_r\n    status: na\n  - task: lint_c_src\n    status: na\n  - task: lint_c_examples\n    status: na\n  - task: lint_c_benchmarks\n    status: na\n  - task: lint_c_tests_fixtures\n    status: na\n  - task: lint_shell\n    status: na\n  - task: lint_typescript_declarations\n    status: passed\n  - task: lint_typescript_tests\n    status: na\n  - task: lint_license_headers\n    status: passed\n---",
+   "author": {
+    "name": "Athan"
+   }
+  },
+  "author": {
+   "login": "kgryte",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "2885e6d960b3362106cb8d41cf4bcb01beac5ccc"
+   }
+  ]
+ },
+ {
+  "sha": "2885e6d960b3362106cb8d41cf4bcb01beac5ccc",
+  "commit": {
+   "message": "feat: add `lastIndexOfTruthy` to namespace\n\n---\ntype: pre_commit_static_analysis_report\ndescription: Results of running static analysis checks when committing changes.\nreport:\n  - task: lint_filenames\n    status: passed\n  - task: lint_editorconfig\n    status: passed\n  - task: lint_markdown_pkg_readmes\n    status: na\n  - task: lint_markdown_docs\n    status: na\n  - task: lint_markdown\n    status: na\n  - task: lint_package_json\n    status: na\n  - task: lint_repl_help\n    status: na\n  - task: lint_javascript_src\n    status: passed\n  - task: lint_javascript_cli\n    status: na\n  - task: lint_javascript_examples\n    status: na\n  - task: lint_javascript_tests\n    status: na\n  - task: lint_javascript_benchmarks\n    status: na\n  - task: lint_python\n    status: na\n  - task: lint_r\n    status: na\n  - task: lint_c_src\n    status: na\n  - task: lint_c_examples\n    status: na\n  - task: lint_c_benchmarks\n    status: na\n  - task: lint_c_tests_fixtures\n    status: na\n  - task: lint_shell\n    status: na\n  - task: lint_typescript_declarations\n    status: passed\n  - task: lint_typescript_tests\n    status: na\n  - task: lint_license_headers\n    status: passed\n---",
+   "author": {
+    "name": "Athan"
+   }
+  },
+  "author": {
+   "login": "kgryte",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "9708ad1ec1a6922a5ab697f59dee9415c64a49d2"
+   }
+  ]
+ },
+ {
+  "sha": "9708ad1ec1a6922a5ab697f59dee9415c64a49d2",
+  "commit": {
+   "message": "feat: add `gfillBy` to namespace\n\n---\ntype: pre_commit_static_analysis_report\ndescription: Results of running static analysis checks when committing changes.\nreport:\n  - task: lint_filenames\n    status: passed\n  - task: lint_editorconfig\n    status: passed\n  - task: lint_markdown_pkg_readmes\n    status: na\n  - task: lint_markdown_docs\n    status: na\n  - task: lint_markdown\n    status: na\n  - task: lint_package_json\n    status: na\n  - task: lint_repl_help\n    status: na\n  - task: lint_javascript_src\n    status: passed\n  - task: lint_javascript_cli\n    status: na\n  - task: lint_javascript_examples\n    status: na\n  - task: lint_javascript_tests\n    status: na\n  - task: lint_javascript_benchmarks\n    status: na\n  - task: lint_python\n    status: na\n  - task: lint_r\n    status: na\n  - task: lint_c_src\n    status: na\n  - task: lint_c_examples\n    status: na\n  - task: lint_c_benchmarks\n    status: na\n  - task: lint_c_tests_fixtures\n    status: na\n  - task: lint_shell\n    status: na\n  - task: lint_typescript_declarations\n    status: passed\n  - task: lint_typescript_tests\n    status: na\n  - task: lint_license_headers\n    status: passed\n---",
+   "author": {
+    "name": "Athan"
+   }
+  },
+  "author": {
+   "login": "kgryte",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "cbe12ddf20d5451e575422efb70d52fc62f574ec"
+   }
+  ]
+ },
+ {
+  "sha": "cbe12ddf20d5451e575422efb70d52fc62f574ec",
+  "commit": {
+   "message": "feat: add `blas/ext/base/ndarray/gfill-by`\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15304\nCo-authored-by: Athan Reines <kgryte@gmail.com>\nReviewed-by: Athan Reines <kgryte@gmail.com>\nSigned-off-by: Athan Reines <kgryte@gmail.com> \nCloses: https://github.com/stdlib-js/metr-issue-tracker/issues/1327",
+   "author": {
+    "name": "Muhammad Haris"
+   }
+  },
+  "author": {
+   "login": "headlessNode",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "4c1da140de1ce1328197e5ba73ac6fb2a9854906"
+   }
+  ]
+ },
+ {
+  "sha": "4c1da140de1ce1328197e5ba73ac6fb2a9854906",
+  "commit": {
+   "message": "feat: add `blas/ext/last-index-of-truthy`\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15292\nCo-authored-by: Athan Reines <kgryte@gmail.com>\nReviewed-by: Athan Reines <kgryte@gmail.com>\nSigned-off-by: Athan Reines <kgryte@gmail.com> \nCloses: https://github.com/stdlib-js/metr-issue-tracker/issues/866",
+   "author": {
+    "name": "Muhammad Haris"
+   }
+  },
+  "author": {
+   "login": "headlessNode",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "5a64ba797591937f32a349ce251853787c251b6e"
+   }
+  ]
+ },
+ {
+  "sha": "5a64ba797591937f32a349ce251853787c251b6e",
+  "commit": {
+   "message": "docs: update namespace table of contents\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15554\nReviewed-by: Athan Reines <kgryte@gmail.com>",
+   "author": {
+    "name": "stdlib-bot"
+   }
+  },
+  "author": {
+   "login": "stdlib-bot",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "11614155786581571f7a05f3a444c5ee560e51ce"
+   }
+  ]
+ },
+ {
+  "sha": "11614155786581571f7a05f3a444c5ee560e51ce",
+  "commit": {
+   "message": "feat: update `fft/base/fftpack/ndarray/generic` TypeScript declarations\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15552\nReviewed-by: Athan Reines <kgryte@gmail.com>",
+   "author": {
+    "name": "stdlib-bot"
+   }
+  },
+  "author": {
+   "login": "stdlib-bot",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "5e91c6cf91c6dc793cf2754b3f3fcbdcfcd3e5ce"
+   }
+  ]
+ },
+ {
+  "sha": "5e91c6cf91c6dc793cf2754b3f3fcbdcfcd3e5ce",
+  "commit": {
+   "message": "test: migrate `stats/incr/mmda` to ULP-based assertions\n\nPR-URL: https://github.com/stdlib-js/stdlib/pull/15553\nReviewed-by: Athan Reines <kgryte@gmail.com>\nRef: https://github.com/stdlib-js/stdlib/issues/11352",
+   "author": {
+    "name": "Athan"
+   }
+  },
+  "author": {
+   "login": "kgryte",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "19fdc41e7696ec3864fd4fb22ee5368795a1e293"
+   }
+  ]
+ },
+ {
+  "sha": "19fdc41e7696ec3864fd4fb22ee5368795a1e293",
+  "commit": {
+   "message": "feat: add `cfill` and `zfill` to namespace\n\n---\ntype: pre_commit_static_analysis_report\ndescription: Results of running static analysis checks when committing changes.\nreport:\n  - task: lint_filenames\n    status: passed\n  - task: lint_editorconfig\n    status: passed\n  - task: lint_markdown_pkg_readmes\n    status: na\n  - task: lint_markdown_docs\n    status: na\n  - task: lint_markdown\n    status: na\n  - task: lint_package_json\n    status: na\n  - task: lint_repl_help\n    status: na\n  - task: lint_javascript_src\n    status: passed\n  - task: lint_javascript_cli\n    status: na\n  - task: lint_javascript_examples\n    status: na\n  - task: lint_javascript_tests\n    status: na\n  - task: lint_javascript_benchmarks\n    status: na\n  - task: lint_python\n    status: na\n  - task: lint_r\n    status: na\n  - task: lint_c_src\n    status: na\n  - task: lint_c_examples\n    status: na\n  - task: lint_c_benchmarks\n    status: na\n  - task: lint_c_tests_fixtures\n    status: na\n  - task: lint_shell\n    status: na\n  - task: lint_typescript_declarations\n    status: passed\n  - task: lint_typescript_tests\n    status: na\n  - task: lint_license_headers\n    status: passed\n---",
+   "author": {
+    "name": "Athan"
+   }
+  },
+  "author": {
+   "login": "kgryte",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "14b80fb61b816355f33d9203254ea630c6dd47f0"
+   }
+  ]
+ },
+ {
+  "sha": "14b80fb61b816355f33d9203254ea630c6dd47f0",
+  "commit": {
+   "message": "docs: fix examples\n\n---\ntype: pre_commit_static_analysis_report\ndescription: Results of running static analysis checks when committing changes.\nreport:\n  - task: lint_filenames\n    status: passed\n  - task: lint_editorconfig\n    status: passed\n  - task: lint_markdown_pkg_readmes\n    status: passed\n  - task: lint_markdown_docs\n    status: na\n  - task: lint_markdown\n    status: na\n  - task: lint_package_json\n    status: na\n  - task: lint_repl_help\n    status: na\n  - task: lint_javascript_src\n    status: na\n  - task: lint_javascript_cli\n    status: na\n  - task: lint_javascript_examples\n    status: na\n  - task: lint_javascript_tests\n    status: na\n  - task: lint_javascript_benchmarks\n    status: na\n  - task: lint_python\n    status: na\n  - task: lint_r\n    status: na\n  - task: lint_c_src\n    status: na\n  - task: lint_c_examples\n    status: na\n  - task: lint_c_benchmarks\n    status: na\n  - task: lint_c_tests_fixtures\n    status: na\n  - task: lint_shell\n    status: na\n  - task: lint_typescript_declarations\n    status: passed\n  - task: lint_typescript_tests\n    status: na\n  - task: lint_license_headers\n    status: passed\n---",
+   "author": {
+    "name": "Athan"
+   }
+  },
+  "author": {
+   "login": "kgryte",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "8b79b919e9514ddaff25acddef991b4bbc16b8bd"
+   }
+  ]
+ }
+]

@@ -1,0 +1,902 @@
+[
+ {
+  "sha": "a2a064c76afe42fedf061d976de8dff69ef2feaf",
+  "commit": {
+   "message": "test: split FFI call and callback coverage\n\nIsolate each callback abort scenario so timeouts identify the failing\ncase. Consolidate callback GC coverage in the weakref test and disable\ncore dumps for intentional aborts on POSIX.\n\nSigned-off-by: Filip Skokan <panva.ip@gmail.com>\nAssisted-by: Codex\nPR-URL: https://github.com/nodejs/node/pull/66287\nReviewed-By: Daeyeon Jeong <daeyeon.dev@gmail.com>\nReviewed-By: Antoine du Hamel <duhamelantoine1995@gmail.com>\nReviewed-By: Matteo Collina <matteo.collina@gmail.com>\nReviewed-By: Paolo Insogna <paolo@cowtech.it>",
+   "author": {
+    "name": "Filip Skokan"
+   }
+  },
+  "author": {
+   "login": "panva",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "51376380627ef1ec1db20fb53a0547e2a23995f0"
+   }
+  ]
+ },
+ {
+  "sha": "51376380627ef1ec1db20fb53a0547e2a23995f0",
+  "commit": {
+   "message": "tools: check CI availability and workload\n\nSelect mergeable PRs and check Jenkins availability and workload before\nremoving request labels. Leave requests for a later run when Jenkins is\nunavailable or the workload has reached the configured limit.\n\nMake the batch size and workload limit repository variables, defaulting\nto 5 and 10 respectively.\n\nRefs: https://github.com/nodejs/node-core-utils/pull/1204\nSigned-off-by: Filip Skokan <panva.ip@gmail.com>\nAssisted-by: Codex\nPR-URL: https://github.com/nodejs/node/pull/66280\nReviewed-By: Antoine du Hamel <duhamelantoine1995@gmail.com>\nReviewed-By: Matteo Collina <matteo.collina@gmail.com>",
+   "author": {
+    "name": "Filip Skokan"
+   }
+  },
+  "author": {
+   "login": "panva",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "c97bbfb2e716abc6ea6aa7387aa14af40d806c7a"
+   }
+  ]
+ },
+ {
+  "sha": "c97bbfb2e716abc6ea6aa7387aa14af40d806c7a",
+  "commit": {
+   "message": "benchmark: remove duplicate ffi string length direct\n\nSigned-off-by: HoonDongKang <d159123@naver.com>\nPR-URL: https://github.com/nodejs/node/pull/66278\nReviewed-By: Daeyeon Jeong <daeyeon.dev@gmail.com>\nReviewed-By: Luigi Pinca <luigipinca@gmail.com>",
+   "author": {
+    "name": "Donghoon Kang"
+   }
+  },
+  "author": {
+   "login": "HoonDongKang",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "3641c36af1e99d47d0b90a9e86143153efdc54a8"
+   }
+  ]
+ },
+ {
+  "sha": "3641c36af1e99d47d0b90a9e86143153efdc54a8",
+  "commit": {
+   "message": "watch: detect files replaced via unlink and create\n\nSigned-off-by: marcopiraccini <marco.piraccini@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/63888\nFixes: https://github.com/nodejs/node/issues/51621\nRefs: https://github.com/nodejs/node/issues/54774\nReviewed-By: Paolo Insogna <paolo@cowtech.it>\nReviewed-By: Filip Skokan <panva.ip@gmail.com>",
+   "author": {
+    "name": "Marco"
+   }
+  },
+  "author": {
+   "login": "marcopiraccini",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "2ce7a73fec4478a340754ee81bc1fc66bef3e250"
+   }
+  ]
+ },
+ {
+  "sha": "2ce7a73fec4478a340754ee81bc1fc66bef3e250",
+  "commit": {
+   "message": "perf_hooks: fix truncation of monitorEventLoopDelay() resolution\n\n`IntervalHistogram` stored the interval as `int32_t`, so a resolution\nabove 2^31 - 1 ms wrapped: `resolution: 2 ** 32 + 1` sampled every\nmillisecond.\n\nSigned-off-by: James M Snell <jasnell@gmail.com>\nAssisted-by: OpenCode\nPR-URL: https://github.com/nodejs/node/pull/66115\nReviewed-By: Matteo Collina <matteo.collina@gmail.com>\nReviewed-By: Filip Skokan <panva.ip@gmail.com>",
+   "author": {
+    "name": "James M Snell"
+   }
+  },
+  "author": {
+   "login": "jasnell",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "0519f500b485d7e3497e5b29c48b24290d521a04"
+   }
+  ]
+ },
+ {
+  "sha": "0519f500b485d7e3497e5b29c48b24290d521a04",
+  "commit": {
+   "message": "http: cache parser callbacks\n\nCache the per-message callback lookups on the parser's JS object instead\nof retaining callback functions in strong v8::Global handles. A callback\nthat captures its parser can otherwise keep the parser alive.\n\nClear the cache when a parser is initialized or freed so reused parsers\ncan load replacement callbacks and idle parsers do not retain them.\nHeader field names remain non-internalized because they are supplied by\nclients.\n\nAssisted-by: pi\nSigned-off-by: Matteo Collina <hello@matteocollina.com>\nPR-URL: https://github.com/nodejs/node/pull/66152\nReviewed-By: Robert Nagy <ronagy@icloud.com>\nReviewed-By: Yagiz Nizipli <yagiz@nizipli.com>\nReviewed-By: Tim Perry <pimterry@gmail.com>\nReviewed-By: James M Snell <jasnell@gmail.com>\nReviewed-By: Anna Henningsen <anna@addaleax.net>",
+   "author": {
+    "name": "Matteo Collina"
+   }
+  },
+  "author": {
+   "login": "mcollina",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "55e966fbe2d9c9a0319d7e265c245177f379d6a8"
+   }
+  ]
+ },
+ {
+  "sha": "55e966fbe2d9c9a0319d7e265c245177f379d6a8",
+  "commit": {
+   "message": "build: support LIEF 0.17.x and 1.x\n\nKeep bundled LIEF at 0.17.0 while selecting the Mach-O section API\nfrom the headers in use and the bundled build settings by version.\nPrepare the updater for Mbed TLS 4 and TF-PSA-Crypto so the vendor\nupdate can land separately.\n\nAssisted-by: Codex\nSigned-off-by: inoway46 <inoueyuya416@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/66240\nFixes: https://github.com/nodejs/node/issues/66238\nRefs: https://github.com/nodejs/node/pull/66242\nRefs: https://github.com/nodejs/node/issues/63530\nRefs: https://github.com/nodejs/nodejs-dependency-vuln-assessments/issues/360\nRefs: https://github.com/nodejs/nodejs-dependency-vuln-assessments/issues/342\nReviewed-By: Antoine du Hamel <duhamelantoine1995@gmail.com>\nReviewed-By: Filip Skokan <panva.ip@gmail.com>",
+   "author": {
+    "name": "Yuya Inoue"
+   }
+  },
+  "author": {
+   "login": "inoway46",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "7d79ed37de404bb137074eead038e32d679cc1a5"
+   }
+  ]
+ },
+ {
+  "sha": "7d79ed37de404bb137074eead038e32d679cc1a5",
+  "commit": {
+   "message": "sea: add test and update docs for import() with code cache\n\nSigned-off-by: Ali Hassan <ali-hassan27@outlook.com>\nPR-URL: https://github.com/nodejs/node/pull/62678\nReviewed-By: Joyee Cheung <joyeec9h3@gmail.com>",
+   "author": {
+    "name": "Ali Hassan"
+   }
+  },
+  "author": {
+   "login": "thisalihassan",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "cf0434f59c1e5d5ba1cd2b514a5a0aafb2365a7f"
+   }
+  ]
+ },
+ {
+  "sha": "cf0434f59c1e5d5ba1cd2b514a5a0aafb2365a7f",
+  "commit": {
+   "message": "typings: wire up spawn_sync internal binding types\n\nSigned-off-by: agape1225 <49804691+agape1225@users.noreply.github.com>\nPR-URL: https://github.com/nodejs/node/pull/65996\nReviewed-By: Daeyeon Jeong <daeyeon.dev@gmail.com>",
+   "author": {
+    "name": "agape1225"
+   }
+  },
+  "author": {
+   "login": "agape1225",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "14e8f5bca4bfac077be1bed9594245bd1ad2bb88"
+   }
+  ]
+ },
+ {
+  "sha": "14e8f5bca4bfac077be1bed9594245bd1ad2bb88",
+  "commit": {
+   "message": "tools: enable temporal by default in Nix integration\n\nSo we can test it with `test-shared.yml`.\n\nSigned-off-by: Antoine du Hamel <duhamelantoine1995@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/66267\nReviewed-By: Filip Skokan <panva.ip@gmail.com>\nReviewed-By: René <contact.9a5d6388@renegade334.me.uk>",
+   "author": {
+    "name": "Antoine du Hamel"
+   }
+  },
+  "author": {
+   "login": "aduh95",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "cd908df27ff00a12353827c80701575f2cbfc02a"
+   }
+  ]
+ },
+ {
+  "sha": "cd908df27ff00a12353827c80701575f2cbfc02a",
+  "commit": {
+   "message": "worker: add Symbol.toStringTag to BroadcastChannel\n\nSigned-off-by: Lazizbek Ergashev <lazerg2@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/65532\nFixes: https://github.com/nodejs/node/issues/65527\nReviewed-By: James M Snell <jasnell@gmail.com>",
+   "author": {
+    "name": "Lazizbek Ergashev"
+   }
+  },
+  "author": {
+   "login": "lazerg",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "b456adbcd6f67f32db84b45e36c4b44c31651551"
+   }
+  ]
+ },
+ {
+  "sha": "b456adbcd6f67f32db84b45e36c4b44c31651551",
+  "commit": {
+   "message": "worker: add Symbol.toStringTag to MessageChannel and MessagePort\n\nSigned-off-by: Lazizbek Ergashev <lazerg2@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/65532\nFixes: https://github.com/nodejs/node/issues/65527\nReviewed-By: James M Snell <jasnell@gmail.com>",
+   "author": {
+    "name": "Lazizbek Ergashev"
+   }
+  },
+  "author": {
+   "login": "lazerg",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "7ff62671a58c2756cee05db1d87e2e0bfed6991f"
+   }
+  ]
+ },
+ {
+  "sha": "7ff62671a58c2756cee05db1d87e2e0bfed6991f",
+  "commit": {
+   "message": "stream: keep consumer state in fast mode\n\nCreate null-prototype share and broadcast consumer state with fast\n   properties instead of V8 dictionary properties.\n\nAssisted-by: Pi\nSigned-off-by: Matteo Collina <hello@matteocollina.com>\nPR-URL: https://github.com/nodejs/node/pull/66266\nReviewed-By: Mattias Buelens <mattias@buelens.com>\nReviewed-By: James M Snell <jasnell@gmail.com>",
+   "author": {
+    "name": "Matteo Collina"
+   }
+  },
+  "author": {
+   "login": "mcollina",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "147ade5ff9fb3afcd1284491d6db348bedef35e6"
+   }
+  ]
+ },
+ {
+  "sha": "147ade5ff9fb3afcd1284491d6db348bedef35e6",
+  "commit": {
+   "message": "test: deflake sliding window histogram test\n\nSigned-off-by: James M Snell <jasnell@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/66132\nReviewed-By: Rafael Gonzaga <rafael.nunu@hotmail.com>\nReviewed-By: Matteo Collina <matteo.collina@gmail.com>",
+   "author": {
+    "name": "James M Snell"
+   }
+  },
+  "author": {
+   "login": "jasnell",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "d1960949bb0710df25ca00320b2e51a69ef73238"
+   }
+  ]
+ },
+ {
+  "sha": "d1960949bb0710df25ca00320b2e51a69ef73238",
+  "commit": {
+   "message": "benchmark: protect against accidental fork bomb\n\nSigned-off-by: James M Snell <jasnell@gmail.com>\nAssisted-by: Opencode\nPR-URL: https://github.com/nodejs/node/pull/66132\nReviewed-By: Rafael Gonzaga <rafael.nunu@hotmail.com>\nReviewed-By: Matteo Collina <matteo.collina@gmail.com>",
+   "author": {
+    "name": "James M Snell"
+   }
+  },
+  "author": {
+   "login": "jasnell",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "f378cfcfbfcb673d942ec60d6fb75fbb2a125796"
+   }
+  ]
+ },
+ {
+  "sha": "f378cfcfbfcb673d942ec60d6fb75fbb2a125796",
+  "commit": {
+   "message": "src,lib: add --allow-env permission\n\nNecessarily semver-major.\n\nWhen `--permission` is on, every env var not matched by\n`--allow-env` is removed at startup. It takes names,\nprefix patterns (`PREFIX_*`), or `*`, repeatable or\ncomma-sep'd.\n\nThere are a range of env vars that Node.js itself uses,\nand a default range that are generally known to be safe\nin common usage. These are never scrubbed. These include\nthings like `NODE_OPTIONS`, `NODE_EXTRA_CA_CERTS`, `PATH`,\n`HOME`, etc. `NODE_ENV` is not in the defaults and must\nbe allowed explicitly.\n\nProxy vars (`HTTP_PROXY`, `HTTPS_PROXY`, `NO_PROXY`) are\nalso not in the defaults since they can carry credentials.\nWhen `--use-env-proxy` or `NODE_USE_ENV_PROXY` is set and\nany of them were removed, a single warning naming them is\nemitted.\n\nEnv vars can be dropped at runtime after reading using\n`permission.drop()`. This is a stronger protection than\nusing `process.env.FOO = undefined` because it will\nscrub the env var also from the environment block.\n\nOn Linux, the removed entries are overwritten in the\ninitial environment block. fs reads of any other\nprocess's /proc/<pid>/environ, ancestors included, are\ndenied regardless of `--allow-fs-read`. A process's own\nis readable only with `--allow-env=*`. Symlinks are\nresolved before the check so paths like\n/dev/fd/../../<ppid>/environ are caught. The check only\ncanonicalizes paths that statfs() reports are on procfs.\n\nOn Windows, removal also clears the C runtime's copy\nof the environ using _wputenv_s.\n\nReading a removed name returns undefined, warns once per\nname, and publishes to a diagnostics channel.\n\nEnv file keys are allowed. If the user had reason to pass\nin an env file the assumption is they meant to allow them.\n\nFile-source config (node.config.json and NODE_OPTIONS\nfrom a .env file) can only narrow the allow list.\n\nEmbedders must call ScrubProcessEnvironment() themselves\non startup. This is left up to the embedder to determine\nthe exact timing but needs to be called before startup\nactually happens.\n\nChild processes are started with `--allow-env=*`. Those\neither receive the explicit env they were started with\nor only the env they inherit from the parent. Since the\nparent process is scrubbed, and the child cannot read\nany other process's /proc/<pid>/environ, it should never\nsee more than the parent can.\n\nMain part of the impl was done by hand. Docs, tests,\nverification pass, and cleanup nits were automated.\n\nSigned-off-by: James M Snell <jasnell@gmail.com>\nAssisted-by: Opencode\nPR-URL: https://github.com/nodejs/node/pull/66132\nReviewed-By: Rafael Gonzaga <rafael.nunu@hotmail.com>\nReviewed-By: Matteo Collina <matteo.collina@gmail.com>",
+   "author": {
+    "name": "James M Snell"
+   }
+  },
+  "author": {
+   "login": "jasnell",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "261c8a196cea84c4ffcb119545520a11fc28318e"
+   }
+  ]
+ },
+ {
+  "sha": "261c8a196cea84c4ffcb119545520a11fc28318e",
+  "commit": {
+   "message": "events: fix addAbortListener for aborted signals\n\nSigned-off-by: Lazizbek Ergashev <lazerg2@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/65640\nReviewed-By: James M Snell <jasnell@gmail.com>\nReviewed-By: Robert Nagy <ronagy@icloud.com>",
+   "author": {
+    "name": "Lazizbek Ergashev"
+   }
+  },
+  "author": {
+   "login": "lazerg",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "cf072ab0cdf7475f8601bff043a7c933a85cebe8"
+   }
+  ]
+ },
+ {
+  "sha": "cf072ab0cdf7475f8601bff043a7c933a85cebe8",
+  "commit": {
+   "message": "src: expose size and count in heap profile output\n\nSigned-off-by: ishabi <ilyasshabi94@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/65737\nReviewed-By: Anna Henningsen <anna@addaleax.net>",
+   "author": {
+    "name": "Ilyas Shabi"
+   }
+  },
+  "author": {
+   "login": "IlyasShabi",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "6a6e09e834433d7c8f75ba45ad79fea9e76473c6"
+   }
+  ]
+ },
+ {
+  "sha": "6a6e09e834433d7c8f75ba45ad79fea9e76473c6",
+  "commit": {
+   "message": "querystring: speed up default parse and unescape\n\nSkip the %XX walk in unescapeBuffer when the input has no '%'.\nAdd a dedicated '&'/'=' scanner for the default parse path so\nit does not build separator code arrays or run the multi-char\nstate machine.\n\nOfficial benchmark/querystring/querystring-parse.js:\nencodemany is about 38% faster, manyblankpairs about 17%,\nencodelast about 10%, noencode about 8%.\nOfficial querystring-unescapebuffer.js with no escapes is\nabout 36% faster.\n\nAssisted-by: a closed-source coding agent\nSigned-off-by: Yagiz Nizipli <yagiz@nizipli.com>\nCo-authored-by: Yagiz Nizipli <anonrig@users.noreply.github.com>\nPR-URL: https://github.com/nodejs/node/pull/66175\nReviewed-By: James M Snell <jasnell@gmail.com>\nReviewed-By: Gürgün Dayıoğlu <hey@gurgun.day>",
+   "author": {
+    "name": "Yagiz Nizipli"
+   }
+  },
+  "author": {
+   "login": "anonrig",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "d35c89e03dd17eb7a6433fbdb6b803147246c143"
+   }
+  ]
+ },
+ {
+  "sha": "d35c89e03dd17eb7a6433fbdb6b803147246c143",
+  "commit": {
+   "message": "test: add smoke tests for defer importing synthetic modules\n\nThe tests added ensure that Node.js doesn't crash or produce\nincorrect results when importing synthetic modules (i.e. JSON,\ntext or builtin modules) with the `defer` modifier.\n\nSigned-off-by: Maya Lekova <maya@igalia.com>\nPR-URL: https://github.com/nodejs/node/pull/65537\nReviewed-By: Luigi Pinca <luigipinca@gmail.com>\nReviewed-By: James M Snell <jasnell@gmail.com>\nReviewed-By: Joyee Cheung <joyeec9h3@gmail.com>",
+   "author": {
+    "name": "Maya Lekova"
+   }
+  },
+  "author": {
+   "login": "MayaLekova",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "1e17275dea7a1af3b23681bfdf9393d9416dc9dc"
+   }
+  ]
+ },
+ {
+  "sha": "1e17275dea7a1af3b23681bfdf9393d9416dc9dc",
+  "commit": {
+   "message": "fs: fix crash on negative zero file descriptor\n\n`isInt32()` accepts -0 because `-0 === (-0 | 0)`, but V8 does not\nrepresent -0 as an Int32 value, so `Value::IsInt32()` rejects it. The\nutf8 fast paths of `readFileSync()` and `writeFileSync()` hand the value\nstraight to the binding, which then took it for a path and aborted on\nthe null check.\n\nCoerce -0 to 0 before the call, matching `getValidatedFd()` and the rest\nof fs, where -0 is a valid way to name file descriptor 0.\n\nSigned-off-by: Christian Aurich <christian.aurichzm@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/65888\nFixes: https://github.com/nodejs/node/issues/65886\nReviewed-By: Xuguang Mei <meixuguang@gmail.com>",
+   "author": {
+    "name": "Christian Aurich Zanettini Martins"
+   }
+  },
+  "author": {
+   "login": "christianaurichzm",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "d9208ccdccb1c6cd5bd0011df0775e860c5d2d1e"
+   }
+  ]
+ },
+ {
+  "sha": "d9208ccdccb1c6cd5bd0011df0775e860c5d2d1e",
+  "commit": {
+   "message": "worker: remove messageerror listeners on exit\n\nSigned-off-by: Dayun <dlekdbs6530@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/66075\nFixes: https://github.com/nodejs/node/issues/65782\nReviewed-By: James M Snell <jasnell@gmail.com>",
+   "author": {
+    "name": "Dayun"
+   }
+  },
+  "author": {
+   "login": "dayun6530",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "31e841f05633513db165eeaa8f51986d6932f8ca"
+   }
+  ]
+ },
+ {
+  "sha": "31e841f05633513db165eeaa8f51986d6932f8ca",
+  "commit": {
+   "message": "stream: fix pipeline function tail deadlock\n\nSigned-off-by: Dayun <dlekdbs6530@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/65559\nFixes: https://github.com/nodejs/node/issues/40685\nReviewed-By: Robert Nagy <ronagy@icloud.com>\nReviewed-By: Matteo Collina <matteo.collina@gmail.com>\nReviewed-By: James M Snell <jasnell@gmail.com>",
+   "author": {
+    "name": "Dayun"
+   }
+  },
+  "author": {
+   "login": "dayun6530",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "db1e36b8dd7e6ab9bd2ddbfd8d7a6bbc7bdce5f4"
+   }
+  ]
+ },
+ {
+  "sha": "db1e36b8dd7e6ab9bd2ddbfd8d7a6bbc7bdce5f4",
+  "commit": {
+   "message": "worker: strip types in Web Worker module entries\n\nStrip TypeScript from file-backed module worker entries before\nevaluating the fetched source.\n\nAdd regression coverage and document the supported entry types.\n\nAssisted-by: Codex\nSigned-off-by: Hubert Walczak <hubertwalczak8@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/66085\nReviewed-By: Aviv Keller <me@aviv.sh>\nReviewed-By: James M Snell <jasnell@gmail.com>\nReviewed-By: Matthew Aitken <maitken033380023@gmail.com>\nReviewed-By: Matteo Collina <matteo.collina@gmail.com>\nReviewed-By: Marco Ippolito <marcoippolito54@gmail.com>",
+   "author": {
+    "name": "Hubert Walczak"
+   }
+  },
+  "author": {
+   "login": "osztenkurden",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "1e0167d7d60b3b3de5be4a80d164fd4bf990acd3"
+   }
+  ]
+ },
+ {
+  "sha": "1e0167d7d60b3b3de5be4a80d164fd4bf990acd3",
+  "commit": {
+   "message": "zlib: preserve brotli params and dictionary on reset\n\nResetStream currently calls Init() with no arguments, which drops\nthe stored dictionary and never replays SetParams. Remember each\nsuccessful parameter and replay both the dictionary and the params\nwhen the stream is reset.\n\nFixes: https://github.com/nodejs/node/issues/66156\nSigned-off-by: Xia Chao <shapirolutts@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/66157\nReviewed-By: James M Snell <jasnell@gmail.com>\nReviewed-By: Filip Skokan <panva.ip@gmail.com>",
+   "author": {
+    "name": "Xia Chao"
+   }
+  },
+  "author": {
+   "login": "xia-chao",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "ca0810fd80e11e494585c641158e57982cd7329c"
+   }
+  ]
+ },
+ {
+  "sha": "ca0810fd80e11e494585c641158e57982cd7329c",
+  "commit": {
+   "message": "zlib: reject reset after gzip/deflate emitted incomplete output\n\ndeflateReset starts a new member. Bytes already written out cannot be\ntaken back, so gunzip/inflate see a truncated member followed by a new\nheader. Refuse reset in that case. Raw deflate has no wrapper header\nand is unchanged.\n\nSigned-off-by: Xia Chao <shapirolutts@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/66179\nReviewed-By: James M Snell <jasnell@gmail.com>\nReviewed-By: Filip Skokan <panva.ip@gmail.com>",
+   "author": {
+    "name": "Xia Chao"
+   }
+  },
+  "author": {
+   "login": "xia-chao",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "af135021599773ce4a6b88850957e684d9c532b4"
+   }
+  ]
+ },
+ {
+  "sha": "af135021599773ce4a6b88850957e684d9c532b4",
+  "commit": {
+   "message": "benchmark: fix shadowing that broke h=20 on incoming_headers benchmark\n\nPreviously the inner 'headers' variable shadowed the outer, meaning that\nheaders=20 sends the same 7 headers as headers=0.\n\nSigned-off-by: Tim Perry <pimterry@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/66257\nReviewed-By: Gürgün Dayıoğlu <hey@gurgun.day>\nReviewed-By: Matteo Collina <matteo.collina@gmail.com>",
+   "author": {
+    "name": "Tim Perry"
+   }
+  },
+  "author": {
+   "login": "pimterry",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "71c63912a716fbe643fbdab42a719dc4de781821"
+   }
+  ]
+ },
+ {
+  "sha": "71c63912a716fbe643fbdab42a719dc4de781821",
+  "commit": {
+   "message": "build: add clang support for pgo on macOS/Linux\n\nSigned-off-by: Chengzhong Wu <legendecas@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/66136\nReviewed-By: Joyee Cheung <joyeec9h3@gmail.com>",
+   "author": {
+    "name": "Chengzhong Wu"
+   }
+  },
+  "author": {
+   "login": "legendecas",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "08dbed22724162e5b61596ce00c79107bc336150"
+   }
+  ]
+ },
+ {
+  "sha": "08dbed22724162e5b61596ce00c79107bc336150",
+  "commit": {
+   "message": "deps: V8: backport 786c1c2d88d4\n\nOriginal commit message:\n\n    [stack-traces] Fix overflow in Error.stackTraceLimit trimming\n\n    When stack traces are captured for uncaught exceptions (enabled via\n    Isolate::SetCaptureStackTraceForUncaughtExceptions, e.g. by the\n    inspector or by Node.js's --trace-uncaught), CaptureAndSetErrorStack\n    reuses the simple stack trace and trims it to Error.stackTraceLimit.\n\n    Error.stackTraceLimit counts frames, but the raw call site data stores\n    CallSiteInfo::Fields::kCount slots per frame, so the trim multiplied the\n    limit by kCount: once in the uint32_t comparison against the array\n    length and once, as int, to compute the new length. GetStackTraceLimit\n    clamps the limit to [0, INT_MAX], so for very large limits the uint32_t\n    product can wrap to a value below the array length. The trim branch is\n    then taken although the limit exceeds the number of captured frames,\n    and the int multiplication of the new length overflows.\n\n    On main (kCount == 5) the product first wraps at 858993460. That limit\n    trimmed the raw data to 4 slots (no complete frame) and 858993461 to 9\n    slots (one frame), so error.stack silently lost frames. Infinity, the\n    value from the Node.js report, is clamped to INT_MAX; its wrapped\n    product (2147483643) is not below the array length, so on main it does\n    not take the trim branch and does not reach the signed overflow.\n\n    Fix this by comparing the limit with the number of frames in the raw\n    data (length / kCount), and only multiplying once the limit is known to\n    be smaller than the frame count. The resulting length is then bounded\n    by the existing array length and cannot overflow. Behavior for limits\n    that did not overflow is unchanged, since the raw data length is always\n    a multiple of kCount.\n\n    This regressed with https://crrev.com/c/7673818 (ebd15783b7b,\n    \"[objects]: Defer CallSiteInfo creation\"), which switched from one\n    CallSiteInfo per frame to kCount raw slots per frame.\n\n    This is the underlying cause of Node.js issue 66074. The symptom there\n    differs from main: Node's V8 14.6 backport of that change has\n    kCount == 6 and uses int for the comparison and for RightTrim, so the\n    product overflows for limits above 357913941. For many of those,\n    including Infinity (INT_MAX * 6 wraps to -6), the result is negative\n    and fails \"Check failed: new_capacity > 0.\" in RightTrim. Comparing in\n    frames avoids the overflow in both cases.\n\n    The new cctest CaptureStackTraceForUncaughtExceptionHugeStackTraceLimit\n    enables capture for uncaught exceptions and checks that limits of\n    858993460, 858993461 and Infinity yield the same error.stack as a limit\n    of 10, and that a limit of 1 still trims to a single frame. 858993460\n    and 858993461 are the first limits whose product with kCount wraps\n    around uint32_t; both fail without this change. The new test and the\n    existing stack trace tests also pass in a UBSan build, with no\n    diagnostics.\n\n    Bug: 565047704\n    Refs: https://github.com/nodejs/node/issues/66074\n    Change-Id: I3422ca1de6a7dd9448c7fd53fb9bc5e40e2a17c1\n    Reviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/8426465\n    Reviewed-by: Patrick Thier <pthier@chromium.org>\n    Reviewed-by: Leszek Swirski <leszeks@chromium.org>\n    Auto-Submit: eliau elkouby (‫אליהו אלקובי‬‎) <eliau.elkouby@gmail.com>\n    Commit-Queue: Patrick Thier <pthier@chromium.org>\n    Cr-Commit-Position: refs/heads/main@{#110043}\n\nRefs: https://github.com/v8/v8/commit/786c1c2d88d445eecf54efe7ba9cef27a3eef3bb\nFixes: https://github.com/nodejs/node/issues/66074\nAssisted-by: a closed-source coding agent\nSigned-off-by: Eliau Elkouby <145869377+eliau2005@users.noreply.github.com>\nPR-URL: https://github.com/nodejs/node/pull/66249\nReviewed-By: René <contact.9a5d6388@renegade334.me.uk>\nReviewed-By: Richard Lau <richard.lau@ibm.com>",
+   "author": {
+    "name": "Eliau Elkouby"
+   }
+  },
+  "author": {
+   "login": "eliau2005",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "c0681e51796caf400cb59b2a7ed5698d302fb36e"
+   }
+  ]
+ },
+ {
+  "sha": "c0681e51796caf400cb59b2a7ed5698d302fb36e",
+  "commit": {
+   "message": "http: normalize CONNECT request paths\n\nSigned-off-by: Efe Karasakal <hi@efe.dev>\nPR-URL: https://github.com/nodejs/node/pull/64876\nReviewed-By: Yagiz Nizipli <yagiz@nizipli.com>\nReviewed-By: Tim Perry <pimterry@gmail.com>",
+   "author": {
+    "name": "Efe Karasakal"
+   }
+  },
+  "author": {
+   "login": "efekrskl",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "95279e7af85e2c83796d30a52f7de132072c78bc"
+   }
+  ]
+ },
+ {
+  "sha": "95279e7af85e2c83796d30a52f7de132072c78bc",
+  "commit": {
+   "message": "deps: update googletest to 4267679b6887f349f17b01ccd70c9e3483689b25\n\nPR-URL: https://github.com/nodejs/node/pull/66145\nReviewed-By: Colin Ihrig <cjihrig@gmail.com>\nReviewed-By: Aviv Keller <me@aviv.sh>\nReviewed-By: Luigi Pinca <luigipinca@gmail.com>",
+   "author": {
+    "name": "Node.js GitHub Bot"
+   }
+  },
+  "author": {
+   "login": "nodejs-github-bot",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "66f26d3a9b91b065dc976d7542bb7dfccb6c4069"
+   }
+  ]
+ },
+ {
+  "sha": "66f26d3a9b91b065dc976d7542bb7dfccb6c4069",
+  "commit": {
+   "message": "test: deflake test runner timeout coverage\n\nUse a dedicated fixture with a pending promise and assertion plan\ninstead of competing assertion timers. Keep both timeout failure\nassertions and clear the keepalive interval after the tests finish.\n\nSigned-off-by: Filip Skokan <panva.ip@gmail.com>\nAssisted-by: Codex\nPR-URL: https://github.com/nodejs/node/pull/66255\nReviewed-By: Aviv Keller <me@aviv.sh>\nReviewed-By: Antoine du Hamel <duhamelantoine1995@gmail.com>",
+   "author": {
+    "name": "Filip Skokan"
+   }
+  },
+  "author": {
+   "login": "panva",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "4cd4701f69c010dad0f4c48bc342a0abf7e92fe5"
+   }
+  ]
+ },
+ {
+  "sha": "4cd4701f69c010dad0f4c48bc342a0abf7e92fe5",
+  "commit": {
+   "message": "test: deflake inspector async hook setup\n\nAsync hook activation can be deferred when the inspector command arrives\nduring a V8 interrupt. Schedule timeout creation with setImmediate so\nthe event loop finishes enabling the hooks before recording its async\nstack.\n\nSigned-off-by: Filip Skokan <panva.ip@gmail.com>\nAssisted-by: Codex\nPR-URL: https://github.com/nodejs/node/pull/66255\nReviewed-By: Aviv Keller <me@aviv.sh>\nReviewed-By: Antoine du Hamel <duhamelantoine1995@gmail.com>",
+   "author": {
+    "name": "Filip Skokan"
+   }
+  },
+  "author": {
+   "login": "panva",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "5d9228d5c3e3c5ba8a03ffb8d053fbee57e7956c"
+   }
+  ]
+ },
+ {
+  "sha": "5d9228d5c3e3c5ba8a03ffb8d053fbee57e7956c",
+  "commit": {
+   "message": "tools: pin sccache on all platforms to fix benchmark CI job\n\nSigned-off-by: Tim Perry <pimterry@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/66284\nReviewed-By: Antoine du Hamel <duhamelantoine1995@gmail.com>\nReviewed-By: Filip Skokan <panva.ip@gmail.com>",
+   "author": {
+    "name": "Tim Perry"
+   }
+  },
+  "author": {
+   "login": "pimterry",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "45fef372fcf3b8593dd32d1907e8ea19f7b3a9a7"
+   }
+  ]
+ },
+ {
+  "sha": "45fef372fcf3b8593dd32d1907e8ea19f7b3a9a7",
+  "commit": {
+   "message": "test: deflake debugger function name extraction\n\nEvaluating expressions against the running target can trigger a V8\nscope assertion. Keep the target paused and wait for the initial break\nbefore checking the function formatting. Await debugger teardown.\n\nSigned-off-by: Filip Skokan <panva.ip@gmail.com>\nAssisted-by: Codex\nPR-URL: https://github.com/nodejs/node/pull/66231\nReviewed-By: Aviv Keller <me@aviv.sh>\nReviewed-By: Antoine du Hamel <duhamelantoine1995@gmail.com>",
+   "author": {
+    "name": "Filip Skokan"
+   }
+  },
+  "author": {
+   "login": "panva",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "4889fb0a4373f295f413dda7d0159d72e5b338fc"
+   }
+  ]
+ },
+ {
+  "sha": "4889fb0a4373f295f413dda7d0159d72e5b338fc",
+  "commit": {
+   "message": "stream: skip write() checks in flowing pipe\n\npipe() installs one 'data' listener that calls dest.write() for\nevery chunk. That repeats encoding, mode, and end checks that stay\nthe same for a synchronous buffer write.\n\nWhen that listener is still the only one, hand the Buffer to the\nsame synchronous write path without those checks. A second\nlistener, a non-buffer chunk, or a busy writable still goes through\nemit('data').\n\nOn top of the flowing-read fast path, benchmark/streams/pipe.js is\nabout 31% faster (20 runs). Object-mode pipe and readable-readall\nstay within noise.\n\nAssisted-by: a closed-source coding agent\nSigned-off-by: Yagiz Nizipli <yagiz@nizipli.com>\nPR-URL: https://github.com/nodejs/node/pull/66182\nReviewed-By: Matteo Collina <matteo.collina@gmail.com>\nReviewed-By: Robert Nagy <ronagy@icloud.com>\nReviewed-By: James M Snell <jasnell@gmail.com>\nReviewed-By: Gürgün Dayıoğlu <hey@gurgun.day>\nReviewed-By: Zeyu \"Alex\" Yang <himself65@outlook.com>",
+   "author": {
+    "name": "Yagiz Nizipli"
+   }
+  },
+  "author": {
+   "login": "anonrig",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "236b53ff62df569d76125d519793d7bdbbe30799"
+   }
+  ]
+ },
+ {
+  "sha": "236b53ff62df569d76125d519793d7bdbbe30799",
+  "commit": {
+   "message": "stream: speed up flowing pipe of buffers\n\nflow() pulls one already-buffered chunk and calls _read() for the\nnext one on every iteration. That goes through the general read()\npath, which updates a holey buffer array and then pulls the chunk\nback out.\n\nWhile a synchronous byte-mode flow is in progress, keep that\nprefetched chunk on the readable state and emit it directly.\n_read() of the next chunk still runs before 'data', and a nested\nread() moves the chunk back onto the buffer.\n\nbenchmark/streams/pipe.js is about 77% faster (15 runs).\npipe-object-mode, readable-readall, and readable-bigread stay\nwithin noise.\n\nAssisted-by: a closed-source coding agent\nSigned-off-by: Yagiz Nizipli <yagiz@nizipli.com>\nPR-URL: https://github.com/nodejs/node/pull/66182\nReviewed-By: Matteo Collina <matteo.collina@gmail.com>\nReviewed-By: Robert Nagy <ronagy@icloud.com>\nReviewed-By: James M Snell <jasnell@gmail.com>\nReviewed-By: Gürgün Dayıoğlu <hey@gurgun.day>\nReviewed-By: Zeyu \"Alex\" Yang <himself65@outlook.com>",
+   "author": {
+    "name": "Yagiz Nizipli"
+   }
+  },
+  "author": {
+   "login": "anonrig",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "ebd52388a4b9c5887cf5a284067fb5f8032a7ae1"
+   }
+  ]
+ },
+ {
+  "sha": "ebd52388a4b9c5887cf5a284067fb5f8032a7ae1",
+  "commit": {
+   "message": "tools: reduce source tarball compression in CI\n\nUse gzip level 6 in build-tarball and test-shared to reduce tarball\ncreation time with a small increase in archive size.\n\nRefs: https://github.com/nodejs/node/pull/66228#issuecomment-5822882231\nAssisted-by: Codex\nSigned-off-by: inoway46 <inoueyuya416@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/66228\nReviewed-By: Antoine du Hamel <duhamelantoine1995@gmail.com>\nReviewed-By: Filip Skokan <panva.ip@gmail.com>",
+   "author": {
+    "name": "inoway46"
+   }
+  },
+  "author": {
+   "login": "inoway46",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "733bb345f0d193be433594cf8b3f4693e1d9763f"
+   }
+  ]
+ },
+ {
+  "sha": "733bb345f0d193be433594cf8b3f4693e1d9763f",
+  "commit": {
+   "message": "build: add GZIP_COMPRESSION Make variable\n\nMake gzip compression configurable for source, header, and binary\ntarballs. Keep level 9 as the default.\n\nAssisted-by: Codex\nSigned-off-by: inoway46 <inoueyuya416@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/66228\nReviewed-By: Antoine du Hamel <duhamelantoine1995@gmail.com>\nReviewed-By: Filip Skokan <panva.ip@gmail.com>",
+   "author": {
+    "name": "inoway46"
+   }
+  },
+  "author": {
+   "login": "inoway46",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "38ad98a0aef2594fed66f90e2c3329c6f16e7165"
+   }
+  ]
+ },
+ {
+  "sha": "38ad98a0aef2594fed66f90e2c3329c6f16e7165",
+  "commit": {
+   "message": "test: use Database in sqlite virtual table test\n\nThe sqlite classes were renamed from DatabaseSync to Database.\nThe file now imports only `Database`, but the \"closes the iterator when\na filter is reapplied to the cursor\" test landed with a leftover\n`new DatabaseSync()` call, which throws a ReferenceError.\n\nSigned-off-by: Trivikram Kamat <16024985+trivikr@users.noreply.github.com>\nPR-URL: https://github.com/nodejs/node/pull/66307\nRefs: https://github.com/nodejs/node/pull/65988\nReviewed-By: Daeyeon Jeong <daeyeon.dev@gmail.com>\nReviewed-By: James M Snell <jasnell@gmail.com>\nReviewed-By: Filip Skokan <panva.ip@gmail.com>",
+   "author": {
+    "name": "Trivikram Kamat"
+   }
+  },
+  "author": {
+   "login": "trivikr",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "8812357aff40f5193a3bb70ea624b79552d0dd04"
+   }
+  ]
+ },
+ {
+  "sha": "8812357aff40f5193a3bb70ea624b79552d0dd04",
+  "commit": {
+   "message": "src: throw on a malformed localStorage file\n\nThe localStorage backing file is a user-specified path, and the schema\nis created with CREATE TABLE IF NOT EXISTS, so a file that already\ncontains tables of those names is adopted as-is. Its stored values may\nthen have any SQLite type, but every read asserted the expected type\nwith CHECK, so a wrong-typed value aborted the process. A bad\nschema_version was the worst case: that assertion is in\nStorage::Open(), so any access aborted and the application had no\nchance to inspect or repair the file.\n\nReport these as ERR_INVALID_STATE instead, matching the throw four\nlines below the schema_version assertion for a version that is too new.\nStorage::GetAll() has no JavaScript caller to throw at, so it returns\nstd::nullopt and the DOM storage inspector agent reports a protocol\nerror.\n\nNow that a failed open returns instead of aborting, Open() has to clean\nup after itself: adopt the sqlite3* into a conn_unique_ptr immediately,\nso that an error does not leak the connection and leave the next access\nto open another one.\n\nStorage::GetAll() also ignored the result of sqlite3_prepare_v2() and\nthe status its row loop ended on, reporting a malformed file or a\nmid-scan error as an empty store. Both now return std::nullopt.\n\nAlso drop a redundant second sqlite3_exec() of the init SQL that\nclobbered the result of the sqlite3_prepare_v2() above it, hiding\nprepare failures behind a misleading \"bad parameter or other API\nmisuse\".\n\nSigned-off-by: Trevor Burnham <trevorburnham@gmail.com>\nAssisted-by: Claude Opus 5\nPR-URL: https://github.com/nodejs/node/pull/65879\nFixes: https://github.com/nodejs/node/issues/65878\nFixes: https://github.com/nodejs/node/issues/64640\nReviewed-By: Colin Ihrig <cjihrig@gmail.com>\nReviewed-By: Trivikram Kamat <trivikr.dev@gmail.com>",
+   "author": {
+    "name": "Trevor Burnham"
+   }
+  },
+  "author": {
+   "login": "TrevorBurnham",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "f2b698f1cf7e03581e9a4a36e66424cecb153520"
+   }
+  ]
+ },
+ {
+  "sha": "f2b698f1cf7e03581e9a4a36e66424cecb153520",
+  "commit": {
+   "message": "sqlite: rename DatabaseSync and StatementSync\n\nRename the DatabaseSync and StatementSync classes to Database and\nStatement, and the internal DatabaseSyncLimits helper to\nDatabaseLimits. The old names are kept as aliases of the new classes\nand are Documentation-only deprecated (DEP0210, DEP0211).\n\nAssisted-by: Claude Code\nSigned-off-by: Guilherme Araújo <arauujogui@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/65988\nReviewed-By: Matteo Collina <matteo.collina@gmail.com>\nReviewed-By: Gürgün Dayıoğlu <hey@gurgun.day>\nReviewed-By: Rafael Gonzaga <rafael.nunu@hotmail.com>\nReviewed-By: James M Snell <jasnell@gmail.com>\nReviewed-By: Robert Nagy <ronagy@icloud.com>\nReviewed-By: Yagiz Nizipli <yagiz@nizipli.com>",
+   "author": {
+    "name": "Guilherme Araújo"
+   }
+  },
+  "author": {
+   "login": "araujogui",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "9c06dab7d061dfaf7e875caec781633418d54215"
+   }
+  ]
+ },
+ {
+  "sha": "9c06dab7d061dfaf7e875caec781633418d54215",
+  "commit": {
+   "message": "http: pass maxHeaderPairs to parser.initialize()\n\nThe parser read the `maxHeaderPairs` property from its JS object in\nC++ once per header section to enforce the header count limit. That\nlookup is a runtime property load for every parsed request, and costs\nup to 7% on the parser benchmark for requests with few headers.\n\nPass the limit to `initialize()` instead and keep it in a field. The\nproperty is still set, as the JS side uses it to trim the header list.\n\nRefs: https://github.com/nodejs/node/pull/64988\nSigned-off-by: Matteo Collina <hello@matteocollina.com>\nPR-URL: https://github.com/nodejs/node/pull/66250\nReviewed-By: James M Snell <jasnell@gmail.com>\nReviewed-By: Gürgün Dayıoğlu <hey@gurgun.day>\nReviewed-By: Xuguang Mei <meixuguang@gmail.com>\nReviewed-By: Paolo Insogna <paolo@cowtech.it>\nReviewed-By: Tim Perry <pimterry@gmail.com>\nReviewed-By: Gerhard Stöbich <deb2001-github@yahoo.de>",
+   "author": {
+    "name": "Matteo Collina"
+   }
+  },
+  "author": {
+   "login": "mcollina",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "4bd56b3590b5a1dc10dc2ce8ee1652d3dd657615"
+   }
+  ]
+ },
+ {
+  "sha": "4bd56b3590b5a1dc10dc2ce8ee1652d3dd657615",
+  "commit": {
+   "message": "http: avoid toLowerCase on the server hot path\n\nAfter #65802, Host/Expect/body checks still allocate\ntoLowerCase() copies and Expect/HTTP/1.0 TE still\nread req.headers. Compare names without allocating,\nread those values from rawHeaders, intern parser\nheader names, and skip Title-Case toLowerCase on\ncommon outgoing fields.\n\nRefs: https://github.com/nodejs/node/pull/65802\nSigned-off-by: Yagiz Nizipli <yagiz@nizipli.com>\nAssisted-by: a closed-source coding agent\nPR-URL: https://github.com/nodejs/node/pull/66120\nRefs: https://github.com/nodejs/node/pull/65332\nReviewed-By: Robert Nagy <ronagy@icloud.com>\nReviewed-By: Filip Skokan <panva.ip@gmail.com>",
+   "author": {
+    "name": "Yagiz Nizipli"
+   }
+  },
+  "author": {
+   "login": "anonrig",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "823d229adcbbeb4f6cbf8eaace136ae34d680d76"
+   }
+  ]
+ },
+ {
+  "sha": "823d229adcbbeb4f6cbf8eaace136ae34d680d76",
+  "commit": {
+   "message": "src: add --process-timeout=N\n\nPutting a time limit on a Node.js process is common in many\nuse cases, but each of the common approaches are generally\nflawed.\n\nOS and CI timeouts are inconsistent and blind. Every OS flavor\nhandles process timeouts in different ways. Stock macOS and\nWindows do not ship coreutils `timeout`, etc. None of the options\ncan explain why the process was still running or what exactly\nwas interrupted. Using setTimeout only fires when the event loop\nis free so it misses busy loops and thread blocks and cannot\nsee the stack. Diagnostics triggered by signal have the same\nproblem.\n\nThis introduces a `--process-timeout` that should work\nconsistently across all runtimes. A native watchdog thread\ninterrupts the main thread, even in the middle of running\ncode. It prints the JavaScript stack (if any) and resources\nkeeping the event loop alive (if any), and can optionally\nprint a full diagnostic report. The process exits with a\ndistinct code (124). If the main thread is stuck in native\ncode, the process still exits.\n\n    $ node --process-timeout=10s -e \"while(true) {}\"\n    (node:483970) Process timed out after 10s (--process-timeout). Exiting with code 124.\n    Main thread was executing JavaScript:\n        at [eval]:1:1\n        at runScriptInThisContext (node:internal/vm:219:10)\n        at node:internal/process/execution:485:12\n        at [eval]-wrapper:6:24\n        at runScriptInContext (node:internal/process/execution:483:60)\n        at evalFunction (node:internal/process/execution:317:30)\n        at evalTypeScript (node:internal/process/execution:329:3)\n        at node:internal/main/eval_string:71:3\n    No resources keeping the event loop alive were found.\n\nSigned-off-by: James M Snell <jasnell@gmail.com>\nAssisted-by: Opencode\nPR-URL: https://github.com/nodejs/node/pull/66138\nReviewed-By: Matteo Collina <matteo.collina@gmail.com>\nReviewed-By: Trivikram Kamat <trivikr.dev@gmail.com>",
+   "author": {
+    "name": "James M Snell"
+   }
+  },
+  "author": {
+   "login": "jasnell",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "cc610f1cfbf44f86be0eada4a225b7e64a7f8b65"
+   }
+  ]
+ },
+ {
+  "sha": "cc610f1cfbf44f86be0eada4a225b7e64a7f8b65",
+  "commit": {
+   "message": "fs: validate falsy openAsBlob type option\n\nopenAsBlob() and openAsBlobSync() read the MIME type as\noptions.type || '' before validating it, causing falsy non-string\nvalues to be replaced with the default before reaching validateString().\nAs a result, { type: 0 }, { type: false }, { type: null }, and\n{ type: NaN } are accepted as an empty type, while { type: 1 }\nthrows ERR_INVALID_ARG_TYPE.\n\nDefault the option only when it is undefined so all other values are\nvalidated against the documented string type.\n\nSigned-off-by: Christian Aurich Zanettini Martins <christian.aurichzm@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/66125\nReviewed-By: James M Snell <jasnell@gmail.com>\nReviewed-By: Filip Skokan <panva.ip@gmail.com>",
+   "author": {
+    "name": "Christian Aurich Zanettini Martins"
+   }
+  },
+  "author": {
+   "login": "christianaurichzm",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "63a6ea26bb550dc683a89216fdb70d3a9045c260"
+   }
+  ]
+ },
+ {
+  "sha": "63a6ea26bb550dc683a89216fdb70d3a9045c260",
+  "commit": {
+   "message": "ffi: reject non-boolean copy arguments\n\nffi.toBuffer() and ffi.toArrayBuffer() document copy as a boolean, but\nread it with BooleanValue(), which applies JavaScript truthiness. A\nfalsy non-boolean such as null, 0 or '' therefore selects the\nzero-copy mode, which returns a writable view over foreign memory\ninstead of a copy, while values such as 'false' or 1 select a copy.\n\nThrow ERR_INVALID_ARG_TYPE when copy is neither undefined nor a\nboolean. Omitting copy or passing undefined still makes a copy, and\ntrue and false keep their current behavior.\n\nSigned-off-by: Christian Aurich Zanettini Martins <christian.aurichzm@gmail.com>\nPR-URL: https://github.com/nodejs/node/pull/66219\nReviewed-By: Daeyeon Jeong <daeyeon.dev@gmail.com>\nReviewed-By: Filip Skokan <panva.ip@gmail.com>",
+   "author": {
+    "name": "Christian Aurich Zanettini Martins"
+   }
+  },
+  "author": {
+   "login": "christianaurichzm",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "118f2a1d78e8337397e97a6a8734430c5a29f740"
+   }
+  ]
+ },
+ {
+  "sha": "118f2a1d78e8337397e97a6a8734430c5a29f740",
+  "commit": {
+   "message": "stream: support ArrayBufferView in Utf8Stream write() buffer mode\n\nUtf8Stream#write() in 'buffer' content mode only accepted Buffer\ninstances, even though the underlying implementation only needs\nbyte-addressable data. This accepts any ArrayBufferView (TypedArray,\nDataView) and reinterprets it as a Buffer over the same bytes\n(without copying), so callers no longer need to wrap other typed\narrays in Buffer.from() themselves.\n\nViews are normalized to a Buffer at the single entry point\n(#writeBuffer), using byteOffset/byteLength rather than the view's\nelement-count length, so that internal length bookkeeping used by\nmergeBuf()/Buffer.concat() and the write-release logic keeps\noperating on real byte counts. This mirrors the existing pattern in\nzlibBuffer() (lib/zlib.js).\n\nSigned-off-by: agape1225 <49804691+agape1225@users.noreply.github.com>\nPR-URL: https://github.com/nodejs/node/pull/65301\nReviewed-By: James M Snell <jasnell@gmail.com>\nReviewed-By: Matteo Collina <matteo.collina@gmail.com>",
+   "author": {
+    "name": "agape1225"
+   }
+  },
+  "author": {
+   "login": "agape1225",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "5ebf690dcfa6ace3d0c2704df975b9f96cd6f18c"
+   }
+  ]
+ },
+ {
+  "sha": "5ebf690dcfa6ace3d0c2704df975b9f96cd6f18c",
+  "commit": {
+   "message": "http: preserve socket errors as response error causes\n\nKeep the original socket error as the cause of ECONNRESET errors emitted\nwhen an HTTP response closes before completion. Preserve the existing\naborted message, error code, and event order. Leave cause absent when\nthere is no underlying error.\n\nAllow ConnResetException to accept Error options, document the behavior,\nand cover TLS record errors, TCP resets, explicit destruction, and\npremature closure without a socket error.\n\nThis follows investigation of #66001 and addresses lost error context.\nThe original TLS decryption failure remains unresolved.\n\nRefs: https://github.com/nodejs/node/issues/66001\nSigned-off-by: XadillaX <i@2333.moe>\nPR-URL: https://github.com/nodejs/node/pull/66061\nReviewed-By: Robert Nagy <ronagy@icloud.com>\nReviewed-By: Tim Perry <pimterry@gmail.com>",
+   "author": {
+    "name": "XadillaX"
+   }
+  },
+  "author": {
+   "login": "XadillaX",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "ad63e9ef29d3f70081dda871da46f9fa187d38fd"
+   }
+  ]
+ },
+ {
+  "sha": "ad63e9ef29d3f70081dda871da46f9fa187d38fd",
+  "commit": {
+   "message": "ffi: use type errors for invalid signatures\n\nSigned-off-by: HoonDongKang <d159123@naver.com>\nPR-URL: https://github.com/nodejs/node/pull/66222\nReviewed-By: Daeyeon Jeong <daeyeon.dev@gmail.com>\nReviewed-By: Matteo Collina <matteo.collina@gmail.com>",
+   "author": {
+    "name": "Donghoon Kang"
+   }
+  },
+  "author": {
+   "login": "HoonDongKang",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "e76358e3f197b2e671740796068b4dc1477cad6c"
+   }
+  ]
+ }
+]

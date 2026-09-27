@@ -10,11 +10,12 @@ export type RuleType =
 // Where a rule came from:
 // - "config":   a tool config the repo really runs (commitlint, DCO action...)
 // - "template": the PR template
+// - "history":  a habit seen in the repo's newest commits (shown as "recommended")
 // - "prose":    a sentence in CONTRIBUTING or a linked doc (pattern matched)
-export type Confidence = "config" | "template" | "prose";
+export type Confidence = "config" | "template" | "history" | "prose";
 
 // Lower = more trustworthy. Used to sort rules, strongest first.
-export const CONFIDENCE_RANK: Record<Confidence, number> = { config: 0, template: 1, prose: 2 };
+export const CONFIDENCE_RANK: Record<Confidence, number> = { config: 0, template: 1, history: 2, prose: 3 };
 
 // How a PR template checkbox must be ticked:
 // - "required":          every box in the group
@@ -50,9 +51,11 @@ export type PrTemplateDetails =
 
 type RuleBase = {
     confidence: Confidence;
-    // Exact text from the file (lines joined with a space when it spans several)
+    // Exact text from the file (lines joined with a space when it spans several).
+    // For "history" rules: a count we made, e.g. "48 of the last 50 commits ..."
     sourceQuote: string;
     // Link to the file, pointing at the line when we know it
+    // (for "history" rules: the commit list we counted)
     sourceUrl: string;
 };
 

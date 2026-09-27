@@ -1,0 +1,902 @@
+[
+ {
+  "sha": "bc598a6a8a6b7d6e157e9f19c16911cff8d2360c",
+  "commit": {
+   "message": "fix(bundled-dev): serve the rolldown runtime from the installed rolldown (#23568)",
+   "author": {
+    "name": "andrew"
+   }
+  },
+  "author": {
+   "login": "h-a-n-a",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "3d02335c5125d700a09138e2ef3001598c7fe306"
+   }
+  ]
+ },
+ {
+  "sha": "3d02335c5125d700a09138e2ef3001598c7fe306",
+  "commit": {
+   "message": "ci: remove unnecessary step (#23582)",
+   "author": {
+    "name": "btea"
+   }
+  },
+  "author": {
+   "login": "btea",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "db915e5c0edbe1359dcf0cea340c9571dc7f4ad9"
+   }
+  ]
+ },
+ {
+  "sha": "db915e5c0edbe1359dcf0cea340c9571dc7f4ad9",
+  "commit": {
+   "message": "refactor: use `tinyexec` instead of `cross-spawn` (#23583)",
+   "author": {
+    "name": "btea"
+   }
+  },
+  "author": {
+   "login": "btea",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "bbc88129c967a8b8eedebd93acc82bee63b86b2a"
+   }
+  ]
+ },
+ {
+  "sha": "bbc88129c967a8b8eedebd93acc82bee63b86b2a",
+  "commit": {
+   "message": "fix(ssr): encode whitespace in module runner sourceURL (#23513)",
+   "author": {
+    "name": "Daniel Roe"
+   }
+  },
+  "author": {
+   "login": "danielroe",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "69283019441d93763f085806b374fc53eaea323b"
+   }
+  ]
+ },
+ {
+  "sha": "69283019441d93763f085806b374fc53eaea323b",
+  "commit": {
+   "message": "ci: unpin Node 24 Windows CI (#23581)",
+   "author": {
+    "name": "翠"
+   }
+  },
+  "author": {
+   "login": "sapphi-red",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "972b73a6fcebfb879aef262e7c75d4eff17899b2"
+   }
+  ]
+ },
+ {
+  "sha": "972b73a6fcebfb879aef262e7c75d4eff17899b2",
+  "commit": {
+   "message": "chore: use full version for actions comment (#23580)",
+   "author": {
+    "name": "翠"
+   }
+  },
+  "author": {
+   "login": "sapphi-red",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "00cb9fd33a80c15db318e062e8bcca52497a725c"
+   }
+  ]
+ },
+ {
+  "sha": "00cb9fd33a80c15db318e062e8bcca52497a725c",
+  "commit": {
+   "message": "ci: use pnpm/setup action (#23579)",
+   "author": {
+    "name": "Bjorn Lu"
+   }
+  },
+  "author": {
+   "login": "bluwy",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "e64a5877dd3e552843a545749ccc257568917d28"
+   }
+  ]
+ },
+ {
+  "sha": "e64a5877dd3e552843a545749ccc257568917d28",
+  "commit": {
+   "message": "fix: limit size of object and array printing via `forwardConsole` (#23565)\n\nCo-authored-by: Codex (GPT-5) <noreply@openai.com>",
+   "author": {
+    "name": "Hiroshi Ogawa"
+   }
+  },
+  "author": {
+   "login": "hi-ogawa",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "39ddf7ccf7e7469ff6a3ba37bca38c32ea804d6e"
+   }
+  ]
+ },
+ {
+  "sha": "39ddf7ccf7e7469ff6a3ba37bca38c32ea804d6e",
+  "commit": {
+   "message": "release: v8.3.1 (#23573)\n\nCo-authored-by: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "github-actions[bot]"
+   }
+  },
+  "author": {
+   "login": "github-actions[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "931ad65735d73e7a765baec59a69501109d50f61"
+   }
+  ]
+ },
+ {
+  "sha": "931ad65735d73e7a765baec59a69501109d50f61",
+  "commit": {
+   "message": "docs: update viteconf link on the sidebar to 2026 and add banner (#23569)",
+   "author": {
+    "name": "翠"
+   }
+  },
+  "author": {
+   "login": "sapphi-red",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "f68c0d5a28c96555431413e3e2cbe644337b087f"
+   }
+  ]
+ },
+ {
+  "sha": "f68c0d5a28c96555431413e3e2cbe644337b087f",
+  "commit": {
+   "message": "fix: handle `server.ws: false` in mergeConfig (#23511)\n\nSigned-off-by: vjymisal0 <misalvijay153@gmail.com>\nCo-authored-by: 翠 <green@sapphi.red>",
+   "author": {
+    "name": "Vijay Misal"
+   }
+  },
+  "author": {
+   "login": "vjymisal0",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "6f831f9b58ebda77638b514042ad8d160edfb928"
+   }
+  ]
+ },
+ {
+  "sha": "6f831f9b58ebda77638b514042ad8d160edfb928",
+  "commit": {
+   "message": "fix(server): avoid reinitializing watcher when adding file after server close (#23572)",
+   "author": {
+    "name": "翠"
+   }
+  },
+  "author": {
+   "login": "sapphi-red",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "e5d9af29a3571f388c4bc2a8d4c3387e46ff1da0"
+   }
+  ]
+ },
+ {
+  "sha": "e5d9af29a3571f388c4bc2a8d4c3387e46ff1da0",
+  "commit": {
+   "message": "refactor(create-vite): use `tinyexec` instead of `cross-spawn` (#23541)",
+   "author": {
+    "name": "btea"
+   }
+  },
+  "author": {
+   "login": "btea",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "04fc30a4b91870e65a436b3420620a2e02a94a41"
+   }
+  ]
+ },
+ {
+  "sha": "04fc30a4b91870e65a436b3420620a2e02a94a41",
+  "commit": {
+   "message": "fix(sourcemap): skip URL source roots when injecting sources content (#23519)\n\nCo-authored-by: sapphi-red <green@sapphi.red>",
+   "author": {
+    "name": "Murugappan M"
+   }
+  },
+  "author": {
+   "login": "murugu-21",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "5f894339d27882fedc86bf6b1076fa6d92e404f3"
+   }
+  ]
+ },
+ {
+  "sha": "5f894339d27882fedc86bf6b1076fa6d92e404f3",
+  "commit": {
+   "message": "fix(optimizer): resolve pending discovered dep processing on close before init (#23567)\n\nCo-authored-by: Santhi Prakash <b.santhiprakash@gmail.com>",
+   "author": {
+    "name": "翠"
+   }
+  },
+  "author": {
+   "login": "sapphi-red",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "6e09961181a1047ef78d37b1a23fb0e7488c8980"
+   }
+  ]
+ },
+ {
+  "sha": "6e09961181a1047ef78d37b1a23fb0e7488c8980",
+  "commit": {
+   "message": "test(bundled-dev): enable passing cases in more playgrounds (#23552)",
+   "author": {
+    "name": "andrew"
+   }
+  },
+  "author": {
+   "login": "h-a-n-a",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "63567c73ac132e6384fef384e6b9f7e8d5a37fff"
+   }
+  ]
+ },
+ {
+  "sha": "63567c73ac132e6384fef384e6b9f7e8d5a37fff",
+  "commit": {
+   "message": "chore(optimizer): add debug log when waiting for dep before init (#23566)",
+   "author": {
+    "name": "翠"
+   }
+  },
+  "author": {
+   "login": "sapphi-red",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "e8990c4d6101dfaca2654ed8ab4d0574ee920248"
+   }
+  ]
+ },
+ {
+  "sha": "e8990c4d6101dfaca2654ed8ab4d0574ee920248",
+  "commit": {
+   "message": "fix(deps): update all non-major dependencies (#23537)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "renovate[bot]"
+   }
+  },
+  "author": {
+   "login": "renovate[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "f155b62ceabbaaf71abbf59933968787e3961c56"
+   }
+  ]
+ },
+ {
+  "sha": "f155b62ceabbaaf71abbf59933968787e3961c56",
+  "commit": {
+   "message": "fix(create-vite): add router only options for tanstack router/start (#23543)",
+   "author": {
+    "name": "Ciarán Curley"
+   }
+  },
+  "author": {
+   "login": "DogPawHat",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "af7cdf6964f124f58d66037e808fe687654948e2"
+   }
+  ]
+ },
+ {
+  "sha": "af7cdf6964f124f58d66037e808fe687654948e2",
+  "commit": {
+   "message": "refactor: replace `find` with `some` (#23554)",
+   "author": {
+    "name": "btea"
+   }
+  },
+  "author": {
+   "login": "btea",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "1544bb1b7ac92f775e9d0dea97954c99cc6cbd43"
+   }
+  ]
+ },
+ {
+  "sha": "1544bb1b7ac92f775e9d0dea97954c99cc6cbd43",
+  "commit": {
+   "message": "docs(config): correct the server.sourcemapIgnoreList default (#23462)",
+   "author": {
+    "name": "Rusty Raven"
+   }
+  },
+  "author": {
+   "login": "kakiuwang-ui",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "39330f489a0ae08923557f0ce10a307d6662a3f5"
+   }
+  ]
+ },
+ {
+  "sha": "39330f489a0ae08923557f0ce10a307d6662a3f5",
+  "commit": {
+   "message": "fix(optimizer): don't skip imports whose binding starts with type (#23540)",
+   "author": {
+    "name": "btea"
+   }
+  },
+  "author": {
+   "login": "btea",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "bd97903e326c4caf022405f7c1d5f3eb624a931f"
+   }
+  ]
+ },
+ {
+  "sha": "bd97903e326c4caf022405f7c1d5f3eb624a931f",
+  "commit": {
+   "message": "docs(config): document preserveEntrySignatures defaults (#23469)",
+   "author": {
+    "name": "Parafee41"
+   }
+  },
+  "author": {
+   "login": "koriyoshi2041",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "15569ce343b51936cfa8fb6bbf948a57ba1ff4ad"
+   }
+  ]
+ },
+ {
+  "sha": "15569ce343b51936cfa8fb6bbf948a57ba1ff4ad",
+  "commit": {
+   "message": "docs: fix typo builtin -> built-in in plugins guide (#23525)\n\nCo-authored-by: Ghayth BenAbid <ghayth@example.com>",
+   "author": {
+    "name": "Ghayth Ben Abid"
+   }
+  },
+  "author": {
+   "login": "GhaythBenAbid",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "9abd99bfdd3117149d6faf87fc37bc9899b1c998"
+   }
+  ]
+ },
+ {
+  "sha": "9abd99bfdd3117149d6faf87fc37bc9899b1c998",
+  "commit": {
+   "message": "refactor: remove duplicate configurations (#23532)",
+   "author": {
+    "name": "btea"
+   }
+  },
+  "author": {
+   "login": "btea",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "e9078f865cdff6bed77cd729214a7e2868f126b5"
+   }
+  ]
+ },
+ {
+  "sha": "e9078f865cdff6bed77cd729214a7e2868f126b5",
+  "commit": {
+   "message": "docs: size the version check input to its content (#23505)",
+   "author": {
+    "name": "CSY54"
+   }
+  },
+  "author": {
+   "login": "CSY54",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "3c752c8932bc0599465ba4a6d8f44aaf1e934c3d"
+   }
+  ]
+ },
+ {
+  "sha": "3c752c8932bc0599465ba4a6d8f44aaf1e934c3d",
+  "commit": {
+   "message": "fix(deps): update all non-major dependencies (#23482)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "renovate[bot]"
+   }
+  },
+  "author": {
+   "login": "renovate[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "f4b4431a2f9097fd9bbb7aaebbf1b63c4b54dea1"
+   }
+  ]
+ },
+ {
+  "sha": "f4b4431a2f9097fd9bbb7aaebbf1b63c4b54dea1",
+  "commit": {
+   "message": "refactor: assets regexp use non-capture (#23491)",
+   "author": {
+    "name": "btea"
+   }
+  },
+  "author": {
+   "login": "btea",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "6a84c72100da4e4be4badb2d9a0026279b4df136"
+   }
+  ]
+ },
+ {
+  "sha": "6a84c72100da4e4be4badb2d9a0026279b4df136",
+  "commit": {
+   "message": "chore: update `optimizeDeps.include` comment (#23489)",
+   "author": {
+    "name": "btea"
+   }
+  },
+  "author": {
+   "login": "btea",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "9aecbbfa5fb5da4b9981c099cb9746a9fd210806"
+   }
+  ]
+ },
+ {
+  "sha": "9aecbbfa5fb5da4b9981c099cb9746a9fd210806",
+  "commit": {
+   "message": "fix(deps): update rolldown-related dependencies (#23483)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>\nCo-authored-by: sapphi-red <green@sapphi.red>",
+   "author": {
+    "name": "renovate[bot]"
+   }
+  },
+  "author": {
+   "login": "renovate[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "4aba8d8720e82e4c5b694a4b7877755a3f84fc57"
+   }
+  ]
+ },
+ {
+  "sha": "4aba8d8720e82e4c5b694a4b7877755a3f84fc57",
+  "commit": {
+   "message": "fix: merge `build.rolldownOptions.output.comments` correctly (#23514)",
+   "author": {
+    "name": "翠"
+   }
+  },
+  "author": {
+   "login": "sapphi-red",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "bd3a3a96552a900f31c56b0d8be229dcd20618f4"
+   }
+  ]
+ },
+ {
+  "sha": "bd3a3a96552a900f31c56b0d8be229dcd20618f4",
+  "commit": {
+   "message": "chore: enable `trustPolicyExcludePrune` (#23476)",
+   "author": {
+    "name": "btea"
+   }
+  },
+  "author": {
+   "login": "btea",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "99bd9d1d46153fa939f4a304cc0177db42e28776"
+   }
+  ]
+ },
+ {
+  "sha": "99bd9d1d46153fa939f4a304cc0177db42e28776",
+  "commit": {
+   "message": "chore: merge prereleases in changelog (#23466)",
+   "author": {
+    "name": "翠"
+   }
+  },
+  "author": {
+   "login": "sapphi-red",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "1aec41b32510681131c6fa6978ddc227fa6f3aa8"
+   }
+  ]
+ },
+ {
+  "sha": "1aec41b32510681131c6fa6978ddc227fa6f3aa8",
+  "commit": {
+   "message": "release: create-vite@9.2.1 (#23465)\n\nCo-authored-by: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "github-actions[bot]"
+   }
+  },
+  "author": {
+   "login": "github-actions[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "434e8e9495436a60789f2b588a04a6a24a3d1661"
+   }
+  ]
+ },
+ {
+  "sha": "434e8e9495436a60789f2b588a04a6a24a3d1661",
+  "commit": {
+   "message": "release: v8.3.0 (#23464)\n\nCo-authored-by: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "github-actions[bot]"
+   }
+  },
+  "author": {
+   "login": "github-actions[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "9913672bee9c34a2df7fff4c2538783cd4f43b4e"
+   }
+  ]
+ },
+ {
+  "sha": "9913672bee9c34a2df7fff4c2538783cd4f43b4e",
+  "commit": {
+   "message": "fix: handle CRLF line endings in code frame positions (#23219)\n\nCo-authored-by: nyxst4ck <289980115+nyxst4ck@users.noreply.github.com>\nCo-authored-by: Bjorn Lu <bjornlu.dev@gmail.com>",
+   "author": {
+    "name": "nyxst4ck"
+   }
+  },
+  "author": {
+   "login": "nyxst4ck",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "c8f7b280a2669733b84231c128c4926822b131d7"
+   }
+  ]
+ },
+ {
+  "sha": "c8f7b280a2669733b84231c128c4926822b131d7",
+  "commit": {
+   "message": "docs(ssr): explain server-only module reloads (fix #19114) (#23235)\n\nCo-authored-by: Bjorn Lu <bjornlu.dev@gmail.com>",
+   "author": {
+    "name": "徐天成"
+   }
+  },
+  "author": {
+   "login": "Tiancheng-Xu",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "8abf700eeb2411d8402d08f8e2696effafdbe774"
+   }
+  ]
+ },
+ {
+  "sha": "8abf700eeb2411d8402d08f8e2696effafdbe774",
+  "commit": {
+   "message": "perf(proxy): pre-compile context matchers at server creation (#23263)",
+   "author": {
+    "name": "btea"
+   }
+  },
+  "author": {
+   "login": "btea",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "ef0dc17ada53d1169ae5a89cb8f6482831466755"
+   }
+  ]
+ },
+ {
+  "sha": "ef0dc17ada53d1169ae5a89cb8f6482831466755",
+  "commit": {
+   "message": "fix: only treat whole `node_modules` path segments as dependencies (fix #17467) (#23437)\n\nCo-authored-by: Bjorn Lu <bjornlu.dev@gmail.com>",
+   "author": {
+    "name": "Rusty Raven"
+   }
+  },
+  "author": {
+   "login": "kakiuwang-ui",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "42a4ea7cd01dee615891c2e5675456d4b8a2550c"
+   }
+  ]
+ },
+ {
+  "sha": "42a4ea7cd01dee615891c2e5675456d4b8a2550c",
+  "commit": {
+   "message": "chore: avoid recompiling regex in mergeChangelog script (#23456)",
+   "author": {
+    "name": "btea"
+   }
+  },
+  "author": {
+   "login": "btea",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "e6f6b3e3119256daa837b2dc399058c8aa45b470"
+   }
+  ]
+ },
+ {
+  "sha": "e6f6b3e3119256daa837b2dc399058c8aa45b470",
+  "commit": {
+   "message": "feat(build): avoid settling seen preload dependencies for performance (#23446)",
+   "author": {
+    "name": "StirStudios // Glyn"
+   }
+  },
+  "author": {
+   "login": "StirStudios",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "5bce8ca0f19bfdd5206c98bfabc1f8453deb32c7"
+   }
+  ]
+ },
+ {
+  "sha": "5bce8ca0f19bfdd5206c98bfabc1f8453deb32c7",
+  "commit": {
+   "message": "release: v8.3.0-beta.1 (#23449)\n\nCo-authored-by: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "github-actions[bot]"
+   }
+  },
+  "author": {
+   "login": "github-actions[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "fc7c104e74d35a97fa313d5dd6f1b5e7d5b26159"
+   }
+  ]
+ },
+ {
+  "sha": "fc7c104e74d35a97fa313d5dd6f1b5e7d5b26159",
+  "commit": {
+   "message": "fix(deps): update all non-major dependencies (#23445)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>\nCo-authored-by: sapphi-red <green@sapphi.red>",
+   "author": {
+    "name": "renovate[bot]"
+   }
+  },
+  "author": {
+   "login": "renovate[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "b919a1a8b5a7c694667f993d677973f42d349458"
+   }
+  ]
+ },
+ {
+  "sha": "b919a1a8b5a7c694667f993d677973f42d349458",
+  "commit": {
+   "message": "chore: remove unnecessary comment (#23448)",
+   "author": {
+    "name": "翠"
+   }
+  },
+  "author": {
+   "login": "sapphi-red",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "4ec58d159df4a1b4799356a1fda62db88ed14752"
+   }
+  ]
+ },
+ {
+  "sha": "4ec58d159df4a1b4799356a1fda62db88ed14752",
+  "commit": {
+   "message": "fix: shortcuts extend error (#23447)",
+   "author": {
+    "name": "btea"
+   }
+  },
+  "author": {
+   "login": "btea",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "68aeb8a3b5a5a2ccd505288999bae1a5e6942ee1"
+   }
+  ]
+ },
+ {
+  "sha": "68aeb8a3b5a5a2ccd505288999bae1a5e6942ee1",
+  "commit": {
+   "message": "feat(devtools): enable dev server integration (#23333)\n\nCo-authored-by: sapphi-red <49056869+sapphi-red@users.noreply.github.com>",
+   "author": {
+    "name": "Arlo"
+   }
+  },
+  "author": {
+   "login": "webfansplz",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "f79413353995a2344879014410a9128b1b9f8e9a"
+   }
+  ]
+ },
+ {
+  "sha": "f79413353995a2344879014410a9128b1b9f8e9a",
+  "commit": {
+   "message": "chore: introducing `@e18e/eslint-plugin` (#23357)\n\nCo-authored-by: Bjorn Lu <bjornlu.dev@gmail.com>",
+   "author": {
+    "name": "btea"
+   }
+  },
+  "author": {
+   "login": "btea",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "d6b19ab8590c5b5960cf7afd6f8a52d841d564ad"
+   }
+  ]
+ },
+ {
+  "sha": "d6b19ab8590c5b5960cf7afd6f8a52d841d564ad",
+  "commit": {
+   "message": "chore: fix ts-check comment ordering (#23386)",
+   "author": {
+    "name": "btea"
+   }
+  },
+  "author": {
+   "login": "btea",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "ac6526ff408ae7452f0e4cbd7a881f62a27d35af"
+   }
+  ]
+ },
+ {
+  "sha": "ac6526ff408ae7452f0e4cbd7a881f62a27d35af",
+  "commit": {
+   "message": "chore(deps): update actions/deploy-pages digest to 368f825 (#23444)\n\nCo-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>",
+   "author": {
+    "name": "renovate[bot]"
+   }
+  },
+  "author": {
+   "login": "renovate[bot]",
+   "type": "Bot"
+  },
+  "parents": [
+   {
+    "sha": "8492422b8f110625a90c702f42f30784e8cf19dc"
+   }
+  ]
+ },
+ {
+  "sha": "8492422b8f110625a90c702f42f30784e8cf19dc",
+  "commit": {
+   "message": "fix: resolve the actual package root in findNearestMainPackageData for nested package.json (#23356)",
+   "author": {
+    "name": "btea"
+   }
+  },
+  "author": {
+   "login": "btea",
+   "type": "User"
+  },
+  "parents": [
+   {
+    "sha": "12e709ca4df1059747db1cb7c5d1cd71aba79a24"
+   }
+  ]
+ }
+]

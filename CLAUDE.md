@@ -14,13 +14,18 @@ Built solo for the FirstCommit hackathon (Devpost), deadline 30 Sep 2026.
 
 ## Core architecture rule (never break this)
 - No AI API anywhere. Rules come only from the repo's config files and
-  exact sentences in its docs, extracted by deterministic TypeScript in
-  /lib/rules. Every rule MUST have a sourceQuote (exact text from the
-  file) and a sourceUrl (link to where it came from).
+  exact sentences in its docs, or from counting the repo's recent
+  commits, extracted by deterministic TypeScript in /lib/rules. Every
+  rule MUST have a sourceQuote (exact text from the file) and a
+  sourceUrl (link to where it came from). For history rules, sourceQuote
+  is a computed statistic (clearly labelled as such in the UI) and
+  sourceUrl links to those exact commits.
 - All actual verification is deterministic TypeScript code in
   /lib/checks.
-- Rule confidence: config > template > prose. Relevant CONTRIBUTING
-  sections are also shown to the user as "read this yourself".
+- Rule confidence: config > template > history > prose. Relevant
+  CONTRIBUTING sections are also shown to the user as "read this yourself".
+- History rules are habits, not enforcement: a failed history rule is
+  shown yellow ("recommended"), never red.
 
 ## Rule extraction decisions (approved)
 - Config files (commitlint, package.json "commitlint", .github/dco.yml,
@@ -39,6 +44,12 @@ Built solo for the FirstCommit hackathon (Devpost), deadline 30 Sep 2026.
 - A template section is optional when it says "optional", "if
   applicable", "remove/delete this section", or its first sentence
   starts with "If ...".
+- History: last 50 default-branch commits (one REST call). Merges and
+  bots ("[bot]", "-bot", type Bot) are skipped; at least 15 must remain.
+  >= 90% Conventional Commits (real types only, not node's "subsystem:")
+  or >= 90% "Signed-off-by" -> rule. If more than half have a merge-time
+  signal (subject ends "(#123)" or a "PR-URL:" trailer), the
+  conventional rule applies to the PR title, otherwise to commits.
 
 ## Tech
 - Next.js (App Router) + TypeScript + Tailwind
@@ -94,8 +105,8 @@ remind me of this list first.
 ## Current status
 Day 2: GitHub data layer done (guidelines, linked docs, issue, PR,
 new-contributor detection). Day 3: deterministic rule extraction done
-(/lib/rules: config files, PR template, prose, "read this yourself"
-sections; scripts/try-rules.ts). Next: checks in /lib/checks.
+(/lib/rules: config files, PR template, commit history, prose, "read
+this yourself" sections; scripts/try-rules.ts). Next: checks in /lib/checks.
 
 ## Known limitations
 - Linked docs: only one level deep, max 3 files / 150KB, picked by
@@ -146,3 +157,9 @@ sections; scripts/try-rules.ts). Next: checks in /lib/checks.
   without "all" is not optional (home-assistant's Checklist = required).
 - "Read this yourself": max 6 sections x 4000 chars, linked by line.
   Setext headings (underlined with ===) are not recognised.
+- History rules: only the newest 50 commits, so a repo that changed its
+  habits recently can mislead either way. Squash vs. commit is guessed
+  from "(#123)" / "PR-URL:"; nodejs/node lands with "PR-URL:" but keeps
+  contributor commits, so a conventional rule there would wrongly say
+  "PR title" (node has no such rule today). Bot accounts named without
+  "bot" are counted as people.
