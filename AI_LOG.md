@@ -7,3 +7,4 @@
 | 25 Sep | Claude Code | Scaffolded Next.js 16 + Tailwind + Vitest, set up folders | Reviewed the plan, asked for --ignore-existing so my CLAUDE.md wasn't overwritten |
 | 26 Sep | Claude Code + Claude (chat) | Claude Code wrote parseUrl.test.ts and hints; Claude chat wrote parseUrl.ts | Decided to accept /files and /commits links, read and understood every line |
 | 27 Sep | Claude Code | Wrote fetchGuidelines.ts, errors.ts, 12 tests, real-repo script | Chose community-profile-first approach, required warnings instead of hiding large files, asked to test on real repos and found that React and Node CONTRIBUTING files mostly link elsewhere |
+| 27 Sep | Claude Code | Added per-request timeout, silent logging, same-repo doc link following (docLinks.ts) with tests | Decided to follow linked docs now, fixed scoring to use file name/link text only, added first/newcomer priority, asked to support stdlib's full-URL links |

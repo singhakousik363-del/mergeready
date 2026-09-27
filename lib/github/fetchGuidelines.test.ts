@@ -1,7 +1,7 @@
 import { afterEach, describe, it, expect, vi } from "vitest";
 import type { Octokit } from "@octokit/rest";
 import { fetchGuidelines } from "./fetchGuidelines";
-import { MissingTokenError, RateLimitError, RepoNotFoundError } from "./errors";
+import { GitHubTimeoutError, MissingTokenError, RateLimitError, RepoNotFoundError } from "./errors";
 
 // Real excerpts (trimmed) so tests look like real repos
 // Source: https://github.com/facebook/react/blob/main/.github/PULL_REQUEST_TEMPLATE.md
@@ -21,11 +21,49 @@ The Node.js project welcomes all contributions from anyone willing to work in
 good faith with other contributors and the community.
 `;
 
+// Source: https://github.com/nodejs/node/blob/main/CONTRIBUTING.md (only the lines with doc links)
+const NODE_CONTRIBUTING_WITH_LINKS = `# Contributing to Node.js
+
+> Contributing for the first time? Please read our
+> [Guide for First-Time Contributors](./doc/contributing/first-contributions.md) for tips
+
+See the [GOVERNANCE.md](./GOVERNANCE.md) document.
+
+## [Issues](./doc/contributing/issues.md)
+
+## [Pull Requests](./doc/contributing/pull-requests.md)
+
+* [Large Pull Requests](./doc/contributing/large-pull-requests.md)
+`;
+
+// Source: https://github.com/nodejs/node/blob/main/doc/contributing/pull-requests.md
+const NODE_COMMIT_GUIDELINES = `#### Commit message guidelines
+
+A good commit message should describe what changed and why.
+
+1. The first line should:
+
+   * contain a short description of the change (preferably 50 characters or
+     less, and no more than 72 characters)
+`;
+
+// Source: https://github.com/facebook/react/blob/main/CONTRIBUTING.md (full file)
+const REACT_CONTRIBUTING = `# Contributing to React
+
+Want to contribute to React? There are a few things you need to know.  
+
+We wrote a **[contribution guide](https://reactjs.org/docs/how-to-contribute.html)** to help you get started.
+`;
+
 type FakeRepo = {
     // path -> file text. Folders are worked out from the paths.
     files: Record<string, string>;
+    // Files in the org-wide "acme/.github" repo
+    orgFiles?: Record<string, string>;
     // What the community profile API reports (paths inside this repo)
     profile?: { contributing?: string; prTemplate?: string };
+    // The profile's CONTRIBUTING lives in the org-wide "acme/.github" repo
+    contributingInOrgRepo?: boolean;
     // Make the profile API fail with this error instead
     profileError?: Error;
     // Override the reported size of a file (to test huge files)
@@ -37,31 +75,33 @@ function httpError(status: number, message: string, headers: Record<string, stri
     return Object.assign(new Error(message), { status, response: { headers } });
 }
 
-function contentsUrl(path: string): string {
-    return `https://api.github.com/repos/acme/app/contents/${path}?ref=main`;
+function contentsUrl(path: string, repo = "app"): string {
+    return `https://api.github.com/repos/acme/${repo}/contents/${path}?ref=main`;
 }
 
-function htmlUrl(path: string): string {
-    return `https://github.com/acme/app/blob/main/${path}`;
+function htmlUrl(path: string, repo = "app"): string {
+    return `https://github.com/acme/${repo}/blob/main/${path}`;
 }
 
 // A fake Octokit with only the 3 methods fetchGuidelines uses
 function createFakeOctokit(fake: FakeRepo) {
     const getCommunityProfileMetrics = vi.fn(async () => {
         if (fake.profileError) throw fake.profileError;
-        const health = (path?: string) => (path ? { url: contentsUrl(path), html_url: htmlUrl(path) } : null);
+        const health = (path?: string, repo = "app") =>
+            path ? { url: contentsUrl(path, repo), html_url: htmlUrl(path, repo) } : null;
         return {
             data: {
                 files: {
-                    contributing: health(fake.profile?.contributing),
+                    contributing: health(fake.profile?.contributing, fake.contributingInOrgRepo ? ".github" : "app"),
                     pull_request_template: health(fake.profile?.prTemplate),
                 },
             },
         };
     });
 
-    const getContent = vi.fn(async ({ path }: { path: string }) => {
-        const file = fake.files[path];
+    const getContent = vi.fn(async ({ repo, path }: { repo: string; path: string }) => {
+        const files = repo === ".github" ? (fake.orgFiles ?? {}) : fake.files;
+        const file = files[path];
         if (file !== undefined) {
             return {
                 data: {
@@ -71,7 +111,7 @@ function createFakeOctokit(fake: FakeRepo) {
                     size: fake.sizes?.[path] ?? Buffer.byteLength(file),
                     encoding: "base64",
                     content: Buffer.from(file).toString("base64"),
-                    html_url: htmlUrl(path),
+                    html_url: htmlUrl(path, repo),
                 },
             };
         }
@@ -79,7 +119,7 @@ function createFakeOctokit(fake: FakeRepo) {
         // Is `path` a folder? List its direct children.
         const prefix = path === "" ? "" : `${path}/`;
         const children = new Map<string, "file" | "dir">();
-        for (const filePath of Object.keys(fake.files)) {
+        for (const filePath of Object.keys(files)) {
             if (!filePath.startsWith(prefix)) continue;
             const [name, ...rest] = filePath.slice(prefix.length).split("/");
             children.set(name, rest.length > 0 ? "dir" : "file");
@@ -119,6 +159,7 @@ describe("fetchGuidelines", () => {
                 contributing: htmlUrl("CONTRIBUTING.md"),
                 prTemplate: htmlUrl(".github/PULL_REQUEST_TEMPLATE.md"),
             },
+            extraDocs: [],
             warnings: [],
         });
     });
@@ -186,6 +227,7 @@ describe("fetchGuidelines", () => {
             contributing: null,
             prTemplate: null,
             sources: { contributing: null, prTemplate: null },
+            extraDocs: [],
             warnings: [],
         });
     });
@@ -266,5 +308,206 @@ describe("fetchGuidelines", () => {
 
         await expect(fetchGuidelines("../etc", "app", { octokit })).rejects.toMatchObject({ code: "INVALID_REPO" });
         expect(getContent).not.toHaveBeenCalled();
+    });
+});
+
+describe("fetchGuidelines: docs linked from CONTRIBUTING", () => {
+    it("follows the best same-repo links, like nodejs/node", async () => {
+        const { octokit, getContent } = createFakeOctokit({
+            files: {
+                "CONTRIBUTING.md": NODE_CONTRIBUTING_WITH_LINKS,
+                "GOVERNANCE.md": "# Governance",
+                "doc/contributing/first-contributions.md": "# First contributions",
+                "doc/contributing/issues.md": "# Issues",
+                "doc/contributing/pull-requests.md": NODE_COMMIT_GUIDELINES,
+                "doc/contributing/large-pull-requests.md": "# Large pull requests",
+            },
+            profile: { contributing: "CONTRIBUTING.md" },
+        });
+
+        const result = await fetchGuidelines("acme", "app", { octokit });
+
+        expect(result.extraDocs).toEqual([
+            {
+                path: "doc/contributing/first-contributions.md",
+                text: "# First contributions",
+                source: htmlUrl("doc/contributing/first-contributions.md"),
+                linkText: "Guide for First-Time Contributors",
+            },
+            {
+                path: "doc/contributing/pull-requests.md",
+                text: NODE_COMMIT_GUIDELINES,
+                source: htmlUrl("doc/contributing/pull-requests.md"),
+                linkText: "Pull Requests",
+            },
+            {
+                path: "doc/contributing/large-pull-requests.md",
+                text: "# Large pull requests",
+                source: htmlUrl("doc/contributing/large-pull-requests.md"),
+                linkText: "Large Pull Requests",
+            },
+        ]);
+        expect(result.warnings).toEqual([]);
+        // Score-0 and never-follow files are not even requested
+        const requested = getContent.mock.calls.map(([args]) => args.path);
+        expect(requested).not.toContain("doc/contributing/issues.md");
+        expect(requested).not.toContain("GOVERNANCE.md");
+    });
+
+    it("stops after 3 docs", async () => {
+        const links = ["pr-1", "pr-2", "pr-3", "pr-4"].map((name) => `[PR](./${name}.md)`).join("\n");
+        const { octokit, getContent } = createFakeOctokit({
+            files: { "CONTRIBUTING.md": links, "pr-1.md": "1", "pr-2.md": "2", "pr-3.md": "3", "pr-4.md": "4" },
+        });
+
+        const result = await fetchGuidelines("acme", "app", { octokit });
+
+        expect(result.extraDocs.map((doc) => doc.path)).toEqual(["pr-1.md", "pr-2.md", "pr-3.md"]);
+        expect(getContent.mock.calls.map(([args]) => args.path)).not.toContain("pr-4.md");
+    });
+
+    it("skips a doc that would go over 150KB in total, and keeps looking", async () => {
+        const big = "a".repeat(60 * 1024);
+        const { octokit } = createFakeOctokit({
+            files: {
+                "CONTRIBUTING.md": "[PR 1](./pr-1.md) [PR 2](./pr-2.md) [PR 3](./pr-3.md) [Commits](./commits.md)",
+                "pr-1.md": big,
+                "pr-2.md": big,
+                "pr-3.md": big,
+                "commits.md": "Use conventional commits.",
+            },
+        });
+
+        const result = await fetchGuidelines("acme", "app", { octokit });
+
+        expect(result.extraDocs.map((doc) => doc.path)).toEqual(["pr-1.md", "pr-2.md", "commits.md"]);
+        expect(result.warnings).toEqual(["pr-3.md was skipped: linked docs are limited to 150KB in total."]);
+    });
+
+    it("quietly skips broken links", async () => {
+        const { octokit } = createFakeOctokit({
+            files: {
+                "CONTRIBUTING.md": "[PR guide](./docs/deleted-pr-guide.md) [Commits](./docs/commits.md)",
+                "docs/commits.md": "Use conventional commits.",
+            },
+        });
+
+        const result = await fetchGuidelines("acme", "app", { octokit });
+
+        expect(result.extraDocs.map((doc) => doc.path)).toEqual(["docs/commits.md"]);
+        expect(result.warnings).toEqual([]);
+    });
+
+    it("resolves ../ links from a CONTRIBUTING file inside .github/", async () => {
+        const { octokit } = createFakeOctokit({
+            files: {
+                ".github/CONTRIBUTING.md": "Read the [pull request guide](../docs/pull-requests.md).",
+                "docs/pull-requests.md": NODE_COMMIT_GUIDELINES,
+            },
+        });
+
+        const result = await fetchGuidelines("acme", "app", { octokit });
+
+        expect(result.extraDocs).toMatchObject([{ path: "docs/pull-requests.md", source: htmlUrl("docs/pull-requests.md") }]);
+    });
+
+    it("reads linked docs from the org-wide .github repo when CONTRIBUTING lives there", async () => {
+        const { octokit } = createFakeOctokit({
+            files: { "README.md": "# App", "docs/commits.md": "wrong repo" },
+            orgFiles: { "CONTRIBUTING.md": "[Commit rules](./docs/commits.md)", "docs/commits.md": "Sign off every commit." },
+            profile: { contributing: "CONTRIBUTING.md" },
+            contributingInOrgRepo: true,
+        });
+
+        const result = await fetchGuidelines("acme", "app", { octokit });
+
+        expect(result.extraDocs).toMatchObject([
+            { path: "docs/commits.md", text: "Sign off every commit.", source: htmlUrl("docs/commits.md", ".github") },
+        ]);
+    });
+
+    it("follows full URLs that use a renamed repo's old name, like facebook/react -> react/react", async () => {
+        // The user types acme/old-name, but GitHub says the file is in acme/app
+        const { octokit, getContent } = createFakeOctokit({
+            files: {
+                "CONTRIBUTING.md": "[Pull requests](https://github.com/acme/old-name/blob/main/docs/pull-requests.md)",
+                "docs/pull-requests.md": NODE_COMMIT_GUIDELINES,
+            },
+            profile: { contributing: "CONTRIBUTING.md" },
+        });
+
+        const result = await fetchGuidelines("acme", "old-name", { octokit });
+
+        expect(result.extraDocs).toMatchObject([
+            { path: "docs/pull-requests.md", source: htmlUrl("docs/pull-requests.md", "app") },
+        ]);
+        // Read from where the file really is, not the old name
+        expect(getContent).toHaveBeenCalledWith({ owner: "acme", repo: "app", path: "docs/pull-requests.md" });
+    });
+
+    it("does not treat full URLs to the analysed repo as same-repo when CONTRIBUTING is in the org-wide .github repo", async () => {
+        const { octokit, getContent } = createFakeOctokit({
+            files: { "docs/pull-requests.md": "in acme/app" },
+            orgFiles: {
+                "CONTRIBUTING.md": "[Pull requests](https://github.com/acme/app/blob/main/docs/pull-requests.md)",
+            },
+            profile: { contributing: "CONTRIBUTING.md" },
+            contributingInOrgRepo: true,
+        });
+
+        const result = await fetchGuidelines("acme", "app", { octokit });
+
+        expect(result.extraDocs).toEqual([]);
+        expect(getContent.mock.calls.map(([args]) => args.path)).not.toContain("docs/pull-requests.md");
+    });
+
+    it("warns with the URL when CONTRIBUTING only points to a website, like facebook/react", async () => {
+        const { octokit } = createFakeOctokit({
+            files: { "CONTRIBUTING.md": REACT_CONTRIBUTING },
+            profile: { contributing: "CONTRIBUTING.md" },
+        });
+
+        const result = await fetchGuidelines("acme", "app", { octokit });
+
+        expect(result.extraDocs).toEqual([]);
+        expect(result.warnings).toEqual([
+            "CONTRIBUTING.md mostly points to an external guide: https://reactjs.org/docs/how-to-contribute.html. " +
+                "MergeReady can't read external websites, so rules there aren't checked.",
+        ]);
+    });
+
+    it("warns about a linked doc that times out, and still returns the others", async () => {
+        const { octokit, getContent } = createFakeOctokit({
+            files: {
+                "CONTRIBUTING.md": "[PR guide](./pr.md) [Commits](./commits.md)",
+                "pr.md": "unused",
+                "commits.md": "Use conventional commits.",
+            },
+        });
+        const normal = getContent.getMockImplementation();
+        getContent.mockImplementation(async (args) => {
+            if (args.path === "pr.md") throw new GitHubTimeoutError();
+            return normal!(args);
+        });
+
+        const result = await fetchGuidelines("acme", "app", { octokit });
+
+        expect(result.extraDocs.map((doc) => doc.path)).toEqual(["commits.md"]);
+        expect(result.warnings).toEqual([
+            "Couldn't read pr.md (linked from CONTRIBUTING.md): GitHub took too long to respond. Please try again.",
+        ]);
+    });
+
+    it("stops everything when the rate limit is hit while reading a linked doc", async () => {
+        const { octokit, getContent } = createFakeOctokit({
+            files: { "CONTRIBUTING.md": "[PR guide](./pr.md)", "pr.md": "unused" },
+        });
+        const normal = getContent.getMockImplementation();
+        getContent.mockImplementation(async (args) => {
+            if (args.path === "pr.md") throw httpError(429, "Too Many Requests");
+            return normal!(args);
+        });
+
+        await expect(fetchGuidelines("acme", "app", { octokit })).rejects.toBeInstanceOf(RateLimitError);
     });
 });

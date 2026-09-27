@@ -70,12 +70,13 @@ remind me of this list first.
 - Never add features, libraries or files I didn't approve.
 
 ## Current status
-Day 2: fetchGuidelines done, tested on 3 real repos.
-Next: fetch issue and PR data (assignees, comments, open PRs, commits, files).
+Day 2: guidelines fetching complete incl. linked docs. Next: fetch issue and PR data.
 
 ## Known limitations
-- CONTRIBUTING files that only link to other docs (nodejs/node,
-  facebook/react) give little to analyse. Planned fix on 28 Sep:
-  follow same-repo .md links about pull requests/commits, max 3 files.
+- Linked docs: only one level deep, max 3 files / 150KB, picked by
+  file name and link text only. Repos whose doc names don't mention
+  PR/commit/first-timer words (e.g. stdlib-js/stdlib) get no extra
+  docs. Links to folders are not followed. External guides
+  (facebook/react) can't be read; a warning shows the URL.
 - Timeout is per request; a total time budget for the whole analysis
   will be added in the API route.

@@ -1,9 +1,11 @@
 import type { Octokit } from "@octokit/rest";
 import { createOctokit } from "./client";
+import { findDocLinks, findExternalGuide, type RepoName } from "./docLinks";
 import {
     InvalidRepoError,
     MissingTokenError,
     RateLimitError,
+    GitHubError,
     getHttpStatus,
     toGitHubError,
 } from "./errors";
@@ -11,11 +13,29 @@ import {
 // Files bigger than this are too big to send to the AI later
 export const MAX_FILE_BYTES = 100 * 1024;
 
+// Limits for docs that CONTRIBUTING links to (one level deep only)
+export const MAX_EXTRA_DOCS = 3;
+export const MAX_EXTRA_TOTAL_BYTES = 150 * 1024;
+// Stop trying after this many links, so broken links can't cause lots of requests
+const MAX_EXTRA_ATTEMPTS = 6;
+
+// A same-repo doc that CONTRIBUTING links to, e.g. doc/contributing/pull-requests.md
+export type ExtraDoc = {
+    path: string;
+    text: string;
+    // Clickable GitHub link (html_url), so every rule can be traced to this file
+    source: string;
+    // The link text in CONTRIBUTING, e.g. "Pull Requests"
+    linkText: string;
+};
+
 export type Guidelines = {
     contributing: string | null;
     prTemplate: string | null;
     // Clickable GitHub links (html_url) to where each file came from
     sources: { contributing: string | null; prTemplate: string | null };
+    // Docs linked from CONTRIBUTING, best first (max 3)
+    extraDocs: ExtraDoc[];
     // Problems the user should know about, e.g. "file too large"
     warnings: string[];
 };
@@ -30,7 +50,7 @@ type FetchOptions = {
 type FileLocation = { owner: string; repo: string; path: string };
 
 type FileResult =
-    | { status: "found"; text: string; htmlUrl: string }
+    | { status: "found"; text: string; htmlUrl: string; location: FileLocation }
     | { status: "missing" }
     | { status: "unusable"; warning: string };
 
@@ -76,6 +96,22 @@ export async function fetchGuidelines(
     if (contributing.status === "unusable") warnings.push(contributing.warning);
     if (prTemplate.status === "unusable") warnings.push(prTemplate.warning);
 
+    // 5. Follow CONTRIBUTING's links to other docs in the same repo
+    let extraDocs: ExtraDoc[] = [];
+    if (contributing.status === "found") {
+        const sameRepos = sameRepoNames(contributing.location, { owner, repo });
+        extraDocs = await fetchExtraDocs(octokit, contributing.text, contributing.location, sameRepos, warnings);
+
+        // Nothing to follow in the repo? Maybe the real guide is on a website.
+        const externalGuide = extraDocs.length === 0 ? findExternalGuide(contributing.text, sameRepos) : null;
+        if (externalGuide) {
+            warnings.push(
+                `${contributing.location.path} mostly points to an external guide: ${externalGuide}. ` +
+                    "MergeReady can't read external websites, so rules there aren't checked."
+            );
+        }
+    }
+
     return {
         contributing: contributing.status === "found" ? contributing.text : null,
         prTemplate: prTemplate.status === "found" ? prTemplate.text : null,
@@ -83,6 +119,7 @@ export async function fetchGuidelines(
             contributing: contributing.status === "found" ? contributing.htmlUrl : null,
             prTemplate: prTemplate.status === "found" ? prTemplate.htmlUrl : null,
         },
+        extraDocs,
         warnings,
     };
 }
@@ -173,7 +210,66 @@ async function readFile(octokit: Octokit, location: FileLocation): Promise<FileR
 
     const htmlUrl =
         data.html_url ?? `https://github.com/${location.owner}/${location.repo}/blob/HEAD/${location.path}`;
-    return { status: "found", text, htmlUrl };
+    return { status: "found", text, htmlUrl, location };
+}
+
+// Which owner/repo names mean "the repo CONTRIBUTING is in" inside full GitHub URLs:
+// - where the file really is (e.g. react/react), and
+// - the name the user typed (e.g. facebook/react), because GitHub redirects renamed repos.
+// Exception: a file from the org-wide "<owner>/.github" repo is in a different repo
+// from the one being analysed, so the typed name doesn't count there.
+function sameRepoNames(fileLocation: FileLocation, requested: RepoName): RepoName[] {
+    const inOrgWideRepo = fileLocation.repo.toLowerCase() === ".github" && requested.repo.toLowerCase() !== ".github";
+    const fileRepo = { owner: fileLocation.owner, repo: fileLocation.repo };
+    return inOrgWideRepo ? [fileRepo] : [fileRepo, requested];
+}
+
+// Reads the best docs that CONTRIBUTING links to. These are a bonus, so
+// most problems only add a warning instead of failing the whole analysis.
+async function fetchExtraDocs(
+    octokit: Octokit,
+    contributingText: string,
+    contributing: FileLocation,
+    sameRepos: RepoName[],
+    warnings: string[]
+): Promise<ExtraDoc[]> {
+    const docs: ExtraDoc[] = [];
+    let totalBytes = 0;
+    // Links are relative to the repo the CONTRIBUTING file is really in
+    const links = findDocLinks(contributingText, contributing.path, sameRepos).slice(0, MAX_EXTRA_ATTEMPTS);
+
+    for (const link of links) {
+        if (docs.length >= MAX_EXTRA_DOCS) break;
+
+        let result: FileResult;
+        try {
+            result = await readFile(octokit, { owner: contributing.owner, repo: contributing.repo, path: link.path });
+        } catch (err) {
+            // Rate limit / bad token will break everything after this too, so stop
+            if (err instanceof RateLimitError || err instanceof MissingTokenError) throw err;
+            const message = err instanceof GitHubError ? err.message : "Unknown error.";
+            warnings.push(`Couldn't read ${link.path} (linked from ${contributing.path}): ${message}`);
+            continue;
+        }
+
+        // A broken link is the repo's problem, not the user's: skip quietly
+        if (result.status === "missing") continue;
+        if (result.status === "unusable") {
+            warnings.push(result.warning);
+            continue;
+        }
+
+        const bytes = Buffer.byteLength(result.text);
+        if (totalBytes + bytes > MAX_EXTRA_TOTAL_BYTES) {
+            const limitKb = MAX_EXTRA_TOTAL_BYTES / 1024;
+            warnings.push(`${link.path} was skipped: linked docs are limited to ${limitKb}KB in total.`);
+            continue;
+        }
+
+        totalBytes += bytes;
+        docs.push({ path: link.path, text: result.text, source: result.htmlUrl, linkText: link.linkText });
+    }
+    return docs;
 }
 
 // GitHub sends file content as base64. Returns null if it isn't valid UTF-8 text.

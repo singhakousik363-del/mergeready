@@ -30,6 +30,10 @@ async function main(): Promise<void> {
             const result = await fetchGuidelines(owner ?? "", repo ?? "");
             describeFile("CONTRIBUTING", result.contributing, result.sources.contributing);
             describeFile("PR template ", result.prTemplate, result.sources.prTemplate);
+            console.log(`  Linked docs followed: ${result.extraDocs.length}`);
+            for (const doc of result.extraDocs) {
+                console.log(`    - "${doc.linkText}" -> ${doc.source} (${Math.round(Buffer.byteLength(doc.text) / 1024)}KB)`);
+            }
             for (const warning of result.warnings) console.log(`  WARNING: ${warning}`);
         } catch (err) {
             // Only print our friendly message, never the raw error (could contain request details)
