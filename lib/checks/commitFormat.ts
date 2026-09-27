@@ -1,6 +1,6 @@
 import type { PullRequestData } from "../github/fetchPullRequest";
 import type { Rule } from "../rules/types";
-import { evidenceOf, failStatus, plural, rulesOfType, shortSha, type Check } from "./types";
+import { evidenceOf, failStatus, plural, rulesOfType, shortSha, steps, type Check, type FixStep } from "./types";
 
 // "type(scope)!: description" with a lowercase type, e.g. "fix(parser): handle tabs"
 const CONVENTIONAL = /^([a-z]+)(?:\([^)]*\))?!?: \S/;
@@ -72,8 +72,10 @@ function checkTitle(rules: ConventionalRule[], pr: PullRequestData): Check {
             : "The PR title follows Conventional Commits.",
         howToFix: problem
             ? [
-                  'On the PR page, click "Edit" next to the title.',
-                  `Change it to "type: description", e.g. "fix: correct typo in README".`,
+                  ...steps(
+                      'On the PR page, click "Edit" next to the title.',
+                      `Change it to "type: description", e.g. "fix: correct typo in README".`
+                  ),
                   ...allowedTypesHint(allowed),
               ]
             : [],
@@ -94,19 +96,26 @@ function findProblem(subject: string, allowed: string[] | null): string | null {
     return null;
 }
 
-function fixCommitsSteps(badCount: number, total: number, allowed: string[] | null): string[] {
-    const reword =
+function fixCommitsSteps(badCount: number, total: number, allowed: string[] | null): FixStep[] {
+    const reword: FixStep[] =
         total === 1
-            ? ['Rewrite the message: git commit --amend -m "fix: short description"']
+            ? [
+                  {
+                      text: "Rewrite the message (replace the example with your own words):",
+                      command: 'git commit --amend -m "fix: short description"',
+                  },
+              ]
             : [
-                  `Open your commits for editing: git rebase -i HEAD~${total}`,
-                  `Change "pick" to "reword" for the ${badCount === 1 ? "commit" : "commits"} listed below, save, and write new messages.`,
+                  { text: "Open your commits for editing:", command: `git rebase -i HEAD~${total}` },
+                  {
+                      text: `Change "pick" to "reword" for the ${badCount === 1 ? "commit" : "commits"} listed below, save, and write new messages.`,
+                  },
               ];
-    return [...reword, ...allowedTypesHint(allowed), "Update the PR: git push --force-with-lease"];
+    return [...reword, ...allowedTypesHint(allowed), { text: "Update the PR:", command: "git push --force-with-lease" }];
 }
 
-function allowedTypesHint(allowed: string[] | null): string[] {
-    return allowed ? [`Allowed types: ${allowed.join(", ")}`] : [];
+function allowedTypesHint(allowed: string[] | null): FixStep[] {
+    return allowed ? steps(`Allowed types: ${allowed.join(", ")}`) : [];
 }
 
 function firstLine(message: string): string {

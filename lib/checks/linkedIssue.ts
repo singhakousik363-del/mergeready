@@ -1,6 +1,6 @@
 import type { PullRequestData } from "../github/fetchPullRequest";
 import type { Rule } from "../rules/types";
-import { evidenceOf, failStatus, rulesOfType, type Check } from "./types";
+import { evidenceOf, failStatus, rulesOfType, steps, type Check } from "./types";
 
 // Does the PR say which issue it fixes ("Fixes #123")? Plus a warning when it
 // targets another branch, where GitHub ignores "Fixes #123".
@@ -37,10 +37,10 @@ export function checkLinkedIssue(rules: Rule[], pr: PullRequestData): Check[] {
             status: failStatus(issueRules[0].confidence),
             // Many rules only apply "if your PR fixes an issue", so say it that way
             message: 'This PR doesn\'t link an issue. If it fixes one, add a line like "Fixes #123".',
-            howToFix: [
+            howToFix: steps(
                 'Edit the PR description and add a line like "Fixes #123" (with your issue number).',
                 'Only closing words work: "Fixes", "Closes" or "Resolves". A plain "#123" or "Refs #123" doesn\'t link it.',
-            ],
+            ),
             evidence: {
                 rules: evidenceOf(issueRules),
                 observed: ['No "Fixes/Closes/Resolves #number" for an issue in this repo'],
@@ -56,10 +56,10 @@ export function checkLinkedIssue(rules: Rule[], pr: PullRequestData): Check[] {
             stage: "pr",
             status: "warn",
             message: `This PR targets "${pr.baseBranch}", not the default branch, so GitHub won't close ${linked} automatically when it's merged.`,
-            howToFix: [
+            howToFix: steps(
                 "If the repo wants PRs on the default branch, change the base branch (Edit, next to the PR title).",
                 "Otherwise, remind maintainers to close the issue by hand after merging.",
-            ],
+            ),
             evidence: { rules: evidenceOf(issueRules), observed: [`Base branch: ${pr.baseBranch}`] },
         });
     }

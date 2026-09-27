@@ -89,22 +89,26 @@ describe("checkCommitFormat: failures", () => {
             'Commit c3d4e5f "feature: add login": type "feature" is not allowed here',
         ]);
         expect(check.howToFix).toEqual([
-            "Open your commits for editing: git rebase -i HEAD~3",
-            'Change "pick" to "reword" for the commits listed below, save, and write new messages.',
-            "Allowed types: feat, fix, docs",
-            "Update the PR: git push --force-with-lease",
+            { text: "Open your commits for editing:", command: "git rebase -i HEAD~3" },
+            { text: 'Change "pick" to "reword" for the commits listed below, save, and write new messages.' },
+            { text: "Allowed types: feat, fix, docs" },
+            { text: "Update the PR:", command: "git push --force-with-lease" },
         ]);
     });
 
     it("suggests --amend for a single commit", () => {
         const [check] = checkCommitFormat([COMMITLINT_RULE], pr({ commits: [commit("a1b2c3d", "Fixed it")] }));
-        expect(check.howToFix[0]).toBe('Rewrite the message: git commit --amend -m "fix: short description"');
+        expect(check.howToFix[0]).toEqual({
+            text: "Rewrite the message (replace the example with your own words):",
+            command: 'git commit --amend -m "fix: short description"',
+        });
     });
 
     it("yellow for a history rule on the PR title", () => {
         const [check] = checkCommitFormat([STDLIB_HISTORY_RULE], pr({ title: "Rayleigh MGF fix" }));
         expect(check.status).toBe("warn");
-        expect(check.howToFix[0]).toBe('On the PR page, click "Edit" next to the title.');
+        // Editing a title happens on GitHub: no command to copy
+        expect(check.howToFix[0]).toEqual({ text: 'On the PR page, click "Edit" next to the title.' });
     });
 
     it("makes two checks when rules cover both commits and the title", () => {

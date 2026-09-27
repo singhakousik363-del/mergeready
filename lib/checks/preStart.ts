@@ -1,6 +1,6 @@
 import type { IssueComment, IssueData } from "../github/fetchIssue";
 import type { Rule } from "../rules/types";
-import { evidenceOf, failStatus, rulesOfType, type Check, type CheckStatus } from "./types";
+import { evidenceOf, failStatus, rulesOfType, steps, type Check, type CheckStatus, type FixStep } from "./types";
 
 // No push for this long = the repo may not be maintained any more
 export const INACTIVE_DAYS = 180;
@@ -53,7 +53,7 @@ function checkArchived(issue: IssueData): Check {
         message: archived
             ? "This repo is archived (read-only). New pull requests can't be merged."
             : "The repo is not archived.",
-        howToFix: archived ? ["Pick an issue in a repo that is still active."] : [],
+        howToFix: archived ? steps("Pick an issue in a repo that is still active.") : [],
         evidence: { rules: [], observed: [archived ? "GitHub marks this repo as archived." : "Not archived."] },
     };
 }
@@ -66,7 +66,7 @@ function checkIssueOpen(issue: IssueData): Check {
         stage: "issue",
         status: closed ? "fail" : "pass",
         message: closed ? "This issue is already closed, so there's nothing left to fix." : "The issue is open.",
-        howToFix: closed ? ["Pick an open issue instead."] : [],
+        howToFix: closed ? steps("Pick an open issue instead.") : [],
         evidence: { rules: [], observed: [`Issue state: ${issue.state}`] },
     };
 }
@@ -86,7 +86,7 @@ function checkActivity(issue: IssueData, now: Date): Check {
         message: inactive
             ? `Nothing was pushed to this repo for ${days} days. Maintainers may not review new pull requests.`
             : "The repo is active.",
-        howToFix: inactive ? ["Check recent issues and PRs to see if maintainers still reply before you start."] : [],
+        howToFix: inactive ? steps("Check recent issues and PRs to see if maintainers still reply before you start.") : [],
         // Honest: bots' pushes count too, so an "active" repo may only have bot activity
         evidence: { rules: [], observed: [`Last push: ${pushedAt.slice(0, 10)} (bots' pushes count too)`] },
     };
@@ -97,7 +97,7 @@ function checkAssignment(issue: IssueData, rules: Rule[], isMe: (login: string) 
     const strongest = assignRules[0];
     const observed = [`Assignees: ${issue.assignees.join(", ") || "none"}`];
 
-    function result(status: CheckStatus, message: string, howToFix: string[]): Check {
+    function result(status: CheckStatus, message: string, howToFix: FixStep[]): Check {
         return {
             id: "issue-assignment",
             ruleType: strongest ? "issue-assigned" : null,
@@ -114,20 +114,21 @@ function checkAssignment(issue: IssueData, rules: Rule[], isMe: (login: string) 
     }
     if (issue.assignees.length > 0) {
         const names = issue.assignees.map((a) => `@${a}`).join(", ");
-        return result("fail", `This issue is assigned to ${names}. Someone else is already working on it.`, [
-            "Pick a different issue, or",
-            `ask in the issue whether ${names} is still working on it before you start.`,
-        ]);
+        return result(
+            "fail",
+            `This issue is assigned to ${names}. Someone else is already working on it.`,
+            steps("Pick a different issue, or", `ask in the issue whether ${names} is still working on it before you start.`)
+        );
     }
     // Nobody is assigned: only a problem when the repo asks you to get assigned first
     if (strongest) {
         return result(
             failStatus(strongest.confidence),
             "This repo asks you to be assigned before you start, and nobody is assigned yet.",
-            [
+            steps(
                 'Comment on the issue, e.g. "Hi! I\'d like to work on this. Could you assign it to me?"',
-                "Wait until a maintainer assigns you, then start.",
-            ]
+                "Wait until a maintainer assigns you, then start."
+            )
         );
     }
     return result("pass", "Nobody is assigned to this issue yet.", []);
@@ -178,10 +179,10 @@ function checkClaims(issue: IssueData, isMe: (login: string) => boolean, now: Da
                 active.length === 1
                     ? "Someone else said in the comments that they want to work on this."
                     : `${active.length} people said in the comments that they want to work on this.`,
-            howToFix: [
+            howToFix: steps(
                 "Read their comments and any pull requests they opened.",
-                "If they are active, pick another issue or offer to help instead.",
-            ],
+                "If they are active, pick another issue or offer to help instead."
+            ),
             evidence: { rules: [], observed: active.map(describeClaim) },
         });
     }
@@ -193,10 +194,10 @@ function checkClaims(issue: IssueData, isMe: (login: string) => boolean, now: Da
             stage: "issue",
             status: "warn",
             message: `Claimed ${oldest} days ago with no PR yet. Ask a maintainer if the issue is still taken.`,
-            howToFix: [
+            howToFix: steps(
                 "Comment on the issue and ask politely whether it is still being worked on.",
-                "Start only after someone confirms it is free.",
-            ],
+                "Start only after someone confirms it is free."
+            ),
             evidence: { rules: [], observed: stale.map(describeClaim) },
         });
     }
@@ -225,10 +226,10 @@ function checkOpenPullRequests(issue: IssueData, isMe: (login: string) => boolea
         howToFix:
             others.length === 0
                 ? []
-                : [
+                : steps(
                       "Open those pull requests and check whether they really fix this issue.",
-                      "If one does and it is active, pick another issue or help review it.",
-                  ],
+                      "If one does and it is active, pick another issue or help review it."
+                  ),
         evidence: {
             rules: [],
             observed: others.map((pr) => `#${pr.number} by @${pr.author}${pr.draft ? " (draft)" : ""}: ${pr.title} — ${pr.url}`),

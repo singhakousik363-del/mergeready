@@ -9,7 +9,7 @@ import { checkLinkedIssue } from "./linkedIssue";
 import { checkPreStart } from "./preStart";
 import { checkPrTemplate } from "./prTemplate";
 import { checkTestsChanged } from "./testsChanged";
-import type { Check } from "./types";
+import { steps, type Check } from "./types";
 
 // What the user pasted
 export type RunChecksInput =
@@ -62,7 +62,7 @@ function checkMergeState(pr: PullRequestData, otherChecks: Check[]): Check {
             ...base,
             status: "fail",
             message: "This PR was closed without being merged.",
-            howToFix: ["Read the last comments on the PR to see why, then ask if a new PR would be welcome."],
+            howToFix: steps("Read the last comments on the PR to see why, then ask if a new PR would be welcome."),
         };
     }
     if (pr.draft) {
@@ -70,7 +70,7 @@ function checkMergeState(pr: PullRequestData, otherChecks: Check[]): Check {
             ...base,
             status: "warn",
             message: 'This PR is a draft. Maintainers usually wait until it\'s marked "Ready for review".',
-            howToFix: ['When you\'re done, click "Ready for review" at the bottom of the PR page.'],
+            howToFix: steps('When you\'re done, click "Ready for review" at the bottom of the PR page.'),
         };
     }
     const hasRed = otherChecks.some((c) => c.status === "fail");

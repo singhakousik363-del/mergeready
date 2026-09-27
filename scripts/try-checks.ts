@@ -28,7 +28,7 @@ function print(result: CheckResults): void {
         if (check.status === "skip" || check.status === "pass") continue;
         for (const seen of check.evidence.observed) console.log(`      seen: ${seen}`);
         for (const rule of check.evidence.rules.slice(0, 2)) console.log(`      rule [${rule.confidence}]: "${rule.sourceQuote}" ${rule.sourceUrl}`);
-        for (const step of check.howToFix) console.log(`      fix: ${step}`);
+        for (const step of check.howToFix) console.log(`      fix: ${step.text}${step.command ? `  $ ${step.command}` : ""}`);
     }
     for (const warning of result.warnings) console.log(`  WARNING: ${warning}`);
 }

@@ -1,6 +1,6 @@
 import type { ChangedFile, PullRequestData } from "../github/fetchPullRequest";
 import type { Rule } from "../rules/types";
-import { evidenceOf, failStatus, plural, rulesOfType, type Check } from "./types";
+import { evidenceOf, failStatus, plural, rulesOfType, steps, type Check } from "./types";
 
 // Test files, by the usual naming conventions:
 // test/ tests/ __tests__/ spec/ folders, x.test.js, x.spec.ts, x_test.go, test_x.py, XTest.java
@@ -42,10 +42,10 @@ export function checkTestsChanged(rules: Rule[], pr: PullRequestData): Check {
         ...base,
         status: failStatus(testRules[0].confidence),
         message: `You changed ${plural(code.length, "code file")} but no test files.`,
-        howToFix: [
+        howToFix: steps(
             "Add or update a test that fails without your change and passes with it.",
             "Look at how existing tests are named in this repo (for example a test/ folder or *.test.js files) and follow that.",
-        ],
+        ),
         evidence: { ...evidence, observed: [...observed, ...shown] },
     };
 }

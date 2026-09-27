@@ -13,6 +13,15 @@ export type CheckStatus = "pass" | "fail" | "warn" | "manual" | "pending" | "ski
 
 export type EvidenceRule = { sourceQuote: string; sourceUrl: string; confidence: Confidence };
 
+// One "how to fix" step. command is only set by hand in each check, never
+// guessed from the text: a wrong copied git command can hurt a beginner.
+export type FixStep = { text: string; command?: string };
+
+// Steps that are only text: steps("Do this.", "Then this.")
+export function steps(...texts: string[]): FixStep[] {
+    return texts.map((text) => ({ text }));
+}
+
 export type Check = {
     // Stable name, e.g. "dco-signoff" or "template-section:Description"
     id: string;
@@ -22,8 +31,9 @@ export type Check = {
     status: CheckStatus;
     // Plain English a beginner understands
     message: string;
-    // Concrete steps, e.g. ["git commit --amend -s --no-edit", "git push --force-with-lease"]
-    howToFix: string[];
+    // Concrete steps. A step's command is an exact shell command the UI shows
+    // with a copy button, e.g. { text: "Sign off:", command: "git commit --amend -s --no-edit" }
+    howToFix: FixStep[];
     evidence: {
         // The rules behind this check, strongest first
         rules: EvidenceRule[];

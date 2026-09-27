@@ -1,7 +1,7 @@
 import type { PullRequestData } from "../github/fetchPullRequest";
 import { parseMarkdownBlocks, toPlainText, type Block } from "../rules/sentences";
 import type { PrTemplateDetails, Rule } from "../rules/types";
-import { evidenceOf, failStatus, plural, rulesOfType, type Check, type CheckStatus } from "./types";
+import { evidenceOf, failStatus, plural, rulesOfType, steps, type Check, type CheckStatus, type FixStep } from "./types";
 
 type TemplateRule = Rule & { type: "pr-template" };
 type SectionRule = TemplateRule & { details: Extract<PrTemplateDetails, { kind: "section" }> };
@@ -80,7 +80,7 @@ function readBody(markdown: string): Body {
 function checkSection(rule: SectionRule, body: Body): Check {
     const { heading, templateText, optional } = rule.details;
     const content = body.sections.get(normalize(heading));
-    const result = (status: CheckStatus, message: string, howToFix: string[], observed: string): Check => ({
+    const result = (status: CheckStatus, message: string, howToFix: FixStep[], observed: string): Check => ({
         id: `template-section:${heading}`,
         ruleType: "pr-template",
         stage: "pr",
@@ -97,7 +97,7 @@ function checkSection(rule: SectionRule, body: Body): Check {
         return result(
             failStatus(rule.confidence),
             missing ? `The "${heading}" section from the template is missing.` : `The "${heading}" section is empty.`,
-            [`Edit the PR description and ${missing ? `add a "${heading}" section` : `write something under "${heading}"`}.`],
+            steps(`Edit the PR description and ${missing ? `add a "${heading}" section` : `write something under "${heading}"`}.`),
             observed
         );
     }
@@ -108,7 +108,7 @@ function checkSection(rule: SectionRule, body: Body): Check {
             // Leftover placeholder in an optional section: tidy up, but not red
             optional ? "warn" : failStatus(rule.confidence),
             `The "${heading}" section still has placeholder text from the template.`,
-            [`Replace ${placeholder} with your own words${optional ? ", or delete the section" : ""}.`],
+            steps(`Replace ${placeholder} with your own words${optional ? ", or delete the section" : ""}.`),
             `Found ${placeholder}`
         );
     }
@@ -119,7 +119,7 @@ function checkSection(rule: SectionRule, body: Body): Check {
         return result(
             "manual",
             `The "${heading}" section is exactly the same as the template. Check that it really answers the question.`,
-            [`Read the "${heading}" section and change it if it doesn't describe your PR.`],
+            steps(`Read the "${heading}" section and change it if it doesn't describe your PR.`),
             "Text is unchanged from the template"
         );
     }
@@ -156,10 +156,10 @@ function checkGroup(groupId: number, rules: CheckboxRule[], body: Body): Check {
                       ...base,
                       status: failed,
                       message: `${label}: ${plural(mustTick.length, "required box")} ${mustTick.length === 1 ? "is" : "are"} not ticked.`,
-                      howToFix: [
+                      howToFix: steps(
                           "Do what each box says first. Only then edit the PR description and change [ ] to [x].",
                           ...mustTick.map((s) => `- ${s.rule.details.text}`),
-                      ],
+                      ),
                   };
         case "pick-at-least-one":
             return ticked.length > 0
@@ -168,7 +168,7 @@ function checkGroup(groupId: number, rules: CheckboxRule[], body: Body): Check {
                       ...base,
                       status: failed,
                       message: `${label}: tick at least one box that describes your PR.`,
-                      howToFix: ["Edit the PR description and change [ ] to [x] for the option that fits your PR."],
+                      howToFix: steps("Edit the PR description and change [ ] to [x] for the option that fits your PR."),
                   };
         case "optional":
             return { ...base, status: "pass", message: `${label}: optional, tick only the ones that apply.`, howToFix: [] };
@@ -177,7 +177,7 @@ function checkGroup(groupId: number, rules: CheckboxRule[], body: Body): Check {
                 ...base,
                 status: "manual",
                 message: `${label}: the template doesn't say which boxes you must tick. Check them yourself.`,
-                howToFix: ["Read these boxes and tick the ones that are true for your PR."],
+                howToFix: steps("Read these boxes and tick the ones that are true for your PR."),
             };
     }
 }

@@ -63,6 +63,9 @@ Built solo for the FirstCommit hackathon (Devpost), deadline 30 Sep 2026.
   left unchanged (e.g. stdlib's "No.") is "manual", not a failure;
   "{{...}}" placeholders are failures. The PR description generator
   never ticks a box (it unticks pre-ticked ones).
+- howToFix is structured: { text, command? }[]. Commands are written by
+  hand in each check (and tested exactly), never guessed from text: a
+  wrong copied git command can hurt a beginner.
 
 ## Server decisions (approved)
 - POST /api/analyze { url, username? }: 25s budget for the whole

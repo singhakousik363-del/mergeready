@@ -80,15 +80,17 @@ describe("checkPrTemplate: stdlib's template pasted in without changes", () => {
     it("names the placeholder to replace", () => {
         const description = checks.find((c) => c.id === "template-section:Description");
         expect(description?.howToFix).toEqual([
-            "Replace {{TODO: add description describing what this pull request does}} with your own words.",
+            { text: "Replace {{TODO: add description describing what this pull request does}} with your own words." },
         ]);
     });
 
     it("never tells the user to just tick a box: do what it says first", () => {
         const checklist = checks.find((c) => c.id === "template-checkboxes:1");
-        expect(checklist?.howToFix[0]).toBe(
-            "Do what each box says first. Only then edit the PR description and change [ ] to [x]."
-        );
+        expect(checklist?.howToFix[0]).toEqual({
+            text: "Do what each box says first. Only then edit the PR description and change [ ] to [x].",
+        });
+        // Nothing here is a command to copy
+        expect(checklist?.howToFix.every((step) => step.command === undefined)).toBe(true);
     });
 });
 

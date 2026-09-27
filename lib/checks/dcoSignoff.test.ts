@@ -43,10 +43,10 @@ describe("checkDcoSignoff", () => {
             'Commit 2077076 "fix: resolve remaining lint errors in Rayleigh MGF files" has no Signed-off-by line',
         ]);
         expect(check.howToFix).toEqual([
-            "Check your name and email: git config user.name && git config user.email",
-            "Add the sign-off to all 3 commits: git rebase --signoff HEAD~3",
-            "Update the PR: git push --force-with-lease",
-            "Next time, use git commit -s to sign off as you commit.",
+            { text: "Check your name and email:", command: "git config user.name && git config user.email" },
+            { text: "Add the sign-off to all 3 commits:", command: "git rebase --signoff HEAD~3" },
+            { text: "Update the PR:", command: "git push --force-with-lease" },
+            { text: "Next time, sign off as you commit:", command: "git commit -s" },
         ]);
     });
 
@@ -54,7 +54,7 @@ describe("checkDcoSignoff", () => {
         const one = { ...REAL_PR, commits: REAL_PR.commits.slice(0, 1) };
         const check = checkDcoSignoff([NODE_PROSE_RULE], one);
         expect(check.status).toBe("warn");
-        expect(check.howToFix[1]).toBe("Add the sign-off to your commit: git commit --amend -s --no-edit");
+        expect(check.howToFix[1]).toEqual({ text: "Add the sign-off to your commit:", command: "git commit --amend -s --no-edit" });
     });
 
     it("passes when every commit is signed off, ignoring merge commits", () => {

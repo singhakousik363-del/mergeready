@@ -1,6 +1,6 @@
 import type { PullRequestData } from "../github/fetchPullRequest";
 import type { Rule } from "../rules/types";
-import { evidenceOf, failStatus, plural, rulesOfType, shortSha, type Check } from "./types";
+import { evidenceOf, failStatus, plural, rulesOfType, shortSha, type Check, type FixStep } from "./types";
 
 // Every commit needs a "Signed-off-by: Name <email>" line when the repo uses DCO
 export function checkDcoSignoff(rules: Rule[], pr: PullRequestData): Check {
@@ -42,16 +42,16 @@ export function checkDcoSignoff(rules: Rule[], pr: PullRequestData): Check {
     };
 }
 
-function fixSteps(total: number): string[] {
-    const sign =
+function fixSteps(total: number): FixStep[] {
+    const sign: FixStep =
         total === 1
-            ? "Add the sign-off to your commit: git commit --amend -s --no-edit"
-            : `Add the sign-off to all ${total} commits: git rebase --signoff HEAD~${total}`;
+            ? { text: "Add the sign-off to your commit:", command: "git commit --amend -s --no-edit" }
+            : { text: `Add the sign-off to all ${total} commits:`, command: `git rebase --signoff HEAD~${total}` };
     return [
         // The sign-off uses these, so they must be your real name and email
-        "Check your name and email: git config user.name && git config user.email",
+        { text: "Check your name and email:", command: "git config user.name && git config user.email" },
         sign,
-        "Update the PR: git push --force-with-lease",
-        "Next time, use git commit -s to sign off as you commit.",
+        { text: "Update the PR:", command: "git push --force-with-lease" },
+        { text: "Next time, sign off as you commit:", command: "git commit -s" },
     ];
 }
