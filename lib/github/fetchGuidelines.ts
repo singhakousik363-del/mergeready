@@ -9,7 +9,7 @@ import {
     toGitHubError,
 } from "./errors";
 
-// Files bigger than this are too big to send to the AI later
+// Files bigger than this are skipped with a warning (keeps parsing fast)
 export const MAX_FILE_BYTES = 100 * 1024;
 
 // Limits for docs that CONTRIBUTING links to (one level deep only)

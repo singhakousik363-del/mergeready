@@ -13,11 +13,25 @@ Pull Request merged. Given a GitHub repo + issue or PR link, it:
 Built solo for the FirstCommit hackathon (Devpost), deadline 30 Sep 2026.
 
 ## Core architecture rule (never break this)
-- AI (Gemini) ONLY reads the repo's written guidelines and converts them
-  into a structured JSON checklist. Every rule MUST include the exact
-  source quote from the guideline file.
+- No AI API anywhere. Rules come only from the repo's config files and
+  exact sentences in its docs, extracted by deterministic TypeScript in
+  /lib/rules. Every rule MUST have a sourceQuote (exact text from the
+  file) and a sourceUrl (link to where it came from).
 - All actual verification is deterministic TypeScript code in
-  /lib/checks. AI never decides pass/fail.
+  /lib/checks.
+- Rule confidence: config > template > prose. Relevant CONTRIBUTING
+  sections are also shown to the user as "read this yourself".
+
+## Rule extraction decisions (approved)
+- Config files (commitlint, package.json "commitlint", .github/dco.yml,
+  workflows) are fetched with ONE GitHub GraphQL query.
+- YAML is parsed with the `yaml` package (parse only). JS configs are
+  never executed; they are read with regex only.
+- PR template checkboxes are classified, never all required:
+  "checklist"/"before submitting"/"I have"/"I confirm"/"make sure" ->
+  required; "type of change"/"select one"/"check one"/"choose" -> pick
+  at least one; "optional"/"if applicable"/"check all that apply" ->
+  optional; unclear -> unknown (manual item, never a failure).
 
 ## Tech
 - Next.js (App Router) + TypeScript + Tailwind
@@ -25,7 +39,6 @@ Built solo for the FirstCommit hackathon (Devpost), deadline 30 Sep 2026.
   data. Before writing Next.js-specific code (routes, config, layout),
   check the docs in node_modules/next/dist/docs.
 - GitHub REST API via Octokit (server-side, token in GITHUB_TOKEN)
-- Gemini API via @google/genai (key in GEMINI_API_KEY)
 - Vitest for tests of every check function
 - Deployed on Vercel
 - Never hardcode secrets. Use .env.local and keep it in .gitignore.
@@ -43,10 +56,10 @@ remind me of this list first.
   mock data. Test fixtures should use real CONTRIBUTING files and
   PR templates from popular repos.
 - Never crash: handle rate limits, private/missing repos, 404s,
-  huge files, repos with no guidelines, and bad AI output. Every
+  huge files, repos with no guidelines, and broken config files. Every
   failure shows a clear, friendly message.
-- AI output is untrusted: validate Gemini JSON with zod, retry once,
-  then fall back gracefully.
+- Repo files are untrusted input: parse them defensively (bad JSON/YAML
+  gives a warning, never a crash) and never execute them.
 - TypeScript strict, no `any`, lint clean.
 - Security: tokens only on the server, never logged or sent to the
   browser. Validate all user input.
@@ -71,7 +84,8 @@ remind me of this list first.
 
 ## Current status
 Day 2: GitHub data layer done (guidelines, linked docs, issue, PR,
-new-contributor detection). Next: Gemini rule extraction.
+new-contributor detection). Decided: no AI API. Next: deterministic
+rule extraction in /lib/rules.
 
 ## Known limitations
 - Linked docs: only one level deep, max 3 files / 150KB, picked by
