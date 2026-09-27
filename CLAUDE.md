@@ -78,5 +78,8 @@ Day 2: guidelines fetching complete incl. linked docs. Next: fetch issue and PR 
   PR/commit/first-timer words (e.g. stdlib-js/stdlib) get no extra
   docs. Links to folders are not followed. External guides
   (facebook/react) can't be read; a warning shows the URL.
+- stdlib's commit rules link to a folder (docs/style-guides/git), so
+  they are missed. Full GitHub URLs are always read from the default
+  branch, and branch names with "/" give a wrong path (skipped as 404).
 - Timeout is per request; a total time budget for the whole analysis
   will be added in the API route.
