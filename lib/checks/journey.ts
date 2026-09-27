@@ -11,7 +11,7 @@ export type JourneyStep = {
 };
 
 // Worst first: a stage shows the worst status of its checks
-const WORST_FIRST: CheckStatus[] = ["fail", "warn", "manual", "pending", "pass", "skip"];
+export const WORST_FIRST: CheckStatus[] = ["fail", "warn", "manual", "pending", "pass", "skip"];
 
 // mode: what the user pasted. With only an issue, the later stages can't be checked yet.
 export function buildJourney(checks: Check[], mode: "issue" | "pr"): JourneyStep[] {

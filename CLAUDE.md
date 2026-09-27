@@ -64,6 +64,16 @@ Built solo for the FirstCommit hackathon (Devpost), deadline 30 Sep 2026.
   "{{...}}" placeholders are failures. The PR description generator
   never ticks a box (it unticks pre-ticked ones).
 
+## Server decisions (approved)
+- POST /api/analyze { url, username? }: 25s budget for the whole
+  analysis (maxDuration 30). Caches: rules per repo 10 min, issue/PR
+  data 60 s. Per-IP limit 10/min and 60/hour; requests fully served
+  from cache don't count (they cost no GitHub calls).
+- In PR mode the generated text is labelled "Suggested description".
+- Scripts (e.g. the 29 Sep evaluation script) must call analyze() from
+  lib/server/analyze.ts directly, NOT the HTTP route, so they never hit
+  our own rate limit.
+
 ## Tech
 - Next.js (App Router) + TypeScript + Tailwind
 - This project uses Next.js 16. Its APIs may differ from your training
