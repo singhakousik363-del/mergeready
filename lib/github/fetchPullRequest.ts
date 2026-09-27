@@ -17,7 +17,7 @@ const NEW_ASSOCIATIONS = new Set(["NONE", "FIRST_TIMER", "FIRST_TIME_CONTRIBUTOR
 const MAINTAINER_ASSOCIATIONS = new Set(["OWNER", "MEMBER", "COLLABORATOR"]);
 
 // A "Signed-off-by: Name <email>" line (Developer Certificate of Origin)
-const SIGN_OFF_LINE = /^\s*signed-off-by:\s*\S.*<[^<>\s]+@[^<>\s]+>\s*$/im;
+export const SIGN_OFF_LINE = /^\s*signed-off-by:\s*\S.*<[^<>\s]+@[^<>\s]+>\s*$/im;
 
 export type PullRequestCommit = {
     message: string;
