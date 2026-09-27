@@ -1,5 +1,5 @@
 import type { Octokit, RestEndpointMethodTypes } from "@octokit/rest";
-import { assertValidNumber, assertValidRepo, createOctokit, fetchPages, PER_PAGE } from "./client";
+import { assertValidNumber, assertValidRepo, createOctokit, fetchPages, looksLikeBot, PER_PAGE } from "./client";
 import { IssueNotFoundError, getHttpStatus, toGitHubError } from "./errors";
 
 // Timeline: read at most this many pages of 100 events.
@@ -8,6 +8,8 @@ export const MAX_TIMELINE_PAGES = 3;
 
 export type IssueComment = {
     author: string;
+    // Bot comments ("good first issue" notices...) are never claims
+    isBot: boolean;
     body: string;
     createdAt: string;
 };
@@ -141,10 +143,12 @@ function toComment(event: TimelineEvent): IssueComment[] {
     if (event.event !== "commented" || !("body" in event) || !("user" in event) || !("created_at" in event)) {
         return [];
     }
+    // A deleted account has no user; GitHub shows it as "ghost"
+    const author = event.user?.login ?? "ghost";
     return [
         {
-            // A deleted account has no user; GitHub shows it as "ghost"
-            author: event.user?.login ?? "ghost",
+            author,
+            isBot: event.user?.type === "Bot" || looksLikeBot(author),
             body: event.body ?? "",
             createdAt: event.created_at,
         },

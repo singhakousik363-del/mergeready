@@ -58,6 +58,14 @@ export function withTimeout(baseFetch: typeof fetch, timeoutMs: number): typeof 
 
 function noop(): void {}
 
+// "renovate[bot]" (GitHub App) or "stdlib-bot" (a normal account used as a bot,
+// which GitHub doesn't mark as type "Bot")
+const BOT_NAME = /\[bot\]$|-bot$/i;
+
+export function looksLikeBot(name: string): boolean {
+    return BOT_NAME.test(name);
+}
+
 type Page<T> = { data: T[]; headers: { link?: string } };
 
 export type PagedResult<T> = {

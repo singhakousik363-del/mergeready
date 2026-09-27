@@ -1,0 +1,64 @@
+{
+  "number": 15456,
+  "title": "[Bug]: rayleigh/mgf returns wrong values due to misplaced parenthesis",
+  "url": "https://github.com/stdlib-js/stdlib/issues/15456",
+  "state": "open",
+  "labels": [
+    "Bug"
+  ],
+  "assignees": [
+    "anandkaranubc"
+  ],
+  "comments": [
+    {
+      "author": "stdlib-bot",
+      "isBot": true,
+      "body": ":wave: Hi there! :wave:\n\nAnd thank you for opening your first issue! We will get back to you shortly. :runner: :dash:\n\nIf you have any further questions while waiting for a response, please join our [Zulip community][stdlib-zulip] to chat with project maintainers and other community members.\n\n[stdlib-zulip]: https://stdlib.zulipchat.com\n",
+      "createdAt": "2026-09-23T13:57:55Z"
+    },
+    {
+      "author": "kgryte",
+      "isBot": false,
+      "body": "@anandkaranubc Would you mind investigating?",
+      "createdAt": "2026-09-25T20:10:54Z"
+    },
+    {
+      "author": "anandkaranubc",
+      "isBot": false,
+      "body": "Of course 🫡 \nThanks @AdeshDeshmukh for bringing this up!",
+      "createdAt": "2026-09-25T20:26:29Z"
+    },
+    {
+      "author": "anandkaranubc",
+      "isBot": false,
+      "body": "@AdeshDeshmukh Confirmed, this is a real bug. I integrated the MGF definition directly and your numbers check out on every case. `mgf( 0.0, 1.0 )` returning 1.253 instead of 1 is the giveaway. The C implementation has the same two lines, so it's wrong there too. It's been like this since 2017, and the tests only assert that the output is a number, which is how I think it slipped through.\n\nOne change to the fix though. Moving the parentheses is mathematically correct but falls apart for negative `t`. Around `σt = -10`, `1 + erf( σt/√2 )` rounds to exactly 0 while `exp( σ²t²/2 )` is enormous, so you get back `1` when the real answer is ~0.0097. At `σt = -40` it's `NaN`.\n\nSince `e^(σ²t²/2)·(1 + erf(σt/√2))` is just `erfcx( -σt/√2 )`, the whole thing collapses to\n\n```js\nout = 1.0 + ( sigmat * SQRT_HALF_PI * erfcx( -sigmat / SQRT2 ) );\n```\n\nTested this locally in JS and C against ~3000 fixture points with `σt` in [-20, 20]. No overflow or cancellation issues anywhere, and it drops the `exp` and `erf` deps. `wald/cdf` and `normal/logcdf` already use `erfcx` for the same reason.\n\nFile list: you have everything except the namespace-level `stats/base/dists/rayleigh/docs/types/index.d.ts`, which has the same stale values. The ctor package also needs `~5.586 → ~4.477` and `~-0.91 → ~0.086`.\n\nFixtures: yes please. Julia/R/SciPy don't have a Rayleigh MGF, but a Python runner that integrates the definition with `scipy.integrate.quad` works fine. `planck/mgf` is a template for Python fixtures. Make sure some points have negative `t`, otherwise the old code would have passed too.",
+      "createdAt": "2026-09-27T01:57:41Z"
+    },
+    {
+      "author": "anandkaranubc",
+      "isBot": false,
+      "body": "For reference, here's the change plus the fixture runner: https://gist.github.com/anandkaranubc/18b27f728c9cb96b63c143f24b50c273",
+      "createdAt": "2026-09-27T02:01:55Z"
+    },
+    {
+      "author": "AdeshDeshmukh",
+      "isBot": false,
+      "body": "Hi @anandkaranubc , thank you for the thorough review ... and for the gist , it made the path very clear...!\n\nI verified everything on my end first. You were right about the naive fix: at `σt = −10` it returns exactly `1` (true value `~0.0097`, confirmed by integrating the definition directly), and at `σt = −40` it goes to `NaN`. The `erfcx` formulation holds across the full sweep, so I have implemented your approach as specified — code in all three places, manifest deps, the two missed doc spots, your `runner.py` verbatim with all three scipy fixture files (~50% negative-`t` coverage, cross-checked to ~1e-12), and `test.mgf.js` per your diff.\n\nOne honest flag : a single small-scale fixture point sits at 54 ULP against the 50 in your diff — both sides within ~1e-14 of truth, so it reads as fixture quadrature noise. I set that tolerance to 100 ULP to keep the suite green; happy to adjust if you see it differently...!\n\nI will open the PR shortly .\nreally appreciate you working through this with me...!",
+      "createdAt": "2026-09-27T03:45:32Z"
+    }
+  ],
+  "openPullRequests": [
+    {
+      "number": 15585,
+      "title": "fix: resolve incorrect Rayleigh MGF values via erfcx formulation",
+      "author": "AdeshDeshmukh",
+      "url": "https://github.com/stdlib-js/stdlib/pull/15585",
+      "draft": false
+    }
+  ],
+  "repoActivity": {
+    "archived": false,
+    "pushedAt": "2026-09-27T16:55:13Z"
+  },
+  "warnings": []
+}

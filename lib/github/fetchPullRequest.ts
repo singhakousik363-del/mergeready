@@ -20,6 +20,7 @@ const MAINTAINER_ASSOCIATIONS = new Set(["OWNER", "MEMBER", "COLLABORATOR"]);
 export const SIGN_OFF_LINE = /^\s*signed-off-by:\s*\S.*<[^<>\s]+@[^<>\s]+>\s*$/im;
 
 export type PullRequestCommit = {
+    sha: string;
     message: string;
     // Name written in the commit (from git config)
     authorName: string | null;
@@ -161,6 +162,7 @@ async function getPullRequest(octokit: Octokit, owner: string, repo: string, num
 
 function toCommit(item: Commit): PullRequestCommit {
     return {
+        sha: item.sha,
         message: item.commit.message,
         authorName: item.commit.author?.name ?? null,
         authorLogin: item.author?.login ?? null,

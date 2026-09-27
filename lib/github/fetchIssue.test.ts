@@ -117,16 +117,19 @@ describe("fetchIssue", () => {
             comments: [
                 {
                     author: "stdlib-bot",
+                    isBot: true,
                     body: "This issue has been labeled as a **good first issue**",
                     createdAt: "2026-06-19T00:43:22Z",
                 },
                 {
                     author: "prakashiitp",
+                    isBot: false,
                     body: "I'd like to investigate this lint failure and work on a fix.",
                     createdAt: "2026-06-19T06:06:04Z",
                 },
                 {
                     author: "MannXo",
+                    isBot: false,
                     body: "Interested in working on this. Can I be assigned?",
                     createdAt: "2026-06-19T07:05:00Z",
                 },
@@ -174,7 +177,7 @@ describe("fetchIssue", () => {
         const result = await fetchIssue("stdlib-js", "stdlib", 12959, { octokit });
 
         expect(result.assignees).toEqual([]);
-        expect(result.comments).toEqual([{ author: "ghost", body: "", createdAt: "2026-06-20T00:00:00Z" }]);
+        expect(result.comments).toEqual([{ author: "ghost", isBot: false, body: "", createdAt: "2026-06-20T00:00:00Z" }]);
         expect(result.openPullRequests[0].author).toBe("ghost");
     });
 

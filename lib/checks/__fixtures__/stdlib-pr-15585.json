@@ -1,0 +1,115 @@
+{
+  "number": 15585,
+  "title": "fix: resolve incorrect Rayleigh MGF values via erfcx formulation",
+  "url": "https://github.com/stdlib-js/stdlib/pull/15585",
+  "body": "Resolves #15456.\n\n## Description\n\nThis pull request:\n\n-   Fixes the Rayleigh MGF, which misplaced a parenthesis so that `mgf(0, sigma)` returned `sqrt(pi/2)` instead of `1`.\n-   Evaluates the corrected formula via `erfcx(-sigma*t/sqrt(2))`, which additionally avoids overflow and catastrophic cancellation for negative `t` (the naive regrouping returns `1` at `σt = -10` and `NaN` at `σt = -40`).\n-   Applies the same fix to the C implementation and swaps `exp`/`erf` dependencies for `erfcx` in `manifest.json`.\n-   Updates all documentation examples, the `ctor` docs, and the namespace type declarations.\n-   Adds scipy-generated test fixtures with negative-`t` coverage and rewrites `test.mgf.js` against them.\n\n## Related Issues\n\nThis pull request has the following related issues:\n\n-   #15456\n\n## Questions\n\nNo. One note for reviewers: a single small-scale fixture point sits at 54 ULP against a 100 ULP tolerance (both sides within ~1e-14 of truth; fixture quadrature noise). The C implementation mirrors the reviewed spec but was not compiled locally — CI build will confirm.\n\n## Other\n\nThe fixture generator is `test/fixtures/python/runner.py` (per the reviewer's gist); fixtures were generated with scipy 1.18.1. Verified locally: 3000/3000 fixture assertions pass, `mgf(0, sigma) === 1`, and the negative-`t` regression points behave (`mgf(-10, 1)` ≈ 0.0097, finite at `mgf(-40, 1)`).\n\n## Checklist\n\n-   [x] Read, understood, and followed the [contributing guidelines](https://github.com/stdlib-js/stdlib/blob/develop/CONTRIBUTING.md)\n\n### AI Assistance\n\n-   [x] Yes\n-   [ ] No\n\nIf you answered \"yes\" above, how did you use AI assistance?\n\n-   [ ] Code generation (e.g., when writing an implementation or fixing a bug)\n-   [ ] Test/benchmark generation\n-   [x] Documentation (including examples)\n-   [x] Research and understanding\n\n#### Disclosure\n\nI used an AI assistant to help trace the `dists` implementations and to numerically cross-check the Rayleigh MGF against its closed form and the MGF definition integral. I independently confirmed the diagnosis by executing the code locally, and I verified every corrected value the same way before updating the docs. The `erfcx` formulation itself follows the reviewer's specification.\n\n* * *\n\n@stdlib-js/reviewers\n\n",
+  "author": "AdeshDeshmukh",
+  "authorAssociation": "NONE",
+  "mergedPrCountInRepo": 0,
+  "isNewContributor": true,
+  "draft": false,
+  "state": "open",
+  "baseBranch": "develop",
+  "targetsDefaultBranch": true,
+  "linkedIssues": [
+    15456
+  ],
+  "commits": [
+    {
+      "sha": "77000737b70fcc1ef2d2b1701a5b1cfe4fce3f86",
+      "message": "fix: resolve incorrect Rayleigh MGF values via erfcx formulation\n\nCorrect the moment-generating function for the Rayleigh distribution, which misplaced a parenthesis such that mgf(0, sigma) returned sqrt(pi/2) instead of 1. Evaluate via erfcx(-sigma*t/sqrt(2)) to also avoid overflow and catastrophic cancellation for negative t. Update the C implementation, manifest dependencies, documentation examples, constructor docs, and add Python-generated test fixtures with negative-t coverage.\n\nCloses #15456.",
+      "authorName": "Adesh Deshmukh",
+      "authorLogin": "AdeshDeshmukh",
+      "hasSignOff": false
+    },
+    {
+      "sha": "1eec69eb0686f3a946df27724a03cff86b59b9f9",
+      "message": "fix: resolve lint errors in Rayleigh MGF files\n\nAddress EditorConfig indentation in the Python fixture runner and normalize JSDoc asterisk alignment in lib/factory.js. No functional changes.",
+      "authorName": "Adesh Deshmukh",
+      "authorLogin": "AdeshDeshmukh",
+      "hasSignOff": false
+    },
+    {
+      "sha": "2077076ed8ffd67d85d7976fb35439cc3e44da1a",
+      "message": "fix: resolve remaining lint errors in Rayleigh MGF files\n\nNormalize JSDoc asterisk alignment in lib/factory.js and restructure the Python fixture runner call to a hanging indent satisfying both EditorConfig and pycodestyle. No functional changes.",
+      "authorName": "Adesh Deshmukh",
+      "authorLogin": "AdeshDeshmukh",
+      "hasSignOff": false
+    }
+  ],
+  "files": [
+    {
+      "filename": "lib/node_modules/@stdlib/stats/base/dists/rayleigh/ctor/README.md",
+      "status": "modified"
+    },
+    {
+      "filename": "lib/node_modules/@stdlib/stats/base/dists/rayleigh/ctor/docs/repl.txt",
+      "status": "modified"
+    },
+    {
+      "filename": "lib/node_modules/@stdlib/stats/base/dists/rayleigh/ctor/lib/main.js",
+      "status": "modified"
+    },
+    {
+      "filename": "lib/node_modules/@stdlib/stats/base/dists/rayleigh/docs/types/index.d.ts",
+      "status": "modified"
+    },
+    {
+      "filename": "lib/node_modules/@stdlib/stats/base/dists/rayleigh/mgf/README.md",
+      "status": "modified"
+    },
+    {
+      "filename": "lib/node_modules/@stdlib/stats/base/dists/rayleigh/mgf/docs/repl.txt",
+      "status": "modified"
+    },
+    {
+      "filename": "lib/node_modules/@stdlib/stats/base/dists/rayleigh/mgf/docs/types/index.d.ts",
+      "status": "modified"
+    },
+    {
+      "filename": "lib/node_modules/@stdlib/stats/base/dists/rayleigh/mgf/lib/factory.js",
+      "status": "modified"
+    },
+    {
+      "filename": "lib/node_modules/@stdlib/stats/base/dists/rayleigh/mgf/lib/index.js",
+      "status": "modified"
+    },
+    {
+      "filename": "lib/node_modules/@stdlib/stats/base/dists/rayleigh/mgf/lib/main.js",
+      "status": "modified"
+    },
+    {
+      "filename": "lib/node_modules/@stdlib/stats/base/dists/rayleigh/mgf/lib/native.js",
+      "status": "modified"
+    },
+    {
+      "filename": "lib/node_modules/@stdlib/stats/base/dists/rayleigh/mgf/manifest.json",
+      "status": "modified"
+    },
+    {
+      "filename": "lib/node_modules/@stdlib/stats/base/dists/rayleigh/mgf/src/main.c",
+      "status": "modified"
+    },
+    {
+      "filename": "lib/node_modules/@stdlib/stats/base/dists/rayleigh/mgf/test/fixtures/python/large_scale.json",
+      "status": "added"
+    },
+    {
+      "filename": "lib/node_modules/@stdlib/stats/base/dists/rayleigh/mgf/test/fixtures/python/medium_scale.json",
+      "status": "added"
+    },
+    {
+      "filename": "lib/node_modules/@stdlib/stats/base/dists/rayleigh/mgf/test/fixtures/python/runner.py",
+      "status": "added"
+    },
+    {
+      "filename": "lib/node_modules/@stdlib/stats/base/dists/rayleigh/mgf/test/fixtures/python/small_scale.json",
+      "status": "added"
+    },
+    {
+      "filename": "lib/node_modules/@stdlib/stats/base/dists/rayleigh/mgf/test/test.mgf.js",
+      "status": "modified"
+    }
+  ],
+  "warnings": []
+}

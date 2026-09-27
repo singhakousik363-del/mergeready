@@ -34,8 +34,9 @@ const FILES = [
     { filename: "lib/node_modules/@stdlib/stats/base/dists/rayleigh/mgf/test/fixtures/python/large.json", status: "added" },
 ];
 
-function commit(message: string, login: string | null = "AdeshDeshmukh") {
+function commit(message: string, login: string | null = "AdeshDeshmukh", sha = "5a1e9f0") {
     return {
+        sha,
         commit: { message, author: { name: "Adesh Deshmukh" } },
         author: login === null ? null : { login },
     };
@@ -125,18 +126,21 @@ describe("fetchPullRequest", () => {
             linkedIssues: [15456],
             commits: [
                 {
+                    sha: "5a1e9f0",
                     message: "fix: resolve incorrect Rayleigh MGF values via erfcx formula",
                     authorName: "Adesh Deshmukh",
                     authorLogin: "AdeshDeshmukh",
                     hasSignOff: false,
                 },
                 {
+                    sha: "5a1e9f0",
                     message: "fix: resolve lint errors in Rayleigh MGF files",
                     authorName: "Adesh Deshmukh",
                     authorLogin: "AdeshDeshmukh",
                     hasSignOff: false,
                 },
                 {
+                    sha: "5a1e9f0",
                     message: COMMITS[2].commit.message,
                     authorName: "Adesh Deshmukh",
                     authorLogin: "AdeshDeshmukh",
@@ -190,7 +194,7 @@ describe("fetchPullRequest", () => {
     it("handles missing data: no body, deleted author, commit email not linked to GitHub", async () => {
         const { octokit, issuesAndPullRequests } = createFakeOctokit({
             pr: { ...PR, body: null, user: null, author_association: "NONE" },
-            commits: [{ commit: { message: "fix: x", author: null }, author: null }],
+            commits: [{ sha: "5a1e9f0", commit: { message: "fix: x", author: null }, author: null }],
         });
 
         const result = await fetchPullRequest("stdlib-js", "stdlib", 15585, { octokit });
@@ -202,7 +206,13 @@ describe("fetchPullRequest", () => {
         expect(issuesAndPullRequests).not.toHaveBeenCalled();
         expect(result.mergedPrCountInRepo).toBeNull();
         expect(result.isNewContributor).toBe(true);
-        expect(result.commits[0]).toEqual({ message: "fix: x", authorName: null, authorLogin: null, hasSignOff: false });
+        expect(result.commits[0]).toEqual({
+            sha: "5a1e9f0",
+            message: "fix: x",
+            authorName: null,
+            authorLogin: null,
+            hasSignOff: false,
+        });
     });
 
     it.each(["OWNER", "MEMBER", "COLLABORATOR"])(

@@ -1,5 +1,5 @@
 import type { Octokit } from "@octokit/rest";
-import { assertValidRepo, createOctokit } from "./client";
+import { assertValidRepo, createOctokit, looksLikeBot } from "./client";
 import { MissingTokenError, RateLimitError, RepoNotFoundError, getHttpStatus, toGitHubError } from "./errors";
 
 // How many of the newest commits on the default branch to read (one request)
@@ -32,10 +32,6 @@ export type CommitData = {
     author: { login?: string; type?: string } | null;
     parents: { sha: string }[];
 };
-
-// "renovate[bot]" (GitHub App) or "stdlib-bot" (a normal account used as a bot,
-// which GitHub doesn't mark as type "Bot")
-const BOT_NAME = /\[bot\]$|-bot$/i;
 
 export async function fetchRecentCommits(
     owner: string,
@@ -71,6 +67,6 @@ export function toRecentCommit(item: CommitData): RecentCommit {
         sha: item.sha,
         message: item.commit.message,
         isMerge: item.parents.length > 1,
-        isBot: item.author?.type === "Bot" || BOT_NAME.test(login) || BOT_NAME.test(name),
+        isBot: item.author?.type === "Bot" || looksLikeBot(login) || looksLikeBot(name),
     };
 }
