@@ -1,8 +1,8 @@
 import { isValidLogin } from "../github/client";
-import { parseGithubUrl } from "../github/parseUrl";
+import { MAX_URL_LENGTH, parseGithubUrl } from "../github/parseUrl";
 
 export const MAX_BODY_BYTES = 4 * 1024;
-export const MAX_URL_LENGTH = 500;
+export { MAX_URL_LENGTH };
 
 export type AnalyzeInput = {
     owner: string;

@@ -1,26 +1,112 @@
 @import "tailwindcss";
 
+/*
+  "Maintainer's desk": warm paper, dark ink, one teal accent.
+  Every text colour below was checked for WCAG AA contrast (4.5:1 or more)
+  against both the page and card backgrounds, in light and dark mode.
+  Status colours are never used alone: the UI always adds an icon and a word.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  color-scheme: light dark;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --paper: #faf7f2;
+  --card: #ffffff;
+  --ink: #1c1b19;
+  --muted: #5c5850;
+  --line: #e4ddd1;
+  --accent: #0f5f58;
+  --on-accent: #ffffff;
+
+  --pass: #166534;
+  --fail: #b42318;
+  --warn: #8a4b00;
+  --manual: #4b3f9e;
+  --pending: #1d4e89;
+  --skip: #6b665d;
+
+  /* Soft backgrounds for status areas (text on them stays --ink) */
+  --pass-soft: #e8f3ec;
+  --fail-soft: #fbeae8;
+  --warn-soft: #fbf1e1;
+  --manual-soft: #eeecf8;
+  --pending-soft: #e8eff8;
+  --skip-soft: #f0ede7;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --paper: #15140f;
+    --card: #1e1c17;
+    --ink: #ede9e1;
+    --muted: #a8a297;
+    --line: #34312a;
+    --accent: #5fd3c4;
+    --on-accent: #0b1f1d;
+
+    --pass: #6ee7a1;
+    --fail: #ff8a7a;
+    --warn: #fbbf5c;
+    --manual: #b4a9ff;
+    --pending: #8cb8ff;
+    --skip: #8f897e;
+
+    --pass-soft: #16261c;
+    --fail-soft: #2d1a17;
+    --warn-soft: #2b2213;
+    --manual-soft: #211e33;
+    --pending-soft: #17212f;
+    --skip-soft: #23211c;
   }
 }
 
+/* Makes the colours and fonts available as Tailwind classes, e.g. bg-paper, text-fail, font-display */
+@theme inline {
+  --color-paper: var(--paper);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-pass: var(--pass);
+  --color-fail: var(--fail);
+  --color-warn: var(--warn);
+  --color-manual: var(--manual);
+  --color-pending: var(--pending);
+  --color-skip: var(--skip);
+  --color-pass-soft: var(--pass-soft);
+  --color-fail-soft: var(--fail-soft);
+  --color-warn-soft: var(--warn-soft);
+  --color-manual-soft: var(--manual-soft);
+  --color-pending-soft: var(--pending-soft);
+  --color-skip-soft: var(--skip-soft);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-display: var(--font-instrument-serif), Georgia, serif;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+
+/* A clear focus ring for keyboard users only (mouse clicks don't show it) */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* People who asked their system for less motion get none */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -1,3 +1,6 @@
+// Longer than any real issue or PR link. Shared by the server and the browser.
+export const MAX_URL_LENGTH = 500;
+
 export type ParsedGitHubUrl =
     | { ok: true; owner: string; repo: string; type: "issue" | "pull"; number: number }
     | { ok: false; error: string };
