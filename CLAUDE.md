@@ -70,5 +70,11 @@ remind me of this list first.
 - Never add features, libraries or files I didn't approve.
 
 ## Current status
-Day 1: parseUrl.ts done with 7 passing tests.
-Next: fetch CONTRIBUTING.md and PR template from GitHub.
+Day 2: fetchGuidelines done, tested on 3 real repos.
+Next: fetch issue and PR data (assignees, comments, open PRs, commits, files).
+
+## Known limitations
+- CONTRIBUTING files that only link to other docs (nodejs/node,
+  facebook/react) give little to analyse. Planned fix on 28 Sep:
+  follow same-repo .md links about pull requests/commits, max 3 files.
+- No timeout on GitHub requests yet. Octokit logs 404s to console.
