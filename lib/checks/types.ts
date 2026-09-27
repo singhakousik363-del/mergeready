@@ -52,6 +52,11 @@ export function evidenceOf(rules: Rule[]): EvidenceRule[] {
     return rules.map(({ sourceQuote, sourceUrl, confidence }) => ({ sourceQuote, sourceUrl, confidence }));
 }
 
+// plural(1, "commit") -> "1 commit", plural(3, "commit") -> "3 commits"
+export function plural(count: number, word: string): string {
+    return `${count} ${word}${count === 1 ? "" : "s"}`;
+}
+
 // First 7 characters, like GitHub shows: 3f2a1bc
 export function shortSha(sha: string): string {
     return sha.slice(0, 7);
