@@ -51,6 +51,19 @@ Built solo for the FirstCommit hackathon (Devpost), deadline 30 Sep 2026.
   signal (subject ends "(#123)" or a "PR-URL:" trailer), the
   conventional rule applies to the PR title, otherwise to commits.
 
+## Check decisions (approved)
+- Pre-start: archived repo, closed issue, assigned to someone else =
+  red; claims in comments, open PRs mentioning the issue, no push for
+  180+ days = yellow. Optional `username`: their own claims/PRs don't
+  count, and being assigned passes. Bot comments are never claims. A
+  claim older than 30 days with no open PR by that person gets its own
+  "Claimed N days ago with no PR yet" message (still yellow).
+- Status "pending" = waiting for maintainer review (merge stage).
+- One check per template section and per checkbox group. Template text
+  left unchanged (e.g. stdlib's "No.") is "manual", not a failure;
+  "{{...}}" placeholders are failures. The PR description generator
+  never ticks a box (it unticks pre-ticked ones).
+
 ## Tech
 - Next.js (App Router) + TypeScript + Tailwind
 - This project uses Next.js 16. Its APIs may differ from your training
@@ -161,3 +174,11 @@ prose). Next (28 Sep): checks in /lib/checks, API route, UI.
   contributor commits, so a conventional rule there would wrongly say
   "PR title" (node has no such rule today). Bot accounts named without
   "bot" are counted as people.
+- Checks: claims are found with English patterns ("I'd like to work
+  on", "can I be assigned", "/assign"). Test files are recognised by
+  path/name conventions; docs/, examples/, benchmarks/ never need tests.
+  Merge commits in a PR are spotted by a "Merge " message prefix. The
+  DCO fix suggests "git rebase --signoff HEAD~N", which assumes the PR's
+  commits are the last N. Only the PR's first linked issue is checked
+  for assignment. Template sections are matched by heading text, so a
+  renamed heading counts as missing.

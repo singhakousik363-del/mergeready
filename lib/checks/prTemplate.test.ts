@@ -125,14 +125,14 @@ describe("checkPrTemplate: edge cases", () => {
         ]);
     });
 
-    it("skips when the repo has no template", () => {
+    it("skips when there are no template rules", () => {
         expect(checkPrTemplate([], REAL_PR)).toEqual([
             {
                 id: "pr-template",
                 ruleType: "pr-template",
                 stage: "pr",
                 status: "skip",
-                message: "This repo has no PR template.",
+                message: "We found no PR template rules to check.",
                 howToFix: [],
                 evidence: { rules: [], observed: [] },
             },

@@ -20,7 +20,8 @@ export function checkPrTemplate(rules: Rule[], pr: PullRequestData): Check[] {
                 ruleType: "pr-template",
                 stage: "pr",
                 status: "skip",
-                message: "This repo has no PR template.",
+                // (A template made only of comments, like nodejs/node's, has no rules either)
+                message: "We found no PR template rules to check.",
                 howToFix: [],
                 evidence: { rules: [], observed: [] },
             },

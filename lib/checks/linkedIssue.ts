@@ -35,7 +35,8 @@ export function checkLinkedIssue(rules: Rule[], pr: PullRequestData): Check[] {
             ruleType: "linked-issue",
             stage: "pr",
             status: failStatus(issueRules[0].confidence),
-            message: "This PR doesn't say which issue it fixes.",
+            // Many rules only apply "if your PR fixes an issue", so say it that way
+            message: 'This PR doesn\'t link an issue. If it fixes one, add a line like "Fixes #123".',
             howToFix: [
                 'Edit the PR description and add a line like "Fixes #123" (with your issue number).',
                 'Only closing words work: "Fixes", "Closes" or "Resolves". A plain "#123" or "Refs #123" doesn\'t link it.',

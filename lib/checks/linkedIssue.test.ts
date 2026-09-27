@@ -41,7 +41,7 @@ describe("checkLinkedIssue", () => {
     it("red when a template rule asks for it and the PR links nothing", () => {
         const [check] = checkLinkedIssue([STDLIB_ISSUE_FIELD], { ...REAL_PR, linkedIssues: [] });
         expect(check.status).toBe("fail");
-        expect(check.message).toBe("This PR doesn't say which issue it fixes.");
+        expect(check.message).toBe('This PR doesn\'t link an issue. If it fixes one, add a line like "Fixes #123".');
     });
 
     it("warns that 'Fixes #' won't work on a non-default branch, even without a rule", () => {
