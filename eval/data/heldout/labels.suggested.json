@@ -1,0 +1,375 @@
+[
+  {
+    "pr": "stdlib-js/stdlib#15330",
+    "suggestions": []
+  },
+  {
+    "pr": "stdlib-js/stdlib#15317",
+    "suggestions": [
+      {
+        "id": "stdlib-js/stdlib#15317:template",
+        "category": "template",
+        "evidence": [
+          {
+            "kind": "comment",
+            "who": "stdlib-bot (bot)",
+            "at": "2026-09-18T06:49:07Z",
+            "url": "https://github.com/stdlib-js/stdlib/pull/15317#issuecomment-5726304059",
+            "text": "2. Update your pull request description to include this checked box:"
+          },
+          {
+            "kind": "author-fix",
+            "who": "Abhist17",
+            "at": "2026-09-18T09:50:43Z",
+            "url": "https://github.com/stdlib-js/stdlib/pull/15317",
+            "text": "Author edited the description"
+          }
+        ]
+      },
+      {
+        "id": "stdlib-js/stdlib#15317:not-checkable",
+        "category": "not-checkable",
+        "evidence": [
+          {
+            "kind": "comment",
+            "who": "kgryte (MEMBER)",
+            "at": "2026-09-27T08:53:54Z",
+            "url": "https://github.com/stdlib-js/stdlib/pull/15317#issuecomment-5854387212",
+            "text": "@nakul-krishnakumar Would you mind doing an initial review of this PR? Cheers!"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "pr": "stdlib-js/stdlib#15297",
+    "suggestions": []
+  },
+  {
+    "pr": "stdlib-js/stdlib#15293",
+    "suggestions": [
+      {
+        "id": "stdlib-js/stdlib#15293:tests",
+        "category": "tests",
+        "evidence": [
+          {
+            "kind": "comment",
+            "who": "stdlib-bot (bot)",
+            "at": "2026-09-17T09:06:32Z",
+            "url": "https://github.com/stdlib-js/stdlib/pull/15293#issuecomment-5711826216",
+            "text": "3.  You'll need to address any failures in linting or unit tests."
+          }
+        ]
+      },
+      {
+        "id": "stdlib-js/stdlib#15293:not-checkable",
+        "category": "not-checkable",
+        "evidence": [
+          {
+            "kind": "review-comment",
+            "who": "kgryte (MEMBER)",
+            "at": "2026-09-23T08:54:02Z",
+            "url": "https://github.com/stdlib-js/stdlib/pull/15293#discussion_r4080659363",
+            "text": "Suggested a code change"
+          },
+          {
+            "kind": "review-comment",
+            "who": "kgryte (MEMBER)",
+            "at": "2026-09-23T08:54:10Z",
+            "url": "https://github.com/stdlib-js/stdlib/pull/15293#discussion_r4080661117",
+            "text": "Suggested a code change"
+          },
+          {
+            "kind": "author-fix",
+            "who": "Abhist17",
+            "at": "2026-09-23T08:54:19Z",
+            "url": "https://github.com/stdlib-js/stdlib/pull/15293",
+            "text": "Author added commit \"Apply batched suggestions from code review\""
+          }
+        ]
+      },
+      {
+        "id": "stdlib-js/stdlib#15293:commit-format",
+        "category": "commit-format",
+        "evidence": [
+          {
+            "kind": "maintainer-title-edit",
+            "who": "kgryte",
+            "at": "2026-09-23T08:58:06Z",
+            "url": "https://github.com/stdlib-js/stdlib/pull/15293",
+            "text": "Title changed: \"chore: fix JavaScript lint errors (issue #15228)\" → \"chore: fix JavaScript lint errors\""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "pr": "stdlib-js/stdlib#15289",
+    "suggestions": [
+      {
+        "id": "stdlib-js/stdlib#15289:not-checkable",
+        "category": "not-checkable",
+        "evidence": [
+          {
+            "kind": "review-comment",
+            "who": "kgryte (MEMBER)",
+            "at": "2026-09-28T05:25:15Z",
+            "url": "https://github.com/stdlib-js/stdlib/pull/15289#discussion_r4118856551",
+            "text": "Suggested a code change"
+          },
+          {
+            "kind": "author-fix",
+            "who": "himayurjogade",
+            "at": "2026-09-28T05:25:24Z",
+            "url": "https://github.com/stdlib-js/stdlib/pull/15289",
+            "text": "Author added commit \"style: add empty line\""
+          },
+          {
+            "kind": "review-comment",
+            "who": "kgryte (MEMBER)",
+            "at": "2026-09-28T05:28:05Z",
+            "url": "https://github.com/stdlib-js/stdlib/pull/15289#discussion_r4118870386",
+            "text": "Suggested a code change"
+          },
+          {
+            "kind": "author-fix",
+            "who": "himayurjogade",
+            "at": "2026-09-28T05:28:15Z",
+            "url": "https://github.com/stdlib-js/stdlib/pull/15289",
+            "text": "Author added commit \"docs: fix missing header\""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "pr": "nodejs/node#66113",
+    "suggestions": [
+      {
+        "id": "nodejs/node#66113:commit-format",
+        "category": "commit-format",
+        "evidence": [
+          {
+            "kind": "failed-check",
+            "who": "GitHub Actions",
+            "at": "2026-09-18T18:02:29Z",
+            "url": "https://github.com/nodejs/node/runs/105706369254",
+            "text": "Check \"lint-commit-message\" failed on the first commit"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "pr": "nodejs/node#66088",
+    "suggestions": [
+      {
+        "id": "nodejs/node#66088:commit-format",
+        "category": "commit-format",
+        "evidence": [
+          {
+            "kind": "failed-check",
+            "who": "GitHub Actions",
+            "at": "2026-09-17T14:18:38Z",
+            "url": "https://github.com/nodejs/node/runs/105240254711",
+            "text": "Check \"lint-commit-message\" failed on the first commit"
+          },
+          {
+            "kind": "author-fix",
+            "who": "xia-chao",
+            "at": "2026-09-17T19:57:52Z",
+            "url": "https://github.com/nodejs/node/pull/66088",
+            "text": "Author force-pushed new commits"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "pr": "nodejs/node#66085",
+    "suggestions": [
+      {
+        "id": "nodejs/node#66085:not-checkable",
+        "category": "not-checkable",
+        "evidence": [
+          {
+            "kind": "review",
+            "who": "avivkeller (MEMBER)",
+            "at": "2026-09-23T13:08:33Z",
+            "url": "https://github.com/nodejs/node/pull/66085#pullrequestreview-5291380630",
+            "text": "LGTM, and thanks for the ping! just note it's differing from the HTML Spec (which is fine, but @nodejs/web-standards should take a look)"
+          },
+          {
+            "kind": "review-comment",
+            "who": "avivkeller (MEMBER)",
+            "at": "2026-09-23T13:09:39Z",
+            "url": "https://github.com/nodejs/node/pull/66085#discussion_r4082769759",
+            "text": "Can we lazy load this with `getLazy`?"
+          },
+          {
+            "kind": "comment",
+            "who": "KhafraDev (MEMBER)",
+            "at": "2026-09-23T13:29:42Z",
+            "url": "https://github.com/nodejs/node/pull/66085#issuecomment-5795740645",
+            "text": "Why would *web* workers strip types?"
+          },
+          {
+            "kind": "review-comment",
+            "who": "jasnell (MEMBER)",
+            "at": "2026-09-23T14:58:12Z",
+            "url": "https://github.com/nodejs/node/pull/66085#discussion_r4083886994",
+            "text": "I'm wondering if we should mark this experimental on it's own, at least initially."
+          },
+          {
+            "kind": "review-comment",
+            "who": "jasnell (MEMBER)",
+            "at": "2026-09-23T15:01:19Z",
+            "url": "https://github.com/nodejs/node/pull/66085#discussion_r4083922163",
+            "text": "Should likely also list this in the \"Differences from the HTML Standard\" section"
+          },
+          {
+            "kind": "review",
+            "who": "jasnell (MEMBER)",
+            "at": "2026-09-23T15:03:05Z",
+            "url": "https://github.com/nodejs/node/pull/66085#pullrequestreview-5292774310",
+            "text": "Generally LGTM but I think we should probably handle it as independently experimental in case we need to tweak it separately from graduating the main web worker implementation."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "pr": "nodejs/node#66082",
+    "suggestions": []
+  },
+  {
+    "pr": "nodejs/node#66077",
+    "suggestions": [
+      {
+        "id": "nodejs/node#66077:commit-format",
+        "category": "commit-format",
+        "evidence": [
+          {
+            "kind": "failed-check",
+            "who": "GitHub Actions",
+            "at": "2026-09-17T05:58:00Z",
+            "url": "https://github.com/nodejs/node/runs/105093373568",
+            "text": "Check \"lint-commit-message\" failed on the first commit"
+          },
+          {
+            "kind": "author-fix",
+            "who": "ammar3040",
+            "at": "2026-09-17T06:09:40Z",
+            "url": "https://github.com/nodejs/node/pull/66077",
+            "text": "Author force-pushed new commits"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "pr": "prometheus/prometheus#19746",
+    "suggestions": []
+  },
+  {
+    "pr": "prometheus/prometheus#19736",
+    "suggestions": []
+  },
+  {
+    "pr": "prometheus/prometheus#19722",
+    "suggestions": [
+      {
+        "id": "prometheus/prometheus#19722:not-checkable",
+        "category": "not-checkable",
+        "evidence": [
+          {
+            "kind": "comment",
+            "who": "bboreham (MEMBER)",
+            "at": "2026-09-23T16:23:03Z",
+            "url": "https://github.com/prometheus/prometheus/pull/19722#issuecomment-5798528790",
+            "text": "I agree we should not silently drop data, however I don't think we should read the last sample value from every mmapped chunk, since that seems like an enormous amount of work."
+          },
+          {
+            "kind": "author-fix",
+            "who": "dmatth1",
+            "at": "2026-09-23T18:53:57Z",
+            "url": "https://github.com/prometheus/prometheus/pull/19722",
+            "text": "Author added commit \"PR feedback: route mmap-only equal-timestamp appends through OOO\""
+          },
+          {
+            "kind": "author-fix",
+            "who": "dmatth1",
+            "at": "2026-09-23T18:59:30Z",
+            "url": "https://github.com/prometheus/prometheus/pull/19722",
+            "text": "Author added commit \"PR feedback: verify mmap-only conflicts reach OOO storage\""
+          }
+        ]
+      },
+      {
+        "id": "prometheus/prometheus#19722:template",
+        "category": "template",
+        "evidence": [
+          {
+            "kind": "author-fix",
+            "who": "dmatth1",
+            "at": "2026-09-23T18:54:01Z",
+            "url": "https://github.com/prometheus/prometheus/pull/19722",
+            "text": "Author edited the description"
+          },
+          {
+            "kind": "author-fix",
+            "who": "dmatth1",
+            "at": "2026-09-23T18:56:41Z",
+            "url": "https://github.com/prometheus/prometheus/pull/19722",
+            "text": "Author edited the description"
+          },
+          {
+            "kind": "author-fix",
+            "who": "dmatth1",
+            "at": "2026-09-23T22:13:19Z",
+            "url": "https://github.com/prometheus/prometheus/pull/19722",
+            "text": "Author edited the description"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "pr": "prometheus/prometheus#19713",
+    "suggestions": [
+      {
+        "id": "prometheus/prometheus#19713:tests",
+        "category": "tests",
+        "evidence": [
+          {
+            "kind": "comment",
+            "who": "machine424 (MEMBER)",
+            "at": "2026-09-17T19:53:53Z",
+            "url": "https://github.com/prometheus/prometheus/pull/19713#issuecomment-5720335961",
+            "text": "(As a side; please take a look at your PRs changes, at the CI, try to understand what is going on, to add tests etc before asking for reviews)"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "pr": "vitejs/vite#23519",
+    "suggestions": []
+  },
+  {
+    "pr": "vitejs/vite#23517",
+    "suggestions": []
+  },
+  {
+    "pr": "vitejs/vite#23516",
+    "suggestions": []
+  },
+  {
+    "pr": "vitejs/vite#23509",
+    "suggestions": []
+  },
+  {
+    "pr": "vitejs/vite#23507",
+    "suggestions": []
+  }
+]

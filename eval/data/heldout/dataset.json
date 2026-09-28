@@ -1,0 +1,224 @@
+{
+  "rules": "eval/SELECTION.md (held-out addendum)",
+  "windowStart": "2026-09-15T00:00:00Z",
+  "cutoff": "2026-09-18T23:59:59Z",
+  "perRepo": 5,
+  "repos": [
+    {
+      "repo": {
+        "owner": "stdlib-js",
+        "repo": "stdlib"
+      },
+      "scanned": 48,
+      "skipped": {
+        "after-cutoff": 270,
+        "bot": 1,
+        "maintainer": 33,
+        "not-looked-at": 6,
+        "not-new": 3
+      },
+      "prs": [
+        {
+          "number": 15330,
+          "title": "feat: add C implementation for `blas/ext/base/ndarray/dany`",
+          "url": "https://github.com/stdlib-js/stdlib/pull/15330",
+          "createdAt": "2026-09-18T17:51:42Z",
+          "state": "MERGED",
+          "author": "himayurjogade"
+        },
+        {
+          "number": 15317,
+          "title": "fix: correct modified Huber loss gradient in `ml/incr/binary-classification`",
+          "url": "https://github.com/stdlib-js/stdlib/pull/15317",
+          "createdAt": "2026-09-18T06:48:33Z",
+          "state": "OPEN",
+          "author": "Abhist17"
+        },
+        {
+          "number": 15297,
+          "title": "chore: fix JavaScript lint errors (issue #15176)",
+          "url": "https://github.com/stdlib-js/stdlib/pull/15297",
+          "createdAt": "2026-09-17T09:49:41Z",
+          "state": "CLOSED",
+          "author": "Abhist17"
+        },
+        {
+          "number": 15293,
+          "title": "chore: fix JavaScript lint errors",
+          "url": "https://github.com/stdlib-js/stdlib/pull/15293",
+          "createdAt": "2026-09-17T09:06:20Z",
+          "state": "MERGED",
+          "author": "Abhist17"
+        },
+        {
+          "number": 15289,
+          "title": "feat: add C implementation for `blas/ext/base/ndarray/snone`",
+          "url": "https://github.com/stdlib-js/stdlib/pull/15289",
+          "createdAt": "2026-09-17T05:57:28Z",
+          "state": "MERGED",
+          "author": "himayurjogade"
+        }
+      ]
+    },
+    {
+      "repo": {
+        "owner": "nodejs",
+        "repo": "node"
+      },
+      "scanned": 34,
+      "skipped": {
+        "after-cutoff": 200,
+        "bot": 2,
+        "maintainer": 16,
+        "not-looked-at": 1,
+        "not-new": 10
+      },
+      "prs": [
+        {
+          "number": 66113,
+          "title": "update README.md",
+          "url": "https://github.com/nodejs/node/pull/66113",
+          "createdAt": "2026-09-18T18:01:25Z",
+          "state": "CLOSED",
+          "author": "adnankhan123-hub"
+        },
+        {
+          "number": 66088,
+          "title": "zlib: reject reset while a zstd frame is incomplete",
+          "url": "https://github.com/nodejs/node/pull/66088",
+          "createdAt": "2026-09-17T14:17:31Z",
+          "state": "MERGED",
+          "author": "xia-chao"
+        },
+        {
+          "number": 66085,
+          "title": "worker: strip types in Web Worker module entries",
+          "url": "https://github.com/nodejs/node/pull/66085",
+          "createdAt": "2026-09-17T12:17:47Z",
+          "state": "MERGED",
+          "author": "osztenkurden"
+        },
+        {
+          "number": 66082,
+          "title": "build,src: gate jspi flag on V8_ENABLE_WEBASSEMBLY",
+          "url": "https://github.com/nodejs/node/pull/66082",
+          "createdAt": "2026-09-17T10:51:01Z",
+          "state": "OPEN",
+          "author": "pkubaj"
+        },
+        {
+          "number": 66077,
+          "title": "doc: remove stale bug bounty references in SECURITY.md",
+          "url": "https://github.com/nodejs/node/pull/66077",
+          "createdAt": "2026-09-17T05:56:54Z",
+          "state": "OPEN",
+          "author": "ammar3040"
+        }
+      ]
+    },
+    {
+      "repo": {
+        "owner": "prometheus",
+        "repo": "prometheus"
+      },
+      "scanned": 38,
+      "skipped": {
+        "after-cutoff": 94,
+        "bot": 0,
+        "maintainer": 15,
+        "not-looked-at": 14,
+        "not-new": 5
+      },
+      "prs": [
+        {
+          "number": 19746,
+          "title": "model/textparse: validate numeric fields in OM2 composite values",
+          "url": "https://github.com/prometheus/prometheus/pull/19746",
+          "createdAt": "2026-09-18T22:09:10Z",
+          "state": "MERGED",
+          "author": "Suhail98"
+        },
+        {
+          "number": 19736,
+          "title": "scrape: resolve the default timeout against the per-target interval",
+          "url": "https://github.com/prometheus/prometheus/pull/19736",
+          "createdAt": "2026-09-18T01:43:07Z",
+          "state": "CLOSED",
+          "author": "hktitof"
+        },
+        {
+          "number": 19722,
+          "title": "tsdb: fix appends after mmap-only recovery",
+          "url": "https://github.com/prometheus/prometheus/pull/19722",
+          "createdAt": "2026-09-16T13:23:50Z",
+          "state": "OPEN",
+          "author": "dmatth1"
+        },
+        {
+          "number": 19713,
+          "title": "fix(remote-write): return 400 instead of 204 for duplicate labels in v1",
+          "url": "https://github.com/prometheus/prometheus/pull/19713",
+          "createdAt": "2026-09-16T06:32:19Z",
+          "state": "OPEN",
+          "author": "AruneshDwivedi"
+        }
+      ]
+    },
+    {
+      "repo": {
+        "owner": "vitejs",
+        "repo": "vite"
+      },
+      "scanned": 9,
+      "skipped": {
+        "after-cutoff": 68,
+        "bot": 0,
+        "maintainer": 1,
+        "not-looked-at": 1,
+        "not-new": 2
+      },
+      "prs": [
+        {
+          "number": 23519,
+          "title": "fix(sourcemap): skip URL source roots when injecting sources content",
+          "url": "https://github.com/vitejs/vite/pull/23519",
+          "createdAt": "2026-09-18T11:38:41Z",
+          "state": "MERGED",
+          "author": "murugu-21"
+        },
+        {
+          "number": 23517,
+          "title": "fix: guard HMR merge descriptors when websocket is disabled",
+          "url": "https://github.com/vitejs/vite/pull/23517",
+          "createdAt": "2026-09-18T10:12:53Z",
+          "state": "CLOSED",
+          "author": "GruffElixir"
+        },
+        {
+          "number": 23516,
+          "title": "fix(sourcemap): skip URL source roots when injecting sources content",
+          "url": "https://github.com/vitejs/vite/pull/23516",
+          "createdAt": "2026-09-18T08:52:43Z",
+          "state": "CLOSED",
+          "author": "murugappan-medme-1"
+        },
+        {
+          "number": 23509,
+          "title": "fix(css): resolve relative imports in imported preprocessor files for lightningcss",
+          "url": "https://github.com/vitejs/vite/pull/23509",
+          "createdAt": "2026-09-17T10:08:48Z",
+          "state": "CLOSED",
+          "author": "scs0209"
+        },
+        {
+          "number": 23507,
+          "title": "fix(config): avoid crash when merging server.hmr with ws: false",
+          "url": "https://github.com/vitejs/vite/pull/23507",
+          "createdAt": "2026-09-17T10:03:18Z",
+          "state": "CLOSED",
+          "author": "scs0209"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,246 @@
+{
+  "howTo": [
+    "For each PR, read its block in eval/LABELING.md (links first, suggestions marked with ➤).",
+    "For each suggestion, set \"decision\" to \"confirm\", \"reject\", or \"change:<category>\" (e.g. \"change:tests\").",
+    "If the maintainers objected to something the script missed, add it to \"added\": { \"category\": \"...\", \"evidence\": \"<link or quote>\" }.",
+    "Set \"reviewed\": true when done with a PR (a PR with no suggestions and nothing to add still needs \"reviewed\": true).",
+    "Only count what maintainers or bots raised BEFORE the PR was merged or closed."
+  ],
+  "categories": [
+    "template",
+    "commit-format",
+    "dco",
+    "linked-issue",
+    "tests",
+    "assignment",
+    "not-checkable"
+  ],
+  "prs": [
+    {
+      "pr": "stdlib-js/stdlib#15330",
+      "url": "https://github.com/stdlib-js/stdlib/pull/15330",
+      "reviewed": false,
+      "suggestions": [],
+      "added": [],
+      "notes": ""
+    },
+    {
+      "pr": "stdlib-js/stdlib#15317",
+      "url": "https://github.com/stdlib-js/stdlib/pull/15317",
+      "reviewed": false,
+      "suggestions": [
+        {
+          "id": "stdlib-js/stdlib#15317:template",
+          "category": "template",
+          "decision": ""
+        },
+        {
+          "id": "stdlib-js/stdlib#15317:not-checkable",
+          "category": "not-checkable",
+          "decision": ""
+        }
+      ],
+      "added": [],
+      "notes": ""
+    },
+    {
+      "pr": "stdlib-js/stdlib#15297",
+      "url": "https://github.com/stdlib-js/stdlib/pull/15297",
+      "reviewed": false,
+      "suggestions": [],
+      "added": [],
+      "notes": ""
+    },
+    {
+      "pr": "stdlib-js/stdlib#15293",
+      "url": "https://github.com/stdlib-js/stdlib/pull/15293",
+      "reviewed": false,
+      "suggestions": [
+        {
+          "id": "stdlib-js/stdlib#15293:tests",
+          "category": "tests",
+          "decision": ""
+        },
+        {
+          "id": "stdlib-js/stdlib#15293:not-checkable",
+          "category": "not-checkable",
+          "decision": ""
+        },
+        {
+          "id": "stdlib-js/stdlib#15293:commit-format",
+          "category": "commit-format",
+          "decision": ""
+        }
+      ],
+      "added": [],
+      "notes": ""
+    },
+    {
+      "pr": "stdlib-js/stdlib#15289",
+      "url": "https://github.com/stdlib-js/stdlib/pull/15289",
+      "reviewed": false,
+      "suggestions": [
+        {
+          "id": "stdlib-js/stdlib#15289:not-checkable",
+          "category": "not-checkable",
+          "decision": ""
+        }
+      ],
+      "added": [],
+      "notes": ""
+    },
+    {
+      "pr": "nodejs/node#66113",
+      "url": "https://github.com/nodejs/node/pull/66113",
+      "reviewed": false,
+      "suggestions": [
+        {
+          "id": "nodejs/node#66113:commit-format",
+          "category": "commit-format",
+          "decision": ""
+        }
+      ],
+      "added": [],
+      "notes": ""
+    },
+    {
+      "pr": "nodejs/node#66088",
+      "url": "https://github.com/nodejs/node/pull/66088",
+      "reviewed": false,
+      "suggestions": [
+        {
+          "id": "nodejs/node#66088:commit-format",
+          "category": "commit-format",
+          "decision": ""
+        }
+      ],
+      "added": [],
+      "notes": ""
+    },
+    {
+      "pr": "nodejs/node#66085",
+      "url": "https://github.com/nodejs/node/pull/66085",
+      "reviewed": false,
+      "suggestions": [
+        {
+          "id": "nodejs/node#66085:not-checkable",
+          "category": "not-checkable",
+          "decision": ""
+        }
+      ],
+      "added": [],
+      "notes": ""
+    },
+    {
+      "pr": "nodejs/node#66082",
+      "url": "https://github.com/nodejs/node/pull/66082",
+      "reviewed": false,
+      "suggestions": [],
+      "added": [],
+      "notes": ""
+    },
+    {
+      "pr": "nodejs/node#66077",
+      "url": "https://github.com/nodejs/node/pull/66077",
+      "reviewed": false,
+      "suggestions": [
+        {
+          "id": "nodejs/node#66077:commit-format",
+          "category": "commit-format",
+          "decision": ""
+        }
+      ],
+      "added": [],
+      "notes": ""
+    },
+    {
+      "pr": "prometheus/prometheus#19746",
+      "url": "https://github.com/prometheus/prometheus/pull/19746",
+      "reviewed": false,
+      "suggestions": [],
+      "added": [],
+      "notes": ""
+    },
+    {
+      "pr": "prometheus/prometheus#19736",
+      "url": "https://github.com/prometheus/prometheus/pull/19736",
+      "reviewed": false,
+      "suggestions": [],
+      "added": [],
+      "notes": ""
+    },
+    {
+      "pr": "prometheus/prometheus#19722",
+      "url": "https://github.com/prometheus/prometheus/pull/19722",
+      "reviewed": false,
+      "suggestions": [
+        {
+          "id": "prometheus/prometheus#19722:not-checkable",
+          "category": "not-checkable",
+          "decision": ""
+        },
+        {
+          "id": "prometheus/prometheus#19722:template",
+          "category": "template",
+          "decision": ""
+        }
+      ],
+      "added": [],
+      "notes": ""
+    },
+    {
+      "pr": "prometheus/prometheus#19713",
+      "url": "https://github.com/prometheus/prometheus/pull/19713",
+      "reviewed": false,
+      "suggestions": [
+        {
+          "id": "prometheus/prometheus#19713:tests",
+          "category": "tests",
+          "decision": ""
+        }
+      ],
+      "added": [],
+      "notes": ""
+    },
+    {
+      "pr": "vitejs/vite#23519",
+      "url": "https://github.com/vitejs/vite/pull/23519",
+      "reviewed": false,
+      "suggestions": [],
+      "added": [],
+      "notes": ""
+    },
+    {
+      "pr": "vitejs/vite#23517",
+      "url": "https://github.com/vitejs/vite/pull/23517",
+      "reviewed": false,
+      "suggestions": [],
+      "added": [],
+      "notes": ""
+    },
+    {
+      "pr": "vitejs/vite#23516",
+      "url": "https://github.com/vitejs/vite/pull/23516",
+      "reviewed": false,
+      "suggestions": [],
+      "added": [],
+      "notes": ""
+    },
+    {
+      "pr": "vitejs/vite#23509",
+      "url": "https://github.com/vitejs/vite/pull/23509",
+      "reviewed": false,
+      "suggestions": [],
+      "added": [],
+      "notes": ""
+    },
+    {
+      "pr": "vitejs/vite#23507",
+      "url": "https://github.com/vitejs/vite/pull/23507",
+      "reviewed": false,
+      "suggestions": [],
+      "added": [],
+      "notes": ""
+    }
+  ]
+}
