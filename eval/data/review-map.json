@@ -1,0 +1,361 @@
+{
+  "A1": {
+    "pr": "stdlib-js/stdlib#15179",
+    "suggestions": {}
+  },
+  "A2": {
+    "pr": "stdlib-js/stdlib#15177",
+    "suggestions": {
+      "A2": "stdlib-js/stdlib#15177:commit-format"
+    }
+  },
+  "A3": {
+    "pr": "stdlib-js/stdlib#15160",
+    "suggestions": {
+      "A3": "stdlib-js/stdlib#15160:commit-format"
+    }
+  },
+  "A4": {
+    "pr": "stdlib-js/stdlib#15157",
+    "suggestions": {}
+  },
+  "A5": {
+    "pr": "stdlib-js/stdlib#15134",
+    "suggestions": {}
+  },
+  "A6": {
+    "pr": "stdlib-js/stdlib#15103",
+    "suggestions": {
+      "A6": "stdlib-js/stdlib#15103:not-checkable"
+    }
+  },
+  "A7": {
+    "pr": "stdlib-js/stdlib#15017",
+    "suggestions": {}
+  },
+  "A8": {
+    "pr": "stdlib-js/stdlib#14953",
+    "suggestions": {
+      "A8": "stdlib-js/stdlib#14953:commit-format"
+    }
+  },
+  "A9": {
+    "pr": "stdlib-js/stdlib#14945",
+    "suggestions": {
+      "A9": "stdlib-js/stdlib#14945:not-checkable"
+    }
+  },
+  "A10": {
+    "pr": "stdlib-js/stdlib#14941",
+    "suggestions": {}
+  },
+  "A11": {
+    "pr": "stdlib-js/stdlib#14926",
+    "suggestions": {
+      "A11": "stdlib-js/stdlib#14926:commit-format"
+    }
+  },
+  "A12": {
+    "pr": "nodejs/node#66019",
+    "suggestions": {
+      "A12a": "nodejs/node#66019:not-checkable",
+      "A12b": "nodejs/node#66019:commit-format"
+    }
+  },
+  "A13": {
+    "pr": "nodejs/node#66018",
+    "suggestions": {
+      "A13": "nodejs/node#66018:commit-format"
+    }
+  },
+  "A14": {
+    "pr": "nodejs/node#66005",
+    "suggestions": {}
+  },
+  "A15": {
+    "pr": "nodejs/node#66000",
+    "suggestions": {
+      "A15": "nodejs/node#66000:not-checkable"
+    }
+  },
+  "A16": {
+    "pr": "nodejs/node#65947",
+    "suggestions": {
+      "A16": "nodejs/node#65947:template"
+    }
+  },
+  "A17": {
+    "pr": "nodejs/node#65941",
+    "suggestions": {
+      "A17": "nodejs/node#65941:not-checkable"
+    }
+  },
+  "A18": {
+    "pr": "nodejs/node#65940",
+    "suggestions": {
+      "A18": "nodejs/node#65940:commit-format"
+    }
+  },
+  "A19": {
+    "pr": "nodejs/node#65939",
+    "suggestions": {}
+  },
+  "A20": {
+    "pr": "nodejs/node#65918",
+    "suggestions": {
+      "A20": "nodejs/node#65918:commit-format"
+    }
+  },
+  "A21": {
+    "pr": "nodejs/node#65916",
+    "suggestions": {
+      "A21": "nodejs/node#65916:commit-format"
+    }
+  },
+  "A22": {
+    "pr": "nodejs/node#65915",
+    "suggestions": {}
+  },
+  "A23": {
+    "pr": "nodejs/node#65890",
+    "suggestions": {
+      "A23": "nodejs/node#65890:commit-format"
+    }
+  },
+  "A24": {
+    "pr": "nodejs/node#65851",
+    "suggestions": {}
+  },
+  "A25": {
+    "pr": "nodejs/node#65849",
+    "suggestions": {}
+  },
+  "A26": {
+    "pr": "nodejs/node#65841",
+    "suggestions": {}
+  },
+  "A27": {
+    "pr": "prometheus/prometheus#19691",
+    "suggestions": {
+      "A27": "prometheus/prometheus#19691:dco"
+    }
+  },
+  "A28": {
+    "pr": "prometheus/prometheus#19686",
+    "suggestions": {}
+  },
+  "A29": {
+    "pr": "prometheus/prometheus#19681",
+    "suggestions": {
+      "A29": "prometheus/prometheus#19681:template"
+    }
+  },
+  "A30": {
+    "pr": "prometheus/prometheus#19674",
+    "suggestions": {}
+  },
+  "A31": {
+    "pr": "prometheus/prometheus#19662",
+    "suggestions": {
+      "A31": "prometheus/prometheus#19662:template"
+    }
+  },
+  "A32": {
+    "pr": "prometheus/prometheus#19660",
+    "suggestions": {}
+  },
+  "A33": {
+    "pr": "prometheus/prometheus#19658",
+    "suggestions": {
+      "A33": "prometheus/prometheus#19658:template"
+    }
+  },
+  "A34": {
+    "pr": "prometheus/prometheus#19588",
+    "suggestions": {
+      "A34": "prometheus/prometheus#19588:not-checkable"
+    }
+  },
+  "A35": {
+    "pr": "prometheus/prometheus#19572",
+    "suggestions": {}
+  },
+  "A36": {
+    "pr": "prometheus/prometheus#19570",
+    "suggestions": {}
+  },
+  "A37": {
+    "pr": "prometheus/prometheus#19558",
+    "suggestions": {
+      "A37": "prometheus/prometheus#19558:not-checkable"
+    }
+  },
+  "A38": {
+    "pr": "prometheus/prometheus#19556",
+    "suggestions": {
+      "A38": "prometheus/prometheus#19556:template"
+    }
+  },
+  "A39": {
+    "pr": "prometheus/prometheus#19553",
+    "suggestions": {
+      "A39": "prometheus/prometheus#19553:dco"
+    }
+  },
+  "A40": {
+    "pr": "prometheus/prometheus#19539",
+    "suggestions": {}
+  },
+  "A41": {
+    "pr": "prometheus/prometheus#19526",
+    "suggestions": {}
+  },
+  "A42": {
+    "pr": "prometheus/prometheus#19525",
+    "suggestions": {}
+  },
+  "A43": {
+    "pr": "vitejs/vite#23479",
+    "suggestions": {}
+  },
+  "A44": {
+    "pr": "vitejs/vite#23478",
+    "suggestions": {}
+  },
+  "A45": {
+    "pr": "vitejs/vite#23474",
+    "suggestions": {}
+  },
+  "A46": {
+    "pr": "vitejs/vite#23473",
+    "suggestions": {}
+  },
+  "A47": {
+    "pr": "vitejs/vite#23469",
+    "suggestions": {
+      "A47": "vitejs/vite#23469:commit-format"
+    }
+  },
+  "A48": {
+    "pr": "vitejs/vite#23468",
+    "suggestions": {}
+  },
+  "A49": {
+    "pr": "vitejs/vite#23467",
+    "suggestions": {}
+  },
+  "A50": {
+    "pr": "vitejs/vite#23454",
+    "suggestions": {}
+  },
+  "A51": {
+    "pr": "vitejs/vite#23452",
+    "suggestions": {}
+  },
+  "A52": {
+    "pr": "vitejs/vite#23446",
+    "suggestions": {
+      "A52": "vitejs/vite#23446:commit-format"
+    }
+  },
+  "A53": {
+    "pr": "vitejs/vite#23443",
+    "suggestions": {
+      "A53": "vitejs/vite#23443:not-checkable"
+    }
+  },
+  "A54": {
+    "pr": "vitejs/vite#23442",
+    "suggestions": {
+      "A54": "vitejs/vite#23442:not-checkable"
+    }
+  },
+  "A55": {
+    "pr": "vitejs/vite#23439",
+    "suggestions": {}
+  },
+  "A56": {
+    "pr": "vitejs/vite#23438",
+    "suggestions": {}
+  },
+  "A57": {
+    "pr": "vitejs/vite#23428",
+    "suggestions": {}
+  },
+  "A58": {
+    "pr": "vitejs/vite#23420",
+    "suggestions": {}
+  },
+  "A59": {
+    "pr": "vitejs/vite#23403",
+    "suggestions": {}
+  },
+  "A60": {
+    "pr": "vitejs/vite#23402",
+    "suggestions": {}
+  },
+  "A61": {
+    "pr": "vitejs/vite#23400",
+    "suggestions": {}
+  },
+  "A62": {
+    "pr": "vitejs/vite#23396",
+    "suggestions": {}
+  },
+  "B1": {
+    "pr": "stdlib-js/stdlib#15161",
+    "suggestions": {}
+  },
+  "B2": {
+    "pr": "stdlib-js/stdlib#15133",
+    "suggestions": {}
+  },
+  "B3": {
+    "pr": "stdlib-js/stdlib#15020",
+    "suggestions": {}
+  },
+  "B4": {
+    "pr": "stdlib-js/stdlib#15013",
+    "suggestions": {}
+  },
+  "B5": {
+    "pr": "stdlib-js/stdlib#14865",
+    "suggestions": {}
+  },
+  "B6": {
+    "pr": "nodejs/node#66025",
+    "suggestions": {}
+  },
+  "B7": {
+    "pr": "nodejs/node#65963",
+    "suggestions": {}
+  },
+  "B8": {
+    "pr": "nodejs/node#65952",
+    "suggestions": {}
+  },
+  "B9": {
+    "pr": "nodejs/node#65887",
+    "suggestions": {}
+  },
+  "B10": {
+    "pr": "nodejs/node#65876",
+    "suggestions": {}
+  },
+  "B11": {
+    "pr": "prometheus/prometheus#19663",
+    "suggestions": {}
+  },
+  "B12": {
+    "pr": "prometheus/prometheus#19661",
+    "suggestions": {}
+  },
+  "B13": {
+    "pr": "prometheus/prometheus#19659",
+    "suggestions": {}
+  },
+  "B14": {
+    "pr": "prometheus/prometheus#19657",
+    "suggestions": {}
+  }
+}
