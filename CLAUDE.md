@@ -163,8 +163,8 @@ remind me of this list first.
 - Never add features, libraries or files I didn't approve.
 
 ## Current status
-Day 2 done: rule extraction complete (config, template, history,
-prose). Next (28 Sep): checks in /lib/checks, API route, UI.
+Day 3 done: UI live, evaluation complete (held-out: recall 3/5,
+precision 3/7). Next (29 Sep): classmate testing, README, video script.
 
 ## Known limitations
 - Linked docs: only one level deep, max 3 files / 150KB, picked by
