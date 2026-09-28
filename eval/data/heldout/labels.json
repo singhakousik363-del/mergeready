@@ -19,7 +19,7 @@
     {
       "pr": "stdlib-js/stdlib#15330",
       "url": "https://github.com/stdlib-js/stdlib/pull/15330",
-      "reviewed": false,
+      "reviewed": true,
       "suggestions": [],
       "added": [],
       "notes": ""
@@ -27,17 +27,17 @@
     {
       "pr": "stdlib-js/stdlib#15317",
       "url": "https://github.com/stdlib-js/stdlib/pull/15317",
-      "reviewed": false,
+      "reviewed": true,
       "suggestions": [
         {
           "id": "stdlib-js/stdlib#15317:template",
           "category": "template",
-          "decision": ""
+          "decision": "confirm"
         },
         {
           "id": "stdlib-js/stdlib#15317:not-checkable",
           "category": "not-checkable",
-          "decision": ""
+          "decision": "reject"
         }
       ],
       "added": [],
@@ -46,30 +46,35 @@
     {
       "pr": "stdlib-js/stdlib#15297",
       "url": "https://github.com/stdlib-js/stdlib/pull/15297",
-      "reviewed": false,
+      "reviewed": true,
       "suggestions": [],
-      "added": [],
+      "added": [
+        {
+          "category": "not-checkable",
+          "evidence": "Maintainer comment \"Ref: https://github.com/stdlib-js/stdlib/pull/15177\" (https://github.com/stdlib-js/stdlib/pull/15297#issuecomment-5826614963); stdlib-bot says the issue was already addressed (https://github.com/stdlib-js/stdlib/pull/15297#issuecomment-5826617071)"
+        }
+      ],
       "notes": ""
     },
     {
       "pr": "stdlib-js/stdlib#15293",
       "url": "https://github.com/stdlib-js/stdlib/pull/15293",
-      "reviewed": false,
+      "reviewed": true,
       "suggestions": [
         {
           "id": "stdlib-js/stdlib#15293:tests",
           "category": "tests",
-          "decision": ""
+          "decision": "reject"
         },
         {
           "id": "stdlib-js/stdlib#15293:not-checkable",
           "category": "not-checkable",
-          "decision": ""
+          "decision": "confirm"
         },
         {
           "id": "stdlib-js/stdlib#15293:commit-format",
           "category": "commit-format",
-          "decision": ""
+          "decision": "reject"
         }
       ],
       "added": [],
@@ -78,12 +83,12 @@
     {
       "pr": "stdlib-js/stdlib#15289",
       "url": "https://github.com/stdlib-js/stdlib/pull/15289",
-      "reviewed": false,
+      "reviewed": true,
       "suggestions": [
         {
           "id": "stdlib-js/stdlib#15289:not-checkable",
           "category": "not-checkable",
-          "decision": ""
+          "decision": "confirm"
         }
       ],
       "added": [],
@@ -92,12 +97,12 @@
     {
       "pr": "nodejs/node#66113",
       "url": "https://github.com/nodejs/node/pull/66113",
-      "reviewed": false,
+      "reviewed": true,
       "suggestions": [
         {
           "id": "nodejs/node#66113:commit-format",
           "category": "commit-format",
-          "decision": ""
+          "decision": "confirm"
         }
       ],
       "added": [],
@@ -106,12 +111,12 @@
     {
       "pr": "nodejs/node#66088",
       "url": "https://github.com/nodejs/node/pull/66088",
-      "reviewed": false,
+      "reviewed": true,
       "suggestions": [
         {
           "id": "nodejs/node#66088:commit-format",
           "category": "commit-format",
-          "decision": ""
+          "decision": "confirm"
         }
       ],
       "added": [],
@@ -120,12 +125,12 @@
     {
       "pr": "nodejs/node#66085",
       "url": "https://github.com/nodejs/node/pull/66085",
-      "reviewed": false,
+      "reviewed": true,
       "suggestions": [
         {
           "id": "nodejs/node#66085:not-checkable",
           "category": "not-checkable",
-          "decision": ""
+          "decision": "confirm"
         }
       ],
       "added": [],
@@ -134,7 +139,7 @@
     {
       "pr": "nodejs/node#66082",
       "url": "https://github.com/nodejs/node/pull/66082",
-      "reviewed": false,
+      "reviewed": true,
       "suggestions": [],
       "added": [],
       "notes": ""
@@ -142,21 +147,26 @@
     {
       "pr": "nodejs/node#66077",
       "url": "https://github.com/nodejs/node/pull/66077",
-      "reviewed": false,
+      "reviewed": true,
       "suggestions": [
         {
           "id": "nodejs/node#66077:commit-format",
           "category": "commit-format",
-          "decision": ""
+          "decision": "confirm"
         }
       ],
-      "added": [],
+      "added": [
+        {
+          "category": "not-checkable",
+          "evidence": "Maintainer comment \"I think we can keep those there for now... ;).\" (https://github.com/nodejs/node/pull/66077#issuecomment-5711153820)"
+        }
+      ],
       "notes": ""
     },
     {
       "pr": "prometheus/prometheus#19746",
       "url": "https://github.com/prometheus/prometheus/pull/19746",
-      "reviewed": false,
+      "reviewed": true,
       "suggestions": [],
       "added": [],
       "notes": ""
@@ -164,25 +174,30 @@
     {
       "pr": "prometheus/prometheus#19736",
       "url": "https://github.com/prometheus/prometheus/pull/19736",
-      "reviewed": false,
+      "reviewed": true,
       "suggestions": [],
-      "added": [],
+      "added": [
+        {
+          "category": "not-checkable",
+          "evidence": "Maintainer comment \"commented in the issue\" (https://github.com/prometheus/prometheus/pull/19736#issuecomment-5730464762); PR closed without merge"
+        }
+      ],
       "notes": ""
     },
     {
       "pr": "prometheus/prometheus#19722",
       "url": "https://github.com/prometheus/prometheus/pull/19722",
-      "reviewed": false,
+      "reviewed": true,
       "suggestions": [
         {
           "id": "prometheus/prometheus#19722:not-checkable",
           "category": "not-checkable",
-          "decision": ""
+          "decision": "confirm"
         },
         {
           "id": "prometheus/prometheus#19722:template",
           "category": "template",
-          "decision": ""
+          "decision": "reject"
         }
       ],
       "added": [],
@@ -191,29 +206,39 @@
     {
       "pr": "prometheus/prometheus#19713",
       "url": "https://github.com/prometheus/prometheus/pull/19713",
-      "reviewed": false,
+      "reviewed": true,
       "suggestions": [
         {
           "id": "prometheus/prometheus#19713:tests",
           "category": "tests",
-          "decision": ""
+          "decision": "confirm"
         }
       ],
-      "added": [],
+      "added": [
+        {
+          "category": "not-checkable",
+          "evidence": "Maintainer asked for agreement before opinionated architectural changes (https://github.com/prometheus/prometheus/pull/19713#issuecomment-5720335961)"
+        }
+      ],
       "notes": ""
     },
     {
       "pr": "vitejs/vite#23519",
       "url": "https://github.com/vitejs/vite/pull/23519",
-      "reviewed": false,
+      "reviewed": true,
       "suggestions": [],
-      "added": [],
+      "added": [
+        {
+          "category": "not-checkable",
+          "evidence": "Maintainer review \"LGTM. I've also added the handling for `sources` field\" (https://github.com/vitejs/vite/pull/23519#pullrequestreview-5302967612)"
+        }
+      ],
       "notes": ""
     },
     {
       "pr": "vitejs/vite#23517",
       "url": "https://github.com/vitejs/vite/pull/23517",
-      "reviewed": false,
+      "reviewed": true,
       "suggestions": [],
       "added": [],
       "notes": ""
@@ -221,7 +246,7 @@
     {
       "pr": "vitejs/vite#23516",
       "url": "https://github.com/vitejs/vite/pull/23516",
-      "reviewed": false,
+      "reviewed": true,
       "suggestions": [],
       "added": [],
       "notes": ""
@@ -229,7 +254,7 @@
     {
       "pr": "vitejs/vite#23509",
       "url": "https://github.com/vitejs/vite/pull/23509",
-      "reviewed": false,
+      "reviewed": true,
       "suggestions": [],
       "added": [],
       "notes": ""
@@ -237,7 +262,7 @@
     {
       "pr": "vitejs/vite#23507",
       "url": "https://github.com/vitejs/vite/pull/23507",
-      "reviewed": false,
+      "reviewed": true,
       "suggestions": [],
       "added": [],
       "notes": ""
