@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# evaluation: cached GitHub responses (re-runs cost no API calls)
+eval/.cache/
