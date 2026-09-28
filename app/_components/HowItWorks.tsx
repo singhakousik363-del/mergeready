@@ -2,12 +2,12 @@ const SOURCES = [
     {
         title: "Repo config",
         what: "commitlint settings, DCO setup and CI workflows.",
-        weight: "The repo's tools enforce these, so breaking one is red.",
+        weight: "The repo set these up for its own checking tools, so breaking one is red.",
     },
     {
         title: "PR template",
         what: "Sections to fill in, checkboxes, the “Fixes #” field.",
-        weight: "The repo asks every PR for these, so a miss is red.",
+        weight: "A miss is red only when the template clearly requires it (“must”, “required”), otherwise yellow.",
     },
     {
         title: "Commit history",
@@ -17,7 +17,7 @@ const SOURCES = [
     {
         title: "Written guidelines",
         what: "Exact sentences from CONTRIBUTING and the docs it links to.",
-        weight: "Found by pattern matching, so a miss is yellow.",
+        weight: "A miss is red only when the sentence clearly requires it (“must”, “required”), otherwise yellow.",
     },
 ];
 
@@ -30,7 +30,8 @@ export function HowItWorks() {
             </h2>
             <p className="mt-3 max-w-2xl text-muted">
                 No AI. MergeReady reads four kinds of evidence from the repo itself, and every rule it shows comes with
-                the exact words and a link to where they are written.
+                proof: the exact words and a link to where they are written, or for commit history, a count and a link
+                to those commits.
             </p>
             <ol className="mt-6 grid gap-4 sm:grid-cols-2">
                 {SOURCES.map((source, i) => (

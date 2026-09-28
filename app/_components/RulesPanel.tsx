@@ -9,7 +9,8 @@ export function RulesPanel({ rules }: { rules: Rule[] }) {
                 Rules we found <span className="text-muted">({rules.length})</span>
             </h2>
             <p className="mt-2 text-muted">
-                Every rule the checks above use, with the exact words and a link to where the repo wrote them.
+                Every rule the checks above use, with the exact words and a link to where the repo wrote them (for
+                commit history: a count and a link to those commits).
             </p>
             <div className="mt-5 flex flex-col gap-3">
                 {SOURCE_GROUPS.map((group) => {

@@ -32,7 +32,7 @@ export const RULE_TYPE_LABEL: Record<RuleType, string> = {
 
 // The "Rules we found" panel: one group per source, strongest first
 export const SOURCE_GROUPS: { confidence: Confidence; title: string; explain: string }[] = [
-    { confidence: "config", title: "Repo config", explain: "Tools the repo runs on every PR. These are enforced." },
+    { confidence: "config", title: "Repo config", explain: "Settings the repo made for its own checking tools. Breaking one is red." },
     { confidence: "template", title: "PR template", explain: "What the repo's pull request template asks for." },
     { confidence: "history", title: "Commit history", explain: "Habits seen in the repo's recent commits. Recommended, not enforced." },
     { confidence: "prose", title: "Written guidelines", explain: "Sentences from CONTRIBUTING and the docs it links to." },
