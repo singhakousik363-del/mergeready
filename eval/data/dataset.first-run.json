@@ -1,0 +1,551 @@
+{
+  "rules": "eval/SELECTION.md",
+  "cutoff": "2026-09-14T23:59:59Z",
+  "perRepo": 20,
+  "repos": [
+    {
+      "repo": {
+        "owner": "stdlib-js",
+        "repo": "stdlib"
+      },
+      "scanned": 400,
+      "skipped": {
+        "after-cutoff": 378,
+        "bot": 0,
+        "maintainer": 17,
+        "not-looked-at": 1,
+        "not-new": 1
+      },
+      "prs": [
+        {
+          "number": 15218,
+          "title": "test: migrate `math/base/special/lnf` to ULP-based assertions",
+          "url": "https://github.com/stdlib-js/stdlib/pull/15218",
+          "createdAt": "2026-09-14T11:15:21Z",
+          "state": "MERGED",
+          "author": "Devansh-18155"
+        },
+        {
+          "number": 15215,
+          "title": "feat: add C implementation for `stats/base/ndarray/smskmidrange`",
+          "url": "https://github.com/stdlib-js/stdlib/pull/15215",
+          "createdAt": "2026-09-14T07:00:24Z",
+          "state": "OPEN",
+          "author": "himayurjogade"
+        },
+        {
+          "number": 15208,
+          "title": "test: migrate `math/base/special/riemann-zeta` to ULP-based assertions",
+          "url": "https://github.com/stdlib-js/stdlib/pull/15208",
+          "createdAt": "2026-09-13T17:45:17Z",
+          "state": "MERGED",
+          "author": "Devansh-18155"
+        }
+      ]
+    },
+    {
+      "repo": {
+        "owner": "nodejs",
+        "repo": "node"
+      },
+      "scanned": 400,
+      "skipped": {
+        "after-cutoff": 271,
+        "bot": 6,
+        "maintainer": 65,
+        "not-looked-at": 5,
+        "not-new": 36
+      },
+      "prs": [
+        {
+          "number": 66025,
+          "title": "tls: propagate singleUse to the secure context",
+          "url": "https://github.com/nodejs/node/pull/66025",
+          "createdAt": "2026-09-14T20:17:23Z",
+          "state": "MERGED",
+          "author": "ViniciusDev26"
+        },
+        {
+          "number": 66019,
+          "title": "node-api: do not crash on module version mismatch",
+          "url": "https://github.com/nodejs/node/pull/66019",
+          "createdAt": "2026-09-14T09:45:14Z",
+          "state": "MERGED",
+          "author": "krassx"
+        },
+        {
+          "number": 66018,
+          "title": "Codex/browser env",
+          "url": "https://github.com/nodejs/node/pull/66018",
+          "createdAt": "2026-09-14T09:09:27Z",
+          "state": "CLOSED",
+          "author": "wen2go"
+        },
+        {
+          "number": 66005,
+          "title": "deps: improve macOS spawn PATH performance",
+          "url": "https://github.com/nodejs/node/pull/66005",
+          "createdAt": "2026-09-12T17:46:59Z",
+          "state": "CLOSED",
+          "author": "splincode"
+        },
+        {
+          "number": 66000,
+          "title": "http: close connections that go idle after server.close()",
+          "url": "https://github.com/nodejs/node/pull/66000",
+          "createdAt": "2026-09-12T11:42:02Z",
+          "state": "OPEN",
+          "author": "WhatCats"
+        },
+        {
+          "number": 65963,
+          "title": "stream: destroy Duplex.from async function on early return",
+          "url": "https://github.com/nodejs/node/pull/65963",
+          "createdAt": "2026-09-10T14:36:46Z",
+          "state": "MERGED",
+          "author": "ac-mmi"
+        },
+        {
+          "number": 65952,
+          "title": "http: don't destroy socket after request completes",
+          "url": "https://github.com/nodejs/node/pull/65952",
+          "createdAt": "2026-09-10T06:25:15Z",
+          "state": "MERGED",
+          "author": "barathraj048"
+        },
+        {
+          "number": 65947,
+          "title": "doc: clarify QUIC async write backpressure",
+          "url": "https://github.com/nodejs/node/pull/65947",
+          "createdAt": "2026-09-09T20:56:08Z",
+          "state": "MERGED",
+          "author": "johnfinnerty-nz"
+        },
+        {
+          "number": 65941,
+          "title": "node-api: avoid TSFN mutex reentry during teardown",
+          "url": "https://github.com/nodejs/node/pull/65941",
+          "createdAt": "2026-09-09T15:46:59Z",
+          "state": "CLOSED",
+          "author": "jimmyhmiller"
+        },
+        {
+          "number": 65940,
+          "title": "test_runner: match coverage globs against cwd-relative paths only",
+          "url": "https://github.com/nodejs/node/pull/65940",
+          "createdAt": "2026-09-09T15:14:22Z",
+          "state": "OPEN",
+          "author": "NAVEENKUMARKR777"
+        },
+        {
+          "number": 65939,
+          "title": "[v22.x backport] test_runner: convert to uint during deserialization",
+          "url": "https://github.com/nodejs/node/pull/65939",
+          "createdAt": "2026-09-09T13:44:12Z",
+          "state": "CLOSED",
+          "author": "positivef"
+        },
+        {
+          "number": 65918,
+          "title": "build: add arg to disable linking against -latomic",
+          "url": "https://github.com/nodejs/node/pull/65918",
+          "createdAt": "2026-09-08T20:30:51Z",
+          "state": "OPEN",
+          "author": "peppergrayxyz"
+        },
+        {
+          "number": 65916,
+          "title": "doc: update logo assets to new branding",
+          "url": "https://github.com/nodejs/node/pull/65916",
+          "createdAt": "2026-09-08T18:38:41Z",
+          "state": "CLOSED",
+          "author": "rohitkr0111"
+        },
+        {
+          "number": 65915,
+          "title": "test_runner: capture process state in entry point instead of runner",
+          "url": "https://github.com/nodejs/node/pull/65915",
+          "createdAt": "2026-09-08T17:19:47Z",
+          "state": "CLOSED",
+          "author": "krsnaSuraj"
+        },
+        {
+          "number": 65890,
+          "title": "stream: optimize forEach(), some(), every() and find()  functions on Readable",
+          "url": "https://github.com/nodejs/node/pull/65890",
+          "createdAt": "2026-09-07T20:58:55Z",
+          "state": "OPEN",
+          "author": "lukiano"
+        },
+        {
+          "number": 65887,
+          "title": "doc: document windowsHide for child_process.fork",
+          "url": "https://github.com/nodejs/node/pull/65887",
+          "createdAt": "2026-09-07T20:00:18Z",
+          "state": "MERGED",
+          "author": "christopher-buss"
+        },
+        {
+          "number": 65876,
+          "title": "src: avoid copying SEA snapshot data",
+          "url": "https://github.com/nodejs/node/pull/65876",
+          "createdAt": "2026-09-07T11:55:08Z",
+          "state": "MERGED",
+          "author": "colinhacks"
+        }
+      ]
+    },
+    {
+      "repo": {
+        "owner": "prometheus",
+        "repo": "prometheus"
+      },
+      "scanned": 291,
+      "skipped": {
+        "after-cutoff": 132,
+        "bot": 70,
+        "maintainer": 16,
+        "not-looked-at": 24,
+        "not-new": 29
+      },
+      "prs": [
+        {
+          "number": 19691,
+          "title": "rules: add per-rule-group evaluation_delay option",
+          "url": "https://github.com/prometheus/prometheus/pull/19691",
+          "createdAt": "2026-09-13T11:55:52Z",
+          "state": "CLOSED",
+          "author": "Retr0-XD"
+        },
+        {
+          "number": 19686,
+          "title": "tsdb: apply SearchLabelValues limit after ordering",
+          "url": "https://github.com/prometheus/prometheus/pull/19686",
+          "createdAt": "2026-09-11T17:53:42Z",
+          "state": "CLOSED",
+          "author": "priyanshu7739410"
+        },
+        {
+          "number": 19681,
+          "title": "docs: correct TSDB terminology",
+          "url": "https://github.com/prometheus/prometheus/pull/19681",
+          "createdAt": "2026-09-11T10:33:49Z",
+          "state": "MERGED",
+          "author": "gluedtea"
+        },
+        {
+          "number": 19674,
+          "title": "tsdb: apply search limits after sorting unordered index values",
+          "url": "https://github.com/prometheus/prometheus/pull/19674",
+          "createdAt": "2026-09-10T05:46:05Z",
+          "state": "CLOSED",
+          "author": "leaanthony"
+        },
+        {
+          "number": 19663,
+          "title": "scrape: fix 'there'a' typo in reload comment",
+          "url": "https://github.com/prometheus/prometheus/pull/19663",
+          "createdAt": "2026-09-08T18:11:29Z",
+          "state": "MERGED",
+          "author": "simpleqt"
+        },
+        {
+          "number": 19662,
+          "title": "docs: fix dead links in the querying docs",
+          "url": "https://github.com/prometheus/prometheus/pull/19662",
+          "createdAt": "2026-09-08T18:11:06Z",
+          "state": "OPEN",
+          "author": "simpleqt"
+        },
+        {
+          "number": 19661,
+          "title": "httputil: clear handler-set content length before compression",
+          "url": "https://github.com/prometheus/prometheus/pull/19661",
+          "createdAt": "2026-09-08T14:33:13Z",
+          "state": "MERGED",
+          "author": "jakezwang"
+        },
+        {
+          "number": 19660,
+          "title": "tsdb: preserve concurrent commits during selected-series compaction",
+          "url": "https://github.com/prometheus/prometheus/pull/19660",
+          "createdAt": "2026-09-08T14:10:57Z",
+          "state": "CLOSED",
+          "author": "dmatth1"
+        },
+        {
+          "number": 19659,
+          "title": "histogram: keep span gaps empty when unrolling an integer NHCB",
+          "url": "https://github.com/prometheus/prometheus/pull/19659",
+          "createdAt": "2026-09-08T04:03:25Z",
+          "state": "MERGED",
+          "author": "youdie006"
+        },
+        {
+          "number": 19658,
+          "title": "api: reject durations that overflow int64 at the exact boundary",
+          "url": "https://github.com/prometheus/prometheus/pull/19658",
+          "createdAt": "2026-09-08T03:58:29Z",
+          "state": "MERGED",
+          "author": "youdie006"
+        },
+        {
+          "number": 19657,
+          "title": "promql: fix histogram_fraction for custom buckets bounded at zero",
+          "url": "https://github.com/prometheus/prometheus/pull/19657",
+          "createdAt": "2026-09-08T02:16:20Z",
+          "state": "MERGED",
+          "author": "youdie006"
+        },
+        {
+          "number": 19588,
+          "title": "promql/parser: fix duration function pretty-printing",
+          "url": "https://github.com/prometheus/prometheus/pull/19588",
+          "createdAt": "2026-09-05T16:39:43Z",
+          "state": "OPEN",
+          "author": "AbdelrahmanHafez"
+        },
+        {
+          "number": 19572,
+          "title": "logging: fix rule and block fields in JSON logs",
+          "url": "https://github.com/prometheus/prometheus/pull/19572",
+          "createdAt": "2026-09-03T09:44:36Z",
+          "state": "MERGED",
+          "author": "shilohlee98"
+        },
+        {
+          "number": 19570,
+          "title": "web: add /health and /healthz endpoint aliases (#19565)",
+          "url": "https://github.com/prometheus/prometheus/pull/19570",
+          "createdAt": "2026-09-02T08:37:38Z",
+          "state": "OPEN",
+          "author": "ShivanshhhG"
+        },
+        {
+          "number": 19558,
+          "title": "scrape: allow setting multiple URL parameter values via __param_ labels",
+          "url": "https://github.com/prometheus/prometheus/pull/19558",
+          "createdAt": "2026-08-29T13:04:42Z",
+          "state": "OPEN",
+          "author": "iamsharduld"
+        },
+        {
+          "number": 19556,
+          "title": "logging: move Kube deprecation warning logger to cmd/prometheus",
+          "url": "https://github.com/prometheus/prometheus/pull/19556",
+          "createdAt": "2026-08-28T22:49:05Z",
+          "state": "MERGED",
+          "author": "janeblower"
+        },
+        {
+          "number": 19553,
+          "title": "scrape: test JSON log target formatting",
+          "url": "https://github.com/prometheus/prometheus/pull/19553",
+          "createdAt": "2026-08-28T19:14:02Z",
+          "state": "MERGED",
+          "author": "shilohlee98"
+        },
+        {
+          "number": 19539,
+          "title": "harden: this pnpm workspace configuration does not set ... in...",
+          "url": "https://github.com/prometheus/prometheus/pull/19539",
+          "createdAt": "2026-08-27T08:55:13Z",
+          "state": "CLOSED",
+          "author": "anupamme"
+        },
+        {
+          "number": 19526,
+          "title": "mixin: add native histogram variants to remote write latency panel",
+          "url": "https://github.com/prometheus/prometheus/pull/19526",
+          "createdAt": "2026-08-26T05:39:22Z",
+          "state": "CLOSED",
+          "author": "longxiucai"
+        },
+        {
+          "number": 19525,
+          "title": "fix(promql): handle round() with to_nearest 0 or negative",
+          "url": "https://github.com/prometheus/prometheus/pull/19525",
+          "createdAt": "2026-08-25T20:49:20Z",
+          "state": "CLOSED",
+          "author": "shoemoney"
+        }
+      ]
+    },
+    {
+      "repo": {
+        "owner": "vitejs",
+        "repo": "vite"
+      },
+      "scanned": 157,
+      "skipped": {
+        "after-cutoff": 90,
+        "bot": 12,
+        "maintainer": 6,
+        "not-looked-at": 15,
+        "not-new": 14
+      },
+      "prs": [
+        {
+          "number": 23479,
+          "title": "docs: fix 'allows to' grammar in applyToEnvironment docs",
+          "url": "https://github.com/vitejs/vite/pull/23479",
+          "createdAt": "2026-09-12T18:18:29Z",
+          "state": "CLOSED",
+          "author": "mrchatam"
+        },
+        {
+          "number": 23478,
+          "title": "docs: fix 'allows to' grammar in handleHotUpdate guide",
+          "url": "https://github.com/vitejs/vite/pull/23478",
+          "createdAt": "2026-09-12T18:18:24Z",
+          "state": "CLOSED",
+          "author": "mrchatam"
+        },
+        {
+          "number": 23474,
+          "title": "fix(css): parse image-set() with nested parentheses",
+          "url": "https://github.com/vitejs/vite/pull/23474",
+          "createdAt": "2026-09-12T00:21:08Z",
+          "state": "CLOSED",
+          "author": "scs0209"
+        },
+        {
+          "number": 23473,
+          "title": "fix(optimizer): match value imports starting with \"type\"",
+          "url": "https://github.com/vitejs/vite/pull/23473",
+          "createdAt": "2026-09-12T00:20:52Z",
+          "state": "CLOSED",
+          "author": "scs0209"
+        },
+        {
+          "number": 23469,
+          "title": "docs(config): document preserveEntrySignatures defaults",
+          "url": "https://github.com/vitejs/vite/pull/23469",
+          "createdAt": "2026-09-11T02:43:00Z",
+          "state": "MERGED",
+          "author": "koriyoshi2041"
+        },
+        {
+          "number": 23468,
+          "title": "docs: clarify preserveEntrySignatures defaults",
+          "url": "https://github.com/vitejs/vite/pull/23468",
+          "createdAt": "2026-09-10T21:53:08Z",
+          "state": "CLOSED",
+          "author": "dvd233"
+        },
+        {
+          "number": 23467,
+          "title": "docs: note Vite's default for `build.rolldownOptions.preserveEntrySignatures` (fix #23451)",
+          "url": "https://github.com/vitejs/vite/pull/23467",
+          "createdAt": "2026-09-10T13:57:32Z",
+          "state": "CLOSED",
+          "author": "1t1sCooL"
+        },
+        {
+          "number": 23454,
+          "title": "fix(server): clear failed resolution cache",
+          "url": "https://github.com/vitejs/vite/pull/23454",
+          "createdAt": "2026-09-07T19:18:31Z",
+          "state": "CLOSED",
+          "author": "cuishuang"
+        },
+        {
+          "number": 23452,
+          "title": "docs: build.rolldownOptions.preserveEntrySignatures shows incorrect default",
+          "url": "https://github.com/vitejs/vite/pull/23452",
+          "createdAt": "2026-09-07T16:32:01Z",
+          "state": "CLOSED",
+          "author": "eeminionn"
+        },
+        {
+          "number": 23446,
+          "title": "feat(build): avoid settling seen preload dependencies for performance",
+          "url": "https://github.com/vitejs/vite/pull/23446",
+          "createdAt": "2026-09-07T05:53:03Z",
+          "state": "MERGED",
+          "author": "StirStudios"
+        },
+        {
+          "number": 23443,
+          "title": "fix: close chokidar dir watchers orphaned by a close during their add",
+          "url": "https://github.com/vitejs/vite/pull/23443",
+          "createdAt": "2026-09-07T00:23:40Z",
+          "state": "CLOSED",
+          "author": "orangeCatDeveloper"
+        },
+        {
+          "number": 23442,
+          "title": "fix(optimizer): settle pending dependency processing on close",
+          "url": "https://github.com/vitejs/vite/pull/23442",
+          "createdAt": "2026-09-06T17:56:31Z",
+          "state": "CLOSED",
+          "author": "leonardoventurini"
+        },
+        {
+          "number": 23439,
+          "title": "fix(server): treat a missing configured publicDir as having no public files (fix #19864)",
+          "url": "https://github.com/vitejs/vite/pull/23439",
+          "createdAt": "2026-09-06T04:08:12Z",
+          "state": "CLOSED",
+          "author": "Bhumika-1432006"
+        },
+        {
+          "number": 23438,
+          "title": "fix(server): do not re-arm watcher via addWatchFile after container is closed (fix #18224)",
+          "url": "https://github.com/vitejs/vite/pull/23438",
+          "createdAt": "2026-09-06T03:52:14Z",
+          "state": "CLOSED",
+          "author": "Bhumika-1432006"
+        },
+        {
+          "number": 23428,
+          "title": "fix(client): preserve 0 in ws timeout and port injection",
+          "url": "https://github.com/vitejs/vite/pull/23428",
+          "createdAt": "2026-09-03T15:34:23Z",
+          "state": "CLOSED",
+          "author": "xia-chao"
+        },
+        {
+          "number": 23420,
+          "title": "fix(deps): update rolldown to 1.2.7",
+          "url": "https://github.com/vitejs/vite/pull/23420",
+          "createdAt": "2026-09-02T14:45:03Z",
+          "state": "CLOSED",
+          "author": "dennisameling"
+        },
+        {
+          "number": 23403,
+          "title": "fix: align hook filter globs with Rolldown (fix #21979)",
+          "url": "https://github.com/vitejs/vite/pull/23403",
+          "createdAt": "2026-08-31T00:05:44Z",
+          "state": "CLOSED",
+          "author": "QuarkOS"
+        },
+        {
+          "number": 23402,
+          "title": "fix(server): queue restarts requested during restart (fix #23392)",
+          "url": "https://github.com/vitejs/vite/pull/23402",
+          "createdAt": "2026-08-30T23:00:35Z",
+          "state": "CLOSED",
+          "author": "QuarkOS"
+        },
+        {
+          "number": 23400,
+          "title": "fix(asset): escape glob characters in dynamic `new URL` paths",
+          "url": "https://github.com/vitejs/vite/pull/23400",
+          "createdAt": "2026-08-30T12:10:02Z",
+          "state": "CLOSED",
+          "author": "ethanstoner"
+        },
+        {
+          "number": 23396,
+          "title": "fix(server): queue follow-up restart if requested during in-flight restart (fix #23392)",
+          "url": "https://github.com/vitejs/vite/pull/23396",
+          "createdAt": "2026-08-28T10:40:58Z",
+          "state": "CLOSED",
+          "author": "santusht06"
+        }
+      ]
+    }
+  ]
+}

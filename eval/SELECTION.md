@@ -91,3 +91,15 @@ type's check is red or yellow for the rebuilt PR.
   silently.
 - Every number is shown with its sample size (k/n) and a 95% Wilson interval,
   per rule type and per repo.
+
+## Changes after the first run
+
+**Change 1 (2026-09-28, before any PR was rebuilt or labeled, and before
+MergeReady was run on the dataset).** The first selection run counted PRs
+opened *after* the cutoff toward the "at most 400 PRs scanned" limit. stdlib
+opened 378 PRs after the cutoff, so only 22 older PRs were looked at and just
+3 passed; node found 17. The intended meaning was "at most 400 PRs opened on
+or before the cutoff", so PRs after the cutoff no longer count toward the
+limit. This applies to all four repos; prometheus and vite already had 20 and
+don't change. The first run's numbers (stdlib 3, node 17) are reported in
+REPORT.md.
