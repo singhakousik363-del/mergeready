@@ -3,13 +3,14 @@ import { STATUS_LABEL } from "@/lib/ui/labels";
 
 // Tailwind only includes classes it can find written out in full, so each
 // status lists its classes here instead of building them from strings
-export const STATUS_STYLE: Record<CheckStatus, { text: string; soft: string; border: string }> = {
-    pass: { text: "text-pass", soft: "bg-pass-soft", border: "border-pass" },
-    fail: { text: "text-fail", soft: "bg-fail-soft", border: "border-fail" },
-    warn: { text: "text-warn", soft: "bg-warn-soft", border: "border-warn" },
-    manual: { text: "text-manual", soft: "bg-manual-soft", border: "border-manual" },
-    pending: { text: "text-pending", soft: "bg-pending-soft", border: "border-pending" },
-    skip: { text: "text-skip", soft: "bg-skip-soft", border: "border-skip" },
+// border = all sides (journey circles); borderLeft = only the left edge (check cards)
+export const STATUS_STYLE: Record<CheckStatus, { text: string; soft: string; border: string; borderLeft: string }> = {
+    pass: { text: "text-pass", soft: "bg-pass-soft", border: "border-pass", borderLeft: "border-l-pass" },
+    fail: { text: "text-fail", soft: "bg-fail-soft", border: "border-fail", borderLeft: "border-l-fail" },
+    warn: { text: "text-warn", soft: "bg-warn-soft", border: "border-warn", borderLeft: "border-l-warn" },
+    manual: { text: "text-manual", soft: "bg-manual-soft", border: "border-manual", borderLeft: "border-l-manual" },
+    pending: { text: "text-pending", soft: "bg-pending-soft", border: "border-pending", borderLeft: "border-l-pending" },
+    skip: { text: "text-skip", soft: "bg-skip-soft", border: "border-skip", borderLeft: "border-l-skip" },
 };
 
 // A different SHAPE per status, so it's clear without colour too

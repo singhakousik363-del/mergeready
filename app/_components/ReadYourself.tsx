@@ -1,7 +1,23 @@
-import Markdown, { defaultUrlTransform } from "react-markdown";
+import Markdown, { defaultUrlTransform, type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import type { GuideSection } from "@/lib/rules/sections";
 import { resolveDocLink, withReferences } from "@/lib/ui/markdownLinks";
+
+// Headings inside a section become h4-h6, so they sit BELOW this page's own
+// headings (h2 "Read this yourself") in the outline screen readers use
+const HEADINGS: Components = {
+    h1: ({ children }) => <h4>{children}</h4>,
+    h2: ({ children }) => <h4>{children}</h4>,
+    h3: ({ children }) => <h5>{children}</h5>,
+    h4: ({ children }) => <h6>{children}</h6>,
+    h5: ({ children }) => <h6>{children}</h6>,
+    h6: ({ children }) => <h6>{children}</h6>,
+};
+
+// The section's first line is its heading, already shown in <summary>
+function withoutFirstHeading(text: string): string {
+    return /^#{1,6}\s/.test(text) ? text.slice(text.indexOf("\n") + 1 || text.length) : text;
+}
 
 // The parts of CONTRIBUTING that matter most for a first PR, shown as the
 // repo wrote them. Pattern matching can miss rules; people reading can't.
@@ -30,6 +46,7 @@ export function ReadYourself({ sections }: { sections: GuideSection[] }) {
                                     // Links were written for GitHub: point them there, then make them safe
                                     urlTransform={(url) => defaultUrlTransform(resolveDocLink(url, section.sourceUrl))}
                                     components={{
+                                        ...HEADINGS,
                                         a: ({ href, children }) => (
                                             <a href={href} target="_blank" rel="noopener noreferrer">
                                                 {children}
@@ -45,7 +62,7 @@ export function ReadYourself({ sections }: { sections: GuideSection[] }) {
                                             ) : null,
                                     }}
                                 >
-                                    {withReferences(section.text, section.references)}
+                                    {withReferences(withoutFirstHeading(section.text), section.references)}
                                 </Markdown>
                             </div>
                             {section.truncated && <p className="mt-3 text-sm text-muted">This section is long, so it was cut short here.</p>}

@@ -10,7 +10,7 @@ export function CheckCard({ check }: { check: Check }) {
     const hasEvidence = rules.length > 0 || observed.length > 0;
 
     return (
-        <article className={`rounded-xl border border-l-4 border-line bg-card p-4 sm:p-5 ${style.border}`}>
+        <article className={`rounded-xl border border-l-4 border-line bg-card p-4 sm:p-5 ${style.borderLeft}`}>
             <div className="flex flex-col items-start gap-2 sm:flex-row sm:gap-3">
                 <StatusBadge status={check.status} />
                 <p className="font-medium">{check.message}</p>

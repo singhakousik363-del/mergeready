@@ -56,7 +56,8 @@ export function CheckForm({ url, username, onUrlChange, onUsernameChange, onSubm
                 className="mt-2 w-full rounded-lg border border-line bg-paper px-3 py-3 font-mono text-sm text-ink placeholder:text-muted focus:border-accent"
             />
             {error && (
-                <p id={errorId} className="mt-2 flex items-center gap-2 text-sm text-fail">
+                // role="alert": screen readers read the problem out right away
+                <p id={errorId} role="alert" className="mt-2 flex items-center gap-2 text-sm text-fail">
                     <span aria-hidden="true">✕</span>
                     {error}
                 </p>
@@ -82,11 +83,11 @@ export function CheckForm({ url, username, onUrlChange, onUsernameChange, onSubm
                 So your own comments and pull requests don&apos;t count as someone else&apos;s claim.
             </p>
 
-            <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="mt-6 flex flex-col gap-4">
                 <button
                     type="submit"
                     disabled={busy}
-                    className="inline-flex items-center justify-center rounded-lg bg-accent px-6 py-3 font-medium text-on-accent transition-opacity hover:opacity-90 disabled:cursor-wait disabled:opacity-60"
+                    className="inline-flex items-center justify-center self-start rounded-lg bg-accent px-6 py-3 font-medium text-on-accent transition-opacity hover:opacity-90 disabled:cursor-wait disabled:opacity-60"
                 >
                     {busy ? "Checking…" : "Check"}
                 </button>

@@ -39,7 +39,9 @@ export function Results({ data, shareUrl, headingRef }: Props) {
 
             <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
                 <span>
-                    Checked in {(data.meta.durationMs / 1000).toFixed(1)} s{fromCache ? " (from a check in the last minute)" : ""}
+                    {fromCache
+                        ? "Loaded from a check in the last minute"
+                        : `Checked in ${(data.meta.durationMs / 1000).toFixed(1)} s`}
                 </span>
                 <span className="inline-flex items-center rounded-lg border border-line bg-card">
                     <span className="px-3 py-2">Share this result</span>

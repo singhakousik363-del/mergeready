@@ -32,7 +32,8 @@ export function JourneyMap({ journey }: { journey: JourneyStep[] }) {
                                         {i + 1}. {STAGE_LABEL[step.stage]}
                                     </span>
                                     <span className={`block text-sm font-medium ${style.text}`}>{STATUS_LABEL[step.status]}</span>
-                                    <span className="block text-sm text-muted">{step.summary}</span>
+                                    {/* "Not checked" says enough; the section below explains why */}
+                                    {step.status !== "skip" && <span className="block text-sm text-muted">{step.summary}</span>}
                                 </span>
                             </a>
                         </li>

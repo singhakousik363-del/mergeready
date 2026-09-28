@@ -7,6 +7,21 @@ import { StatusBadge } from "./StatusBadge";
 // below them, still openable, so nothing is hidden but the problems stand out
 export function StageSection({ group, index }: { group: StageGroup; index: number }) {
     const titleId = `stage-${group.stage}-title`;
+
+    // Nothing to check here yet (e.g. no PR): one quiet line, not a big empty section
+    if (group.checks.length === 0) {
+        return (
+            <section id={`stage-${group.stage}`} aria-labelledby={titleId} className="mt-6 scroll-mt-6">
+                <h3 id={titleId} className="flex flex-wrap items-baseline gap-x-3 text-muted">
+                    <span className="font-display text-xl text-ink">
+                        {index + 1}. {STAGE_LABEL[group.stage]}
+                    </span>
+                    <span className="text-sm">{group.summary}</span>
+                </h3>
+            </section>
+        );
+    }
+
     const needsAttention = group.checks.filter((c) => c.status !== "pass" && c.status !== "skip");
     const fine = group.checks.filter((c) => c.status === "pass" || c.status === "skip");
 
