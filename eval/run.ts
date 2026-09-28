@@ -1,18 +1,23 @@
 // Runs the evaluation one stage at a time. Uses your real GITHUB_TOKEN; every
 // GitHub answer is cached in eval/.cache, so running a stage again is free.
 //   node --env-file=.env.local --import tsx eval/run.ts select
-import { mkdirSync, readFileSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import path from "path";
 import { CUTOFF, DATA_DIR, PER_REPO, REPOS, repoKey } from "./config";
 import { createCachedGitHub } from "./github";
+import { labelingMarkdown, labelsTemplate } from "./labelingDoc";
 import { reconstructPr } from "./reconstruct";
 import { selectRepo, type RepoSelection } from "./select";
+import { findBoilerplate, suggestLabels } from "./suggestLabels";
 import type { Snapshots } from "./types";
 
 export type Dataset = { rules: string; cutoff: string; perRepo: number; repos: RepoSelection[] };
 
 const DATASET_FILE = path.join(DATA_DIR, "dataset.json");
 export const SNAPSHOTS_FILE = path.join(DATA_DIR, "snapshots.json");
+const SUGGESTED_FILE = path.join(DATA_DIR, "labels.suggested.json");
+export const LABELS_FILE = path.join(DATA_DIR, "labels.json");
+const LABELING_FILE = path.join(DATA_DIR, "..", "LABELING.md");
 
 async function stageSelect(): Promise<void> {
     const gh = createCachedGitHub();
@@ -55,6 +60,28 @@ async function stageReconstruct(): Promise<void> {
     console.log(`\nwrote ${SNAPSHOTS_FILE}: ${out.snapshots.length} rebuilt, ${out.excluded.length} excluded (GitHub: ${gh.stats.fetched} fetched, ${gh.stats.cached} from cache)`);
 }
 
+// No GitHub calls: works only on the rebuilt snapshots
+async function stageSuggest(): Promise<void> {
+    const { snapshots } = readJson<Snapshots>(SNAPSHOTS_FILE);
+    const boilerplate = findBoilerplate(snapshots);
+    const entries = snapshots.map((snapshot) => ({ snapshot, suggestions: suggestLabels(snapshot, boilerplate) }));
+
+    writeJson(SUGGESTED_FILE, entries.map(({ snapshot, suggestions }) => ({ pr: `${repoKey(snapshot.repo)}#${snapshot.number}`, suggestions })));
+    writeFileSync(LABELING_FILE, labelingMarkdown(entries, boilerplate));
+    // Never overwrite decisions someone already made
+    if (existsSync(LABELS_FILE)) {
+        console.log(`kept existing ${LABELS_FILE} (delete it to start the review over)`);
+    } else {
+        writeJson(LABELS_FILE, labelsTemplate(entries));
+    }
+
+    const count: Record<string, number> = {};
+    for (const e of entries) for (const s of e.suggestions) count[s.category] = (count[s.category] ?? 0) + 1;
+    console.log(`suggestions by category: ${JSON.stringify(count)}`);
+    console.log(`PRs with none: ${entries.filter((e) => e.suggestions.length === 0).length}; boilerplate bot texts: ${boilerplate.size}`);
+    console.log(`wrote ${LABELING_FILE}, ${SUGGESTED_FILE}`);
+}
+
 export function readJson<T>(file: string): T {
     return JSON.parse(readFileSync(file, "utf8")) as T;
 }
@@ -64,7 +91,7 @@ export function writeJson(file: string, value: unknown): void {
     writeFileSync(file, `${JSON.stringify(value, null, 2)}\n`);
 }
 
-const STAGES: Record<string, () => Promise<void>> = { select: stageSelect, reconstruct: stageReconstruct };
+const STAGES: Record<string, () => Promise<void>> = { select: stageSelect, reconstruct: stageReconstruct, suggest: stageSuggest };
 
 async function main(): Promise<void> {
     const stage = process.argv[2] ?? "";
