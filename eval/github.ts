@@ -15,6 +15,8 @@ const SEARCH_GAP_MS = 2200;
 export type CachedGitHub = {
     graphql: <T>(query: string, variables: Record<string, unknown>) => Promise<T>;
     rest: <T>(route: string, params: Record<string, unknown>) => Promise<T>;
+    // Any other async result (e.g. our own fetchGuidelines) saved under `key`
+    custom: <T>(key: unknown, load: () => Promise<T>) => Promise<T>;
     stats: { cached: number; fetched: number };
 };
 
@@ -38,6 +40,7 @@ export function createCachedGitHub(octokit: Octokit = createOctokit({ timeoutMs:
 
     return {
         stats,
+        custom: (key, load) => cached({ custom: key }, load),
         graphql: (query, variables) => cached({ query, variables }, () => octokit.graphql(query, variables)),
         rest: (route, params) =>
             cached({ route, params }, async () => {

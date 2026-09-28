@@ -1,15 +1,32 @@
 // Runs the evaluation one stage at a time. Uses your real GITHUB_TOKEN; every
 // GitHub answer is cached in eval/.cache, so running a stage again is free.
 //   node --env-file=.env.local --import tsx eval/run.ts select
+import { execSync } from "child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import path from "path";
-import { CUTOFF, DATA_DIR, PER_REPO, REPOS, repoKey } from "./config";
+import { CUTOFF, DATA_DIR, EVAL_DIR, PER_REPO, REPOS, repoKey } from "./config";
 import { createCachedGitHub } from "./github";
-import { labelingMarkdown, labelsTemplate } from "./labelingDoc";
+import { labelingMarkdown, labelsTemplate, type LabelsFile } from "./labelingDoc";
+import { CATEGORY_RULE, finalCategories, score, type Pair, type Scores } from "./metrics";
 import { reconstructPr } from "./reconstruct";
+import { buildReport } from "./report";
+import { loadRepoFiles, RULE_TYPES, runTool, type ToolResult } from "./runTool";
 import { selectRepo, type RepoSelection } from "./select";
 import { findBoilerplate, suggestLabels } from "./suggestLabels";
 import type { Snapshots } from "./types";
+
+export type Results = {
+    labelsCommit: string;
+    tool: ToolResult[];
+    pairs: Pair[];
+    overall: Scores;
+    byRuleType: Record<string, Scores>;
+    byRepo: Record<string, Scores>;
+    notCheckableByRepo: Record<string, number>;
+};
+
+export const RESULTS_FILE = path.join(EVAL_DIR, "results.json");
+const REPORT_FILE = path.join(EVAL_DIR, "REPORT.md");
 
 export type Dataset = { rules: string; cutoff: string; perRepo: number; repos: RepoSelection[] };
 
@@ -82,6 +99,68 @@ async function stageSuggest(): Promise<void> {
     console.log(`wrote ${LABELING_FILE}, ${SUGGESTED_FILE}`);
 }
 
+// Runs MergeReady on every rebuilt PR and scores it against the locked labels
+async function stageEvaluate(): Promise<void> {
+    // The labels must be final: all reviewed and committed, with no later edits
+    const labels = readJson<LabelsFile>(LABELS_FILE);
+    if (labels.prs.some((p) => !p.reviewed)) throw new Error("Some PRs are not reviewed yet.");
+    if (execSync(`git status --porcelain -- ${LABELS_FILE}`).toString().trim() !== "") {
+        throw new Error("labels.json has changes that are not committed. Lock (commit) the labels first.");
+    }
+    const labelsCommit = execSync(`git log -1 --format=%h -- ${LABELS_FILE}`).toString().trim();
+
+    const gh = createCachedGitHub();
+    const { snapshots } = readJson<Snapshots>(SNAPSHOTS_FILE);
+    const labelsByPr = new Map(labels.prs.map((p) => [p.pr, p]));
+    const tool: ToolResult[] = [];
+    const pairs: Pair[] = [];
+    const notCheckableByRepo: Record<string, number> = {};
+
+    for (const repo of REPOS) {
+        const files = await loadRepoFiles(gh, repo);
+        for (const snapshot of snapshots.filter((s) => repoKey(s.repo) === repoKey(repo))) {
+            const result = await runTool(gh, snapshot, files);
+            tool.push(result);
+            const label = labelsByPr.get(result.pr);
+            if (!label) throw new Error(`No label for ${result.pr}`);
+            const categories = finalCategories(label);
+            if (categories.has("not-checkable")) notCheckableByRepo[result.repo] = (notCheckableByRepo[result.repo] ?? 0) + 1;
+            const objected = new Set([...categories].flatMap((c) => (c === "not-checkable" ? [] : [CATEGORY_RULE[c]])));
+            for (const ruleType of RULE_TYPES) {
+                pairs.push({ pr: result.pr, repo: result.repo, ruleType, objection: objected.has(ruleType), flag: result.flags[ruleType] });
+            }
+            console.log(`  ${result.pr}: flags ${JSON.stringify(Object.fromEntries(Object.entries(result.flags).filter(([, f]) => f)))} | objections ${[...objected].join(", ") || "none"}`);
+        }
+    }
+
+    const group = (key: (p: Pair) => string) =>
+        Object.fromEntries([...new Set(pairs.map(key))].map((k) => [k, score(pairs.filter((p) => key(p) === k))]));
+    const results: Results = {
+        labelsCommit,
+        tool,
+        pairs,
+        overall: score(pairs),
+        byRuleType: group((p) => p.ruleType),
+        byRepo: group((p) => p.repo),
+        notCheckableByRepo,
+    };
+    writeJson(RESULTS_FILE, results);
+    console.log(`\nwrote ${RESULTS_FILE} (labels from commit ${labelsCommit}; GitHub: ${gh.stats.fetched} fetched, ${gh.stats.cached} from cache)`);
+}
+
+// No GitHub calls: turns results.json into REPORT.md
+async function stageReport(): Promise<void> {
+    const report = buildReport({
+        results: readJson<Results>(RESULTS_FILE),
+        dataset: readJson<Dataset>(DATASET_FILE),
+        firstRun: readJson<Dataset>(path.join(DATA_DIR, "dataset.first-run.json")),
+        labels: readJson<LabelsFile>(LABELS_FILE),
+        snapshots: readJson<Snapshots>(SNAPSHOTS_FILE),
+    });
+    writeFileSync(REPORT_FILE, report);
+    console.log(`wrote ${REPORT_FILE}`);
+}
+
 export function readJson<T>(file: string): T {
     return JSON.parse(readFileSync(file, "utf8")) as T;
 }
@@ -91,7 +170,13 @@ export function writeJson(file: string, value: unknown): void {
     writeFileSync(file, `${JSON.stringify(value, null, 2)}\n`);
 }
 
-const STAGES: Record<string, () => Promise<void>> = { select: stageSelect, reconstruct: stageReconstruct, suggest: stageSuggest };
+const STAGES: Record<string, () => Promise<void>> = {
+    select: stageSelect,
+    reconstruct: stageReconstruct,
+    suggest: stageSuggest,
+    evaluate: stageEvaluate,
+    report: stageReport,
+};
 
 async function main(): Promise<void> {
     const stage = process.argv[2] ?? "";
