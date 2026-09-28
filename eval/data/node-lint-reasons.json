@@ -1,0 +1,73 @@
+{
+  "about": "Which rules nodejs/node lint-commit-message reported as \"not ok\" on each labeled PR, read from the job logs on 2026-09-28 after the held-out run (see REPORT.md, sensitivity check).",
+  "prs": [
+    {
+      "pr": "nodejs/node#66019",
+      "job": "https://github.com/nodejs/node/runs/103929647136",
+      "failedRules": [
+        "signed-off-by"
+      ]
+    },
+    {
+      "pr": "nodejs/node#66018",
+      "job": "https://github.com/nodejs/node/runs/103919519765",
+      "failedRules": [
+        "signed-off-by",
+        "subsystem"
+      ]
+    },
+    {
+      "pr": "nodejs/node#65940",
+      "job": "https://github.com/nodejs/node/runs/102524799603",
+      "failedRules": [
+        "line-length",
+        "signed-off-by"
+      ]
+    },
+    {
+      "pr": "nodejs/node#65918",
+      "job": "https://github.com/nodejs/node/runs/102362939072",
+      "failedRules": [
+        "line-length"
+      ]
+    },
+    {
+      "pr": "nodejs/node#65916",
+      "job": "https://github.com/nodejs/node/runs/102399426655",
+      "failedRules": [
+        "signed-off-by"
+      ]
+    },
+    {
+      "pr": "nodejs/node#65890",
+      "job": "https://github.com/nodejs/node/runs/101977696619",
+      "failedRules": [
+        "signed-off-by",
+        "title-format",
+        "title-length"
+      ]
+    },
+    {
+      "pr": "nodejs/node#66113",
+      "job": "https://github.com/nodejs/node/runs/105706369254",
+      "failedRules": [
+        "signed-off-by",
+        "subsystem"
+      ]
+    },
+    {
+      "pr": "nodejs/node#66088",
+      "job": "https://github.com/nodejs/node/runs/105240254711",
+      "failedRules": [
+        "line-length"
+      ]
+    },
+    {
+      "pr": "nodejs/node#66077",
+      "job": "https://github.com/nodejs/node/runs/105093373568",
+      "failedRules": [
+        "signed-off-by"
+      ]
+    }
+  ]
+}

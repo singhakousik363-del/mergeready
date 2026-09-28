@@ -170,14 +170,25 @@ async function stageEvaluate(): Promise<void> {
     console.log(`\nwrote ${RESULTS_FILE} (labels from commit ${labelsCommit}, MergeReady ${toolCommit}; GitHub: ${gh.stats.fetched} fetched, ${gh.stats.cached} from cache)`);
 }
 
-// No GitHub calls: turns results.json into REPORT.md
+// No GitHub calls: turns the results files into REPORT.md (held-out = main result)
 async function stageReport(): Promise<void> {
+    const heldoutDir = path.join(DATA_DIR, "heldout");
     const report = buildReport({
-        results: readJson<Results>(RESULTS_FILE),
-        dataset: readJson<Dataset>(DATASET_FILE),
-        firstRun: readJson<Dataset>(path.join(DATA_DIR, "dataset.first-run.json")),
-        labels: readJson<LabelsFile>(LABELS_FILE),
-        snapshots: readJson<Snapshots>(SNAPSHOTS_FILE),
+        main: {
+            results: readJson<Results>(path.join(EVAL_DIR, "results.json")),
+            afterFixes: readJson<Results>(path.join(EVAL_DIR, "results.after-fixes.json")),
+            dataset: readJson<Dataset>(path.join(DATA_DIR, "dataset.json")),
+            firstRun: readJson<Dataset>(path.join(DATA_DIR, "dataset.first-run.json")),
+            labels: readJson<LabelsFile>(path.join(DATA_DIR, "labels.json")),
+            snapshots: readJson<Snapshots>(path.join(DATA_DIR, "snapshots.json")),
+        },
+        heldout: {
+            results: readJson<Results>(path.join(EVAL_DIR, "results.heldout.json")),
+            dataset: readJson<Dataset>(path.join(heldoutDir, "dataset.json")),
+            labels: readJson<LabelsFile>(path.join(heldoutDir, "labels.json")),
+            snapshots: readJson<Snapshots>(path.join(heldoutDir, "snapshots.json")),
+        },
+        lintReasons: readJson(path.join(DATA_DIR, "node-lint-reasons.json")),
     });
     writeFileSync(REPORT_FILE, report);
     console.log(`wrote ${REPORT_FILE}`);

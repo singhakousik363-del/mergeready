@@ -1,0 +1,2342 @@
+{
+  "labelsCommit": "8bf17b6",
+  "toolCommit": "3a8c9bb",
+  "tool": [
+    {
+      "pr": "stdlib-js/stdlib#15330",
+      "repo": "stdlib-js/stdlib",
+      "flags": {
+        "conventional-commits": null,
+        "pr-template": null,
+        "linked-issue": null,
+        "dco-signoff": null,
+        "issue-assigned": null,
+        "tests-changed": null
+      },
+      "checks": [
+        {
+          "id": "issue-assigned",
+          "ruleType": "issue-assigned",
+          "status": "skip"
+        },
+        {
+          "id": "tests-changed",
+          "ruleType": "tests-changed",
+          "status": "pass"
+        },
+        {
+          "id": "dco-signoff",
+          "ruleType": "dco-signoff",
+          "status": "skip"
+        },
+        {
+          "id": "template-section:Questions",
+          "ruleType": "pr-template",
+          "status": "manual"
+        },
+        {
+          "id": "template-checkboxes:2",
+          "ruleType": "pr-template",
+          "status": "manual"
+        },
+        {
+          "id": "linked-issue",
+          "ruleType": "linked-issue",
+          "status": "manual"
+        },
+        {
+          "id": "commit-format:pr-title",
+          "ruleType": "conventional-commits",
+          "status": "pass"
+        },
+        {
+          "id": "template-section:Description",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-section:Related Issues",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-section:Other",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-section:Disclosure",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-checkboxes:1",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-checkboxes:3",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "merge-state",
+          "ruleType": null,
+          "status": "pending"
+        }
+      ],
+      "ruleCount": 16,
+      "warnings": [
+        ".commitlintrc.js exists, but its settings are built with code (e.g. require()), so its commit rules couldn't be read. JS configs are read as text, never run."
+      ]
+    },
+    {
+      "pr": "stdlib-js/stdlib#15317",
+      "repo": "stdlib-js/stdlib",
+      "flags": {
+        "conventional-commits": null,
+        "pr-template": "yellow",
+        "linked-issue": null,
+        "dco-signoff": null,
+        "issue-assigned": null,
+        "tests-changed": null
+      },
+      "checks": [
+        {
+          "id": "issue-assigned",
+          "ruleType": "issue-assigned",
+          "status": "skip"
+        },
+        {
+          "id": "tests-changed",
+          "ruleType": "tests-changed",
+          "status": "pass"
+        },
+        {
+          "id": "dco-signoff",
+          "ruleType": "dco-signoff",
+          "status": "skip"
+        },
+        {
+          "id": "template-checkboxes:1",
+          "ruleType": "pr-template",
+          "status": "warn"
+        },
+        {
+          "id": "template-checkboxes:2",
+          "ruleType": "pr-template",
+          "status": "manual"
+        },
+        {
+          "id": "commit-format:pr-title",
+          "ruleType": "conventional-commits",
+          "status": "pass"
+        },
+        {
+          "id": "template-section:Description",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-section:Disclosure",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-checkboxes:3",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "linked-issue",
+          "ruleType": "linked-issue",
+          "status": "pass"
+        },
+        {
+          "id": "template-section:Related Issues",
+          "ruleType": "pr-template",
+          "status": "skip"
+        },
+        {
+          "id": "template-section:Questions",
+          "ruleType": "pr-template",
+          "status": "skip"
+        },
+        {
+          "id": "template-section:Other",
+          "ruleType": "pr-template",
+          "status": "skip"
+        },
+        {
+          "id": "merge-state",
+          "ruleType": null,
+          "status": "pending"
+        }
+      ],
+      "ruleCount": 16,
+      "warnings": [
+        ".commitlintrc.js exists, but its settings are built with code (e.g. require()), so its commit rules couldn't be read. JS configs are read as text, never run."
+      ]
+    },
+    {
+      "pr": "stdlib-js/stdlib#15297",
+      "repo": "stdlib-js/stdlib",
+      "flags": {
+        "conventional-commits": null,
+        "pr-template": null,
+        "linked-issue": null,
+        "dco-signoff": null,
+        "issue-assigned": null,
+        "tests-changed": null
+      },
+      "checks": [
+        {
+          "id": "issue-assigned",
+          "ruleType": "issue-assigned",
+          "status": "skip"
+        },
+        {
+          "id": "tests-changed",
+          "ruleType": "tests-changed",
+          "status": "pass"
+        },
+        {
+          "id": "dco-signoff",
+          "ruleType": "dco-signoff",
+          "status": "skip"
+        },
+        {
+          "id": "template-section:Questions",
+          "ruleType": "pr-template",
+          "status": "manual"
+        },
+        {
+          "id": "template-section:Other",
+          "ruleType": "pr-template",
+          "status": "manual"
+        },
+        {
+          "id": "template-checkboxes:2",
+          "ruleType": "pr-template",
+          "status": "manual"
+        },
+        {
+          "id": "commit-format:pr-title",
+          "ruleType": "conventional-commits",
+          "status": "pass"
+        },
+        {
+          "id": "template-section:Description",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-section:Related Issues",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-section:Disclosure",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-checkboxes:1",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-checkboxes:3",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "linked-issue",
+          "ruleType": "linked-issue",
+          "status": "pass"
+        },
+        {
+          "id": "merge-state",
+          "ruleType": null,
+          "status": "pending"
+        }
+      ],
+      "ruleCount": 16,
+      "warnings": [
+        ".commitlintrc.js exists, but its settings are built with code (e.g. require()), so its commit rules couldn't be read. JS configs are read as text, never run."
+      ]
+    },
+    {
+      "pr": "stdlib-js/stdlib#15293",
+      "repo": "stdlib-js/stdlib",
+      "flags": {
+        "conventional-commits": null,
+        "pr-template": null,
+        "linked-issue": null,
+        "dco-signoff": null,
+        "issue-assigned": null,
+        "tests-changed": null
+      },
+      "checks": [
+        {
+          "id": "issue-assigned",
+          "ruleType": "issue-assigned",
+          "status": "skip"
+        },
+        {
+          "id": "tests-changed",
+          "ruleType": "tests-changed",
+          "status": "pass"
+        },
+        {
+          "id": "dco-signoff",
+          "ruleType": "dco-signoff",
+          "status": "skip"
+        },
+        {
+          "id": "template-section:Questions",
+          "ruleType": "pr-template",
+          "status": "manual"
+        },
+        {
+          "id": "template-section:Other",
+          "ruleType": "pr-template",
+          "status": "manual"
+        },
+        {
+          "id": "template-checkboxes:2",
+          "ruleType": "pr-template",
+          "status": "manual"
+        },
+        {
+          "id": "commit-format:pr-title",
+          "ruleType": "conventional-commits",
+          "status": "pass"
+        },
+        {
+          "id": "template-section:Description",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-section:Related Issues",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-section:Disclosure",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-checkboxes:1",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-checkboxes:3",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "linked-issue",
+          "ruleType": "linked-issue",
+          "status": "pass"
+        },
+        {
+          "id": "merge-state",
+          "ruleType": null,
+          "status": "pending"
+        }
+      ],
+      "ruleCount": 16,
+      "warnings": [
+        ".commitlintrc.js exists, but its settings are built with code (e.g. require()), so its commit rules couldn't be read. JS configs are read as text, never run."
+      ]
+    },
+    {
+      "pr": "stdlib-js/stdlib#15289",
+      "repo": "stdlib-js/stdlib",
+      "flags": {
+        "conventional-commits": null,
+        "pr-template": null,
+        "linked-issue": null,
+        "dco-signoff": null,
+        "issue-assigned": null,
+        "tests-changed": null
+      },
+      "checks": [
+        {
+          "id": "issue-assigned",
+          "ruleType": "issue-assigned",
+          "status": "skip"
+        },
+        {
+          "id": "tests-changed",
+          "ruleType": "tests-changed",
+          "status": "pass"
+        },
+        {
+          "id": "dco-signoff",
+          "ruleType": "dco-signoff",
+          "status": "skip"
+        },
+        {
+          "id": "template-section:Questions",
+          "ruleType": "pr-template",
+          "status": "manual"
+        },
+        {
+          "id": "template-checkboxes:2",
+          "ruleType": "pr-template",
+          "status": "manual"
+        },
+        {
+          "id": "linked-issue",
+          "ruleType": "linked-issue",
+          "status": "manual"
+        },
+        {
+          "id": "commit-format:pr-title",
+          "ruleType": "conventional-commits",
+          "status": "pass"
+        },
+        {
+          "id": "template-section:Description",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-section:Related Issues",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-section:Other",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-section:Disclosure",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-checkboxes:1",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-checkboxes:3",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "merge-state",
+          "ruleType": null,
+          "status": "pending"
+        }
+      ],
+      "ruleCount": 16,
+      "warnings": [
+        ".commitlintrc.js exists, but its settings are built with code (e.g. require()), so its commit rules couldn't be read. JS configs are read as text, never run."
+      ]
+    },
+    {
+      "pr": "nodejs/node#66113",
+      "repo": "nodejs/node",
+      "flags": {
+        "conventional-commits": "yellow",
+        "pr-template": null,
+        "linked-issue": null,
+        "dco-signoff": "red",
+        "issue-assigned": null,
+        "tests-changed": null
+      },
+      "checks": [
+        {
+          "id": "issue-assigned",
+          "ruleType": "issue-assigned",
+          "status": "skip"
+        },
+        {
+          "id": "tests-changed",
+          "ruleType": "tests-changed",
+          "status": "pass"
+        },
+        {
+          "id": "dco-signoff",
+          "ruleType": "dco-signoff",
+          "status": "fail"
+        },
+        {
+          "id": "commit-format:commits",
+          "ruleType": "conventional-commits",
+          "status": "warn"
+        },
+        {
+          "id": "linked-issue",
+          "ruleType": "linked-issue",
+          "status": "manual"
+        },
+        {
+          "id": "pr-template",
+          "ruleType": "pr-template",
+          "status": "skip"
+        },
+        {
+          "id": "merge-state",
+          "ruleType": null,
+          "status": "pending"
+        }
+      ],
+      "ruleCount": 9,
+      "warnings": []
+    },
+    {
+      "pr": "nodejs/node#66088",
+      "repo": "nodejs/node",
+      "flags": {
+        "conventional-commits": null,
+        "pr-template": null,
+        "linked-issue": null,
+        "dco-signoff": null,
+        "issue-assigned": null,
+        "tests-changed": null
+      },
+      "checks": [
+        {
+          "id": "issue-assigned",
+          "ruleType": "issue-assigned",
+          "status": "skip"
+        },
+        {
+          "id": "tests-changed",
+          "ruleType": "tests-changed",
+          "status": "pass"
+        },
+        {
+          "id": "commit-format:commits",
+          "ruleType": "conventional-commits",
+          "status": "pass"
+        },
+        {
+          "id": "dco-signoff",
+          "ruleType": "dco-signoff",
+          "status": "pass"
+        },
+        {
+          "id": "linked-issue",
+          "ruleType": "linked-issue",
+          "status": "pass"
+        },
+        {
+          "id": "pr-template",
+          "ruleType": "pr-template",
+          "status": "skip"
+        },
+        {
+          "id": "merge-state",
+          "ruleType": null,
+          "status": "pending"
+        }
+      ],
+      "ruleCount": 9,
+      "warnings": []
+    },
+    {
+      "pr": "nodejs/node#66085",
+      "repo": "nodejs/node",
+      "flags": {
+        "conventional-commits": null,
+        "pr-template": null,
+        "linked-issue": null,
+        "dco-signoff": null,
+        "issue-assigned": null,
+        "tests-changed": null
+      },
+      "checks": [
+        {
+          "id": "issue-assigned",
+          "ruleType": "issue-assigned",
+          "status": "skip"
+        },
+        {
+          "id": "tests-changed",
+          "ruleType": "tests-changed",
+          "status": "pass"
+        },
+        {
+          "id": "commit-format:commits",
+          "ruleType": "conventional-commits",
+          "status": "pass"
+        },
+        {
+          "id": "dco-signoff",
+          "ruleType": "dco-signoff",
+          "status": "pass"
+        },
+        {
+          "id": "linked-issue",
+          "ruleType": "linked-issue",
+          "status": "manual"
+        },
+        {
+          "id": "pr-template",
+          "ruleType": "pr-template",
+          "status": "skip"
+        },
+        {
+          "id": "merge-state",
+          "ruleType": null,
+          "status": "pending"
+        }
+      ],
+      "ruleCount": 9,
+      "warnings": []
+    },
+    {
+      "pr": "nodejs/node#66082",
+      "repo": "nodejs/node",
+      "flags": {
+        "conventional-commits": null,
+        "pr-template": null,
+        "linked-issue": null,
+        "dco-signoff": null,
+        "issue-assigned": null,
+        "tests-changed": "yellow"
+      },
+      "checks": [
+        {
+          "id": "issue-assigned",
+          "ruleType": "issue-assigned",
+          "status": "skip"
+        },
+        {
+          "id": "tests-changed",
+          "ruleType": "tests-changed",
+          "status": "warn"
+        },
+        {
+          "id": "commit-format:commits",
+          "ruleType": "conventional-commits",
+          "status": "pass"
+        },
+        {
+          "id": "dco-signoff",
+          "ruleType": "dco-signoff",
+          "status": "pass"
+        },
+        {
+          "id": "linked-issue",
+          "ruleType": "linked-issue",
+          "status": "manual"
+        },
+        {
+          "id": "pr-template",
+          "ruleType": "pr-template",
+          "status": "skip"
+        },
+        {
+          "id": "merge-state",
+          "ruleType": null,
+          "status": "pending"
+        }
+      ],
+      "ruleCount": 9,
+      "warnings": []
+    },
+    {
+      "pr": "nodejs/node#66077",
+      "repo": "nodejs/node",
+      "flags": {
+        "conventional-commits": null,
+        "pr-template": null,
+        "linked-issue": null,
+        "dco-signoff": "red",
+        "issue-assigned": null,
+        "tests-changed": null
+      },
+      "checks": [
+        {
+          "id": "issue-assigned",
+          "ruleType": "issue-assigned",
+          "status": "skip"
+        },
+        {
+          "id": "tests-changed",
+          "ruleType": "tests-changed",
+          "status": "pass"
+        },
+        {
+          "id": "dco-signoff",
+          "ruleType": "dco-signoff",
+          "status": "fail"
+        },
+        {
+          "id": "commit-format:commits",
+          "ruleType": "conventional-commits",
+          "status": "pass"
+        },
+        {
+          "id": "linked-issue",
+          "ruleType": "linked-issue",
+          "status": "manual"
+        },
+        {
+          "id": "pr-template",
+          "ruleType": "pr-template",
+          "status": "skip"
+        },
+        {
+          "id": "merge-state",
+          "ruleType": null,
+          "status": "pending"
+        }
+      ],
+      "ruleCount": 9,
+      "warnings": []
+    },
+    {
+      "pr": "prometheus/prometheus#19746",
+      "repo": "prometheus/prometheus",
+      "flags": {
+        "conventional-commits": null,
+        "pr-template": null,
+        "linked-issue": null,
+        "dco-signoff": null,
+        "issue-assigned": null,
+        "tests-changed": null
+      },
+      "checks": [
+        {
+          "id": "issue-assigned",
+          "ruleType": "issue-assigned",
+          "status": "skip"
+        },
+        {
+          "id": "tests-changed",
+          "ruleType": "tests-changed",
+          "status": "pass"
+        },
+        {
+          "id": "dco-signoff",
+          "ruleType": "dco-signoff",
+          "status": "pass"
+        },
+        {
+          "id": "commit-format",
+          "ruleType": "conventional-commits",
+          "status": "skip"
+        },
+        {
+          "id": "template-section:Which issue(s) does the PR fix:",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-section:Release notes for end users (ALL commits must be considered).",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "linked-issue",
+          "ruleType": "linked-issue",
+          "status": "skip"
+        },
+        {
+          "id": "merge-state",
+          "ruleType": null,
+          "status": "pending"
+        }
+      ],
+      "ruleCount": 5,
+      "warnings": []
+    },
+    {
+      "pr": "prometheus/prometheus#19736",
+      "repo": "prometheus/prometheus",
+      "flags": {
+        "conventional-commits": null,
+        "pr-template": null,
+        "linked-issue": null,
+        "dco-signoff": null,
+        "issue-assigned": null,
+        "tests-changed": null
+      },
+      "checks": [
+        {
+          "id": "issue-assigned",
+          "ruleType": "issue-assigned",
+          "status": "skip"
+        },
+        {
+          "id": "tests-changed",
+          "ruleType": "tests-changed",
+          "status": "pass"
+        },
+        {
+          "id": "dco-signoff",
+          "ruleType": "dco-signoff",
+          "status": "pass"
+        },
+        {
+          "id": "commit-format",
+          "ruleType": "conventional-commits",
+          "status": "skip"
+        },
+        {
+          "id": "template-section:Which issue(s) does the PR fix:",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-section:Release notes for end users (ALL commits must be considered).",
+          "ruleType": "pr-template",
+          "status": "skip"
+        },
+        {
+          "id": "linked-issue",
+          "ruleType": "linked-issue",
+          "status": "skip"
+        },
+        {
+          "id": "merge-state",
+          "ruleType": null,
+          "status": "pending"
+        }
+      ],
+      "ruleCount": 5,
+      "warnings": []
+    },
+    {
+      "pr": "prometheus/prometheus#19722",
+      "repo": "prometheus/prometheus",
+      "flags": {
+        "conventional-commits": null,
+        "pr-template": null,
+        "linked-issue": null,
+        "dco-signoff": null,
+        "issue-assigned": null,
+        "tests-changed": null
+      },
+      "checks": [
+        {
+          "id": "issue-assigned",
+          "ruleType": "issue-assigned",
+          "status": "skip"
+        },
+        {
+          "id": "tests-changed",
+          "ruleType": "tests-changed",
+          "status": "pass"
+        },
+        {
+          "id": "dco-signoff",
+          "ruleType": "dco-signoff",
+          "status": "pass"
+        },
+        {
+          "id": "commit-format",
+          "ruleType": "conventional-commits",
+          "status": "skip"
+        },
+        {
+          "id": "template-section:Which issue(s) does the PR fix:",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-section:Release notes for end users (ALL commits must be considered).",
+          "ruleType": "pr-template",
+          "status": "skip"
+        },
+        {
+          "id": "linked-issue",
+          "ruleType": "linked-issue",
+          "status": "skip"
+        },
+        {
+          "id": "merge-state",
+          "ruleType": null,
+          "status": "pending"
+        }
+      ],
+      "ruleCount": 5,
+      "warnings": []
+    },
+    {
+      "pr": "prometheus/prometheus#19713",
+      "repo": "prometheus/prometheus",
+      "flags": {
+        "conventional-commits": null,
+        "pr-template": null,
+        "linked-issue": null,
+        "dco-signoff": null,
+        "issue-assigned": null,
+        "tests-changed": "yellow"
+      },
+      "checks": [
+        {
+          "id": "issue-assigned",
+          "ruleType": "issue-assigned",
+          "status": "skip"
+        },
+        {
+          "id": "tests-changed",
+          "ruleType": "tests-changed",
+          "status": "warn"
+        },
+        {
+          "id": "dco-signoff",
+          "ruleType": "dco-signoff",
+          "status": "pass"
+        },
+        {
+          "id": "commit-format",
+          "ruleType": "conventional-commits",
+          "status": "skip"
+        },
+        {
+          "id": "template-section:Which issue(s) does the PR fix:",
+          "ruleType": "pr-template",
+          "status": "pass"
+        },
+        {
+          "id": "template-section:Release notes for end users (ALL commits must be considered).",
+          "ruleType": "pr-template",
+          "status": "skip"
+        },
+        {
+          "id": "linked-issue",
+          "ruleType": "linked-issue",
+          "status": "skip"
+        },
+        {
+          "id": "merge-state",
+          "ruleType": null,
+          "status": "pending"
+        }
+      ],
+      "ruleCount": 5,
+      "warnings": []
+    },
+    {
+      "pr": "vitejs/vite#23519",
+      "repo": "vitejs/vite",
+      "flags": {
+        "conventional-commits": null,
+        "pr-template": null,
+        "linked-issue": null,
+        "dco-signoff": null,
+        "issue-assigned": null,
+        "tests-changed": null
+      },
+      "checks": [
+        {
+          "id": "issue-assigned",
+          "ruleType": "issue-assigned",
+          "status": "skip"
+        },
+        {
+          "id": "tests-changed",
+          "ruleType": "tests-changed",
+          "status": "pass"
+        },
+        {
+          "id": "dco-signoff",
+          "ruleType": "dco-signoff",
+          "status": "skip"
+        },
+        {
+          "id": "commit-format:pr-title",
+          "ruleType": "conventional-commits",
+          "status": "pass"
+        },
+        {
+          "id": "linked-issue",
+          "ruleType": "linked-issue",
+          "status": "pass"
+        },
+        {
+          "id": "pr-template",
+          "ruleType": "pr-template",
+          "status": "skip"
+        },
+        {
+          "id": "merge-state",
+          "ruleType": null,
+          "status": "pending"
+        }
+      ],
+      "ruleCount": 7,
+      "warnings": []
+    },
+    {
+      "pr": "vitejs/vite#23517",
+      "repo": "vitejs/vite",
+      "flags": {
+        "conventional-commits": null,
+        "pr-template": null,
+        "linked-issue": null,
+        "dco-signoff": null,
+        "issue-assigned": null,
+        "tests-changed": null
+      },
+      "checks": [
+        {
+          "id": "issue-assigned",
+          "ruleType": "issue-assigned",
+          "status": "skip"
+        },
+        {
+          "id": "tests-changed",
+          "ruleType": "tests-changed",
+          "status": "pass"
+        },
+        {
+          "id": "dco-signoff",
+          "ruleType": "dco-signoff",
+          "status": "skip"
+        },
+        {
+          "id": "commit-format:pr-title",
+          "ruleType": "conventional-commits",
+          "status": "pass"
+        },
+        {
+          "id": "linked-issue",
+          "ruleType": "linked-issue",
+          "status": "pass"
+        },
+        {
+          "id": "pr-template",
+          "ruleType": "pr-template",
+          "status": "skip"
+        },
+        {
+          "id": "merge-state",
+          "ruleType": null,
+          "status": "pending"
+        }
+      ],
+      "ruleCount": 7,
+      "warnings": []
+    },
+    {
+      "pr": "vitejs/vite#23516",
+      "repo": "vitejs/vite",
+      "flags": {
+        "conventional-commits": null,
+        "pr-template": null,
+        "linked-issue": null,
+        "dco-signoff": null,
+        "issue-assigned": null,
+        "tests-changed": null
+      },
+      "checks": [
+        {
+          "id": "issue-assigned",
+          "ruleType": "issue-assigned",
+          "status": "skip"
+        },
+        {
+          "id": "tests-changed",
+          "ruleType": "tests-changed",
+          "status": "pass"
+        },
+        {
+          "id": "dco-signoff",
+          "ruleType": "dco-signoff",
+          "status": "skip"
+        },
+        {
+          "id": "linked-issue",
+          "ruleType": "linked-issue",
+          "status": "manual"
+        },
+        {
+          "id": "commit-format:pr-title",
+          "ruleType": "conventional-commits",
+          "status": "pass"
+        },
+        {
+          "id": "pr-template",
+          "ruleType": "pr-template",
+          "status": "skip"
+        },
+        {
+          "id": "merge-state",
+          "ruleType": null,
+          "status": "pending"
+        }
+      ],
+      "ruleCount": 7,
+      "warnings": []
+    },
+    {
+      "pr": "vitejs/vite#23509",
+      "repo": "vitejs/vite",
+      "flags": {
+        "conventional-commits": null,
+        "pr-template": null,
+        "linked-issue": null,
+        "dco-signoff": null,
+        "issue-assigned": null,
+        "tests-changed": "yellow"
+      },
+      "checks": [
+        {
+          "id": "issue-assigned",
+          "ruleType": "issue-assigned",
+          "status": "skip"
+        },
+        {
+          "id": "tests-changed",
+          "ruleType": "tests-changed",
+          "status": "warn"
+        },
+        {
+          "id": "dco-signoff",
+          "ruleType": "dco-signoff",
+          "status": "skip"
+        },
+        {
+          "id": "commit-format:pr-title",
+          "ruleType": "conventional-commits",
+          "status": "pass"
+        },
+        {
+          "id": "linked-issue",
+          "ruleType": "linked-issue",
+          "status": "pass"
+        },
+        {
+          "id": "pr-template",
+          "ruleType": "pr-template",
+          "status": "skip"
+        },
+        {
+          "id": "merge-state",
+          "ruleType": null,
+          "status": "pending"
+        }
+      ],
+      "ruleCount": 7,
+      "warnings": []
+    },
+    {
+      "pr": "vitejs/vite#23507",
+      "repo": "vitejs/vite",
+      "flags": {
+        "conventional-commits": null,
+        "pr-template": null,
+        "linked-issue": null,
+        "dco-signoff": null,
+        "issue-assigned": null,
+        "tests-changed": null
+      },
+      "checks": [
+        {
+          "id": "issue-assigned",
+          "ruleType": "issue-assigned",
+          "status": "skip"
+        },
+        {
+          "id": "tests-changed",
+          "ruleType": "tests-changed",
+          "status": "pass"
+        },
+        {
+          "id": "dco-signoff",
+          "ruleType": "dco-signoff",
+          "status": "skip"
+        },
+        {
+          "id": "commit-format:pr-title",
+          "ruleType": "conventional-commits",
+          "status": "pass"
+        },
+        {
+          "id": "linked-issue",
+          "ruleType": "linked-issue",
+          "status": "pass"
+        },
+        {
+          "id": "pr-template",
+          "ruleType": "pr-template",
+          "status": "skip"
+        },
+        {
+          "id": "merge-state",
+          "ruleType": null,
+          "status": "pending"
+        }
+      ],
+      "ruleCount": 7,
+      "warnings": []
+    }
+  ],
+  "pairs": [
+    {
+      "pr": "stdlib-js/stdlib#15330",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "conventional-commits",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15330",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "pr-template",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15330",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "linked-issue",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15330",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "dco-signoff",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15330",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "issue-assigned",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15330",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "tests-changed",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15317",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "conventional-commits",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15317",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "pr-template",
+      "objection": true,
+      "flag": "yellow"
+    },
+    {
+      "pr": "stdlib-js/stdlib#15317",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "linked-issue",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15317",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "dco-signoff",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15317",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "issue-assigned",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15317",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "tests-changed",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15297",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "conventional-commits",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15297",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "pr-template",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15297",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "linked-issue",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15297",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "dco-signoff",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15297",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "issue-assigned",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15297",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "tests-changed",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15293",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "conventional-commits",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15293",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "pr-template",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15293",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "linked-issue",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15293",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "dco-signoff",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15293",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "issue-assigned",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15293",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "tests-changed",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15289",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "conventional-commits",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15289",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "pr-template",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15289",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "linked-issue",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15289",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "dco-signoff",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15289",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "issue-assigned",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "stdlib-js/stdlib#15289",
+      "repo": "stdlib-js/stdlib",
+      "ruleType": "tests-changed",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66113",
+      "repo": "nodejs/node",
+      "ruleType": "conventional-commits",
+      "objection": true,
+      "flag": "yellow"
+    },
+    {
+      "pr": "nodejs/node#66113",
+      "repo": "nodejs/node",
+      "ruleType": "pr-template",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66113",
+      "repo": "nodejs/node",
+      "ruleType": "linked-issue",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66113",
+      "repo": "nodejs/node",
+      "ruleType": "dco-signoff",
+      "objection": false,
+      "flag": "red"
+    },
+    {
+      "pr": "nodejs/node#66113",
+      "repo": "nodejs/node",
+      "ruleType": "issue-assigned",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66113",
+      "repo": "nodejs/node",
+      "ruleType": "tests-changed",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66088",
+      "repo": "nodejs/node",
+      "ruleType": "conventional-commits",
+      "objection": true,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66088",
+      "repo": "nodejs/node",
+      "ruleType": "pr-template",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66088",
+      "repo": "nodejs/node",
+      "ruleType": "linked-issue",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66088",
+      "repo": "nodejs/node",
+      "ruleType": "dco-signoff",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66088",
+      "repo": "nodejs/node",
+      "ruleType": "issue-assigned",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66088",
+      "repo": "nodejs/node",
+      "ruleType": "tests-changed",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66085",
+      "repo": "nodejs/node",
+      "ruleType": "conventional-commits",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66085",
+      "repo": "nodejs/node",
+      "ruleType": "pr-template",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66085",
+      "repo": "nodejs/node",
+      "ruleType": "linked-issue",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66085",
+      "repo": "nodejs/node",
+      "ruleType": "dco-signoff",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66085",
+      "repo": "nodejs/node",
+      "ruleType": "issue-assigned",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66085",
+      "repo": "nodejs/node",
+      "ruleType": "tests-changed",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66082",
+      "repo": "nodejs/node",
+      "ruleType": "conventional-commits",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66082",
+      "repo": "nodejs/node",
+      "ruleType": "pr-template",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66082",
+      "repo": "nodejs/node",
+      "ruleType": "linked-issue",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66082",
+      "repo": "nodejs/node",
+      "ruleType": "dco-signoff",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66082",
+      "repo": "nodejs/node",
+      "ruleType": "issue-assigned",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66082",
+      "repo": "nodejs/node",
+      "ruleType": "tests-changed",
+      "objection": false,
+      "flag": "yellow"
+    },
+    {
+      "pr": "nodejs/node#66077",
+      "repo": "nodejs/node",
+      "ruleType": "conventional-commits",
+      "objection": true,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66077",
+      "repo": "nodejs/node",
+      "ruleType": "pr-template",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66077",
+      "repo": "nodejs/node",
+      "ruleType": "linked-issue",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66077",
+      "repo": "nodejs/node",
+      "ruleType": "dco-signoff",
+      "objection": false,
+      "flag": "red"
+    },
+    {
+      "pr": "nodejs/node#66077",
+      "repo": "nodejs/node",
+      "ruleType": "issue-assigned",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "nodejs/node#66077",
+      "repo": "nodejs/node",
+      "ruleType": "tests-changed",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19746",
+      "repo": "prometheus/prometheus",
+      "ruleType": "conventional-commits",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19746",
+      "repo": "prometheus/prometheus",
+      "ruleType": "pr-template",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19746",
+      "repo": "prometheus/prometheus",
+      "ruleType": "linked-issue",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19746",
+      "repo": "prometheus/prometheus",
+      "ruleType": "dco-signoff",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19746",
+      "repo": "prometheus/prometheus",
+      "ruleType": "issue-assigned",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19746",
+      "repo": "prometheus/prometheus",
+      "ruleType": "tests-changed",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19736",
+      "repo": "prometheus/prometheus",
+      "ruleType": "conventional-commits",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19736",
+      "repo": "prometheus/prometheus",
+      "ruleType": "pr-template",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19736",
+      "repo": "prometheus/prometheus",
+      "ruleType": "linked-issue",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19736",
+      "repo": "prometheus/prometheus",
+      "ruleType": "dco-signoff",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19736",
+      "repo": "prometheus/prometheus",
+      "ruleType": "issue-assigned",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19736",
+      "repo": "prometheus/prometheus",
+      "ruleType": "tests-changed",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19722",
+      "repo": "prometheus/prometheus",
+      "ruleType": "conventional-commits",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19722",
+      "repo": "prometheus/prometheus",
+      "ruleType": "pr-template",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19722",
+      "repo": "prometheus/prometheus",
+      "ruleType": "linked-issue",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19722",
+      "repo": "prometheus/prometheus",
+      "ruleType": "dco-signoff",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19722",
+      "repo": "prometheus/prometheus",
+      "ruleType": "issue-assigned",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19722",
+      "repo": "prometheus/prometheus",
+      "ruleType": "tests-changed",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19713",
+      "repo": "prometheus/prometheus",
+      "ruleType": "conventional-commits",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19713",
+      "repo": "prometheus/prometheus",
+      "ruleType": "pr-template",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19713",
+      "repo": "prometheus/prometheus",
+      "ruleType": "linked-issue",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19713",
+      "repo": "prometheus/prometheus",
+      "ruleType": "dco-signoff",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19713",
+      "repo": "prometheus/prometheus",
+      "ruleType": "issue-assigned",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "prometheus/prometheus#19713",
+      "repo": "prometheus/prometheus",
+      "ruleType": "tests-changed",
+      "objection": true,
+      "flag": "yellow"
+    },
+    {
+      "pr": "vitejs/vite#23519",
+      "repo": "vitejs/vite",
+      "ruleType": "conventional-commits",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23519",
+      "repo": "vitejs/vite",
+      "ruleType": "pr-template",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23519",
+      "repo": "vitejs/vite",
+      "ruleType": "linked-issue",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23519",
+      "repo": "vitejs/vite",
+      "ruleType": "dco-signoff",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23519",
+      "repo": "vitejs/vite",
+      "ruleType": "issue-assigned",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23519",
+      "repo": "vitejs/vite",
+      "ruleType": "tests-changed",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23517",
+      "repo": "vitejs/vite",
+      "ruleType": "conventional-commits",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23517",
+      "repo": "vitejs/vite",
+      "ruleType": "pr-template",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23517",
+      "repo": "vitejs/vite",
+      "ruleType": "linked-issue",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23517",
+      "repo": "vitejs/vite",
+      "ruleType": "dco-signoff",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23517",
+      "repo": "vitejs/vite",
+      "ruleType": "issue-assigned",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23517",
+      "repo": "vitejs/vite",
+      "ruleType": "tests-changed",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23516",
+      "repo": "vitejs/vite",
+      "ruleType": "conventional-commits",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23516",
+      "repo": "vitejs/vite",
+      "ruleType": "pr-template",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23516",
+      "repo": "vitejs/vite",
+      "ruleType": "linked-issue",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23516",
+      "repo": "vitejs/vite",
+      "ruleType": "dco-signoff",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23516",
+      "repo": "vitejs/vite",
+      "ruleType": "issue-assigned",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23516",
+      "repo": "vitejs/vite",
+      "ruleType": "tests-changed",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23509",
+      "repo": "vitejs/vite",
+      "ruleType": "conventional-commits",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23509",
+      "repo": "vitejs/vite",
+      "ruleType": "pr-template",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23509",
+      "repo": "vitejs/vite",
+      "ruleType": "linked-issue",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23509",
+      "repo": "vitejs/vite",
+      "ruleType": "dco-signoff",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23509",
+      "repo": "vitejs/vite",
+      "ruleType": "issue-assigned",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23509",
+      "repo": "vitejs/vite",
+      "ruleType": "tests-changed",
+      "objection": false,
+      "flag": "yellow"
+    },
+    {
+      "pr": "vitejs/vite#23507",
+      "repo": "vitejs/vite",
+      "ruleType": "conventional-commits",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23507",
+      "repo": "vitejs/vite",
+      "ruleType": "pr-template",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23507",
+      "repo": "vitejs/vite",
+      "ruleType": "linked-issue",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23507",
+      "repo": "vitejs/vite",
+      "ruleType": "dco-signoff",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23507",
+      "repo": "vitejs/vite",
+      "ruleType": "issue-assigned",
+      "objection": false,
+      "flag": null
+    },
+    {
+      "pr": "vitejs/vite#23507",
+      "repo": "vitejs/vite",
+      "ruleType": "tests-changed",
+      "objection": false,
+      "flag": null
+    }
+  ],
+  "overall": {
+    "objections": 5,
+    "flags": 7,
+    "recall": {
+      "k": 3,
+      "n": 5,
+      "value": 0.6,
+      "low": 0.23071993220883708,
+      "high": 0.8823817688407467
+    },
+    "precision": {
+      "k": 3,
+      "n": 7,
+      "value": 0.42857142857142855,
+      "low": 0.15821692226262685,
+      "high": 0.7495457695909742
+    },
+    "precisionRed": {
+      "k": 0,
+      "n": 2,
+      "value": 0,
+      "low": 0,
+      "high": 0.6576280471103807
+    },
+    "precisionYellow": {
+      "k": 3,
+      "n": 5,
+      "value": 0.6,
+      "low": 0.23071993220883708,
+      "high": 0.8823817688407467
+    }
+  },
+  "byRuleType": {
+    "conventional-commits": {
+      "objections": 3,
+      "flags": 1,
+      "recall": {
+        "k": 1,
+        "n": 3,
+        "value": 0.3333333333333333,
+        "low": 0.0614903152761605,
+        "high": 0.7923450448735121
+      },
+      "precision": {
+        "k": 1,
+        "n": 1,
+        "value": 1,
+        "low": 0.20654329147389294,
+        "high": 1
+      },
+      "precisionRed": {
+        "k": 0,
+        "n": 0,
+        "value": null,
+        "low": null,
+        "high": null
+      },
+      "precisionYellow": {
+        "k": 1,
+        "n": 1,
+        "value": 1,
+        "low": 0.20654329147389294,
+        "high": 1
+      }
+    },
+    "pr-template": {
+      "objections": 1,
+      "flags": 1,
+      "recall": {
+        "k": 1,
+        "n": 1,
+        "value": 1,
+        "low": 0.20654329147389294,
+        "high": 1
+      },
+      "precision": {
+        "k": 1,
+        "n": 1,
+        "value": 1,
+        "low": 0.20654329147389294,
+        "high": 1
+      },
+      "precisionRed": {
+        "k": 0,
+        "n": 0,
+        "value": null,
+        "low": null,
+        "high": null
+      },
+      "precisionYellow": {
+        "k": 1,
+        "n": 1,
+        "value": 1,
+        "low": 0.20654329147389294,
+        "high": 1
+      }
+    },
+    "linked-issue": {
+      "objections": 0,
+      "flags": 0,
+      "recall": {
+        "k": 0,
+        "n": 0,
+        "value": null,
+        "low": null,
+        "high": null
+      },
+      "precision": {
+        "k": 0,
+        "n": 0,
+        "value": null,
+        "low": null,
+        "high": null
+      },
+      "precisionRed": {
+        "k": 0,
+        "n": 0,
+        "value": null,
+        "low": null,
+        "high": null
+      },
+      "precisionYellow": {
+        "k": 0,
+        "n": 0,
+        "value": null,
+        "low": null,
+        "high": null
+      }
+    },
+    "dco-signoff": {
+      "objections": 0,
+      "flags": 2,
+      "recall": {
+        "k": 0,
+        "n": 0,
+        "value": null,
+        "low": null,
+        "high": null
+      },
+      "precision": {
+        "k": 0,
+        "n": 2,
+        "value": 0,
+        "low": 0,
+        "high": 0.6576280471103807
+      },
+      "precisionRed": {
+        "k": 0,
+        "n": 2,
+        "value": 0,
+        "low": 0,
+        "high": 0.6576280471103807
+      },
+      "precisionYellow": {
+        "k": 0,
+        "n": 0,
+        "value": null,
+        "low": null,
+        "high": null
+      }
+    },
+    "issue-assigned": {
+      "objections": 0,
+      "flags": 0,
+      "recall": {
+        "k": 0,
+        "n": 0,
+        "value": null,
+        "low": null,
+        "high": null
+      },
+      "precision": {
+        "k": 0,
+        "n": 0,
+        "value": null,
+        "low": null,
+        "high": null
+      },
+      "precisionRed": {
+        "k": 0,
+        "n": 0,
+        "value": null,
+        "low": null,
+        "high": null
+      },
+      "precisionYellow": {
+        "k": 0,
+        "n": 0,
+        "value": null,
+        "low": null,
+        "high": null
+      }
+    },
+    "tests-changed": {
+      "objections": 1,
+      "flags": 3,
+      "recall": {
+        "k": 1,
+        "n": 1,
+        "value": 1,
+        "low": 0.20654329147389294,
+        "high": 1
+      },
+      "precision": {
+        "k": 1,
+        "n": 3,
+        "value": 0.3333333333333333,
+        "low": 0.0614903152761605,
+        "high": 0.7923450448735121
+      },
+      "precisionRed": {
+        "k": 0,
+        "n": 0,
+        "value": null,
+        "low": null,
+        "high": null
+      },
+      "precisionYellow": {
+        "k": 1,
+        "n": 3,
+        "value": 0.3333333333333333,
+        "low": 0.0614903152761605,
+        "high": 0.7923450448735121
+      }
+    }
+  },
+  "byRepo": {
+    "stdlib-js/stdlib": {
+      "objections": 1,
+      "flags": 1,
+      "recall": {
+        "k": 1,
+        "n": 1,
+        "value": 1,
+        "low": 0.20654329147389294,
+        "high": 1
+      },
+      "precision": {
+        "k": 1,
+        "n": 1,
+        "value": 1,
+        "low": 0.20654329147389294,
+        "high": 1
+      },
+      "precisionRed": {
+        "k": 0,
+        "n": 0,
+        "value": null,
+        "low": null,
+        "high": null
+      },
+      "precisionYellow": {
+        "k": 1,
+        "n": 1,
+        "value": 1,
+        "low": 0.20654329147389294,
+        "high": 1
+      }
+    },
+    "nodejs/node": {
+      "objections": 3,
+      "flags": 4,
+      "recall": {
+        "k": 1,
+        "n": 3,
+        "value": 0.3333333333333333,
+        "low": 0.0614903152761605,
+        "high": 0.7923450448735121
+      },
+      "precision": {
+        "k": 1,
+        "n": 4,
+        "value": 0.25,
+        "low": 0.045586062644636216,
+        "high": 0.6993639475573634
+      },
+      "precisionRed": {
+        "k": 0,
+        "n": 2,
+        "value": 0,
+        "low": 0,
+        "high": 0.6576280471103807
+      },
+      "precisionYellow": {
+        "k": 1,
+        "n": 2,
+        "value": 0.5,
+        "low": 0.09452865480086614,
+        "high": 0.9054713451991339
+      }
+    },
+    "prometheus/prometheus": {
+      "objections": 1,
+      "flags": 1,
+      "recall": {
+        "k": 1,
+        "n": 1,
+        "value": 1,
+        "low": 0.20654329147389294,
+        "high": 1
+      },
+      "precision": {
+        "k": 1,
+        "n": 1,
+        "value": 1,
+        "low": 0.20654329147389294,
+        "high": 1
+      },
+      "precisionRed": {
+        "k": 0,
+        "n": 0,
+        "value": null,
+        "low": null,
+        "high": null
+      },
+      "precisionYellow": {
+        "k": 1,
+        "n": 1,
+        "value": 1,
+        "low": 0.20654329147389294,
+        "high": 1
+      }
+    },
+    "vitejs/vite": {
+      "objections": 0,
+      "flags": 1,
+      "recall": {
+        "k": 0,
+        "n": 0,
+        "value": null,
+        "low": null,
+        "high": null
+      },
+      "precision": {
+        "k": 0,
+        "n": 1,
+        "value": 0,
+        "low": 0,
+        "high": 0.7934567085261071
+      },
+      "precisionRed": {
+        "k": 0,
+        "n": 0,
+        "value": null,
+        "low": null,
+        "high": null
+      },
+      "precisionYellow": {
+        "k": 0,
+        "n": 1,
+        "value": 0,
+        "low": 0,
+        "high": 0.7934567085261071
+      }
+    }
+  },
+  "notCheckableByRepo": {
+    "stdlib-js/stdlib": 3,
+    "nodejs/node": 2,
+    "prometheus/prometheus": 3,
+    "vitejs/vite": 1
+  }
+}

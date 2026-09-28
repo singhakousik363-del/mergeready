@@ -64,3 +64,18 @@ export function finalCategories(pr: { suggestions: { category: Category; decisio
     for (const a of pr.added) categories.add(a.category);
     return categories;
 }
+
+// Sensitivity check (reported separately, never replaces the locked labels):
+// the labels file every failed node lint-commit-message check under
+// commit-format, but the linter also checks the Signed-off-by line. Using the
+// linter's own failed rules: "signed-off-by" makes it a dco objection, and it
+// stays a commit-format objection only if another rule failed too.
+export function relabelLintFailures(pairs: Pair[], failedRulesByPr: Map<string, string[]>): Pair[] {
+    return pairs.map((pair) => {
+        const failed = failedRulesByPr.get(pair.pr);
+        if (!failed) return pair;
+        if (pair.ruleType === "dco-signoff") return { ...pair, objection: pair.objection || failed.includes("signed-off-by") };
+        if (pair.ruleType === "conventional-commits") return { ...pair, objection: failed.some((rule) => rule !== "signed-off-by") };
+        return pair;
+    });
+}

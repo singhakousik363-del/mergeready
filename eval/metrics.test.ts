@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { finalCategories, score, wilson, type Pair } from "./metrics";
+import { finalCategories, relabelLintFailures, score, wilson, type Pair } from "./metrics";
 
 describe("wilson", () => {
     it("matches the known 95% interval for 8 of 10", () => {
@@ -46,5 +46,31 @@ describe("finalCategories", () => {
             added: [{ category: "template" }],
         });
         expect([...categories].sort()).toEqual(["dco", "not-checkable", "template"]);
+    });
+});
+
+describe("relabelLintFailures", () => {
+    const pair = (pr: string, ruleType: Pair["ruleType"], objection: boolean): Pair => ({ pr, repo: "nodejs/node", ruleType, objection, flag: null });
+
+    it("a sign-off failure becomes dco; commit-format stays only when another rule failed", () => {
+        const pairs = [
+            pair("n#1", "conventional-commits", true),
+            pair("n#1", "dco-signoff", false),
+            pair("n#2", "conventional-commits", true),
+            pair("n#2", "dco-signoff", false),
+            pair("n#3", "conventional-commits", true),
+        ];
+        const failed = new Map([
+            ["n#1", ["signed-off-by"]],
+            ["n#2", ["signed-off-by", "subsystem"]],
+        ]);
+        expect(relabelLintFailures(pairs, failed).map((p) => [p.pr, p.ruleType, p.objection])).toEqual([
+            ["n#1", "conventional-commits", false],
+            ["n#1", "dco-signoff", true],
+            ["n#2", "conventional-commits", true],
+            ["n#2", "dco-signoff", true],
+            // Not in the list: unchanged
+            ["n#3", "conventional-commits", true],
+        ]);
     });
 });
