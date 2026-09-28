@@ -26,7 +26,7 @@ export function checkDcoSignoff(rules: Rule[], pr: PullRequestData): Check {
         id: "dco-signoff",
         ruleType: "dco-signoff",
         stage: "commit",
-        status: ok ? "pass" : failStatus(dcoRules[0].confidence),
+        status: ok ? "pass" : failStatus(dcoRules),
         message: ok
             ? commits.length === 1
                 ? "The commit is signed off."

@@ -29,8 +29,9 @@ describe("extractHistoryRules: real repos", () => {
         expect(rules).toEqual([
             {
                 type: "conventional-commits",
-                details: { appliesTo: "pr-title", allowedTypes: null },
+                details: { format: "conventional", appliesTo: "pr-title", allowedTypes: null },
                 confidence: "history",
+                strict: false,
                 sourceQuote:
                     "41 of the last 41 commits (not counting merges and bots) follow Conventional Commits; " +
                     "most were written when the PR was merged, so the PR title matters most",
@@ -39,14 +40,24 @@ describe("extractHistoryRules: real repos", () => {
         ]);
     });
 
-    it("nodejs/node: every commit is signed off, and 'subsystem: message' is NOT Conventional Commits", () => {
+    it("nodejs/node: 'subsystem: message' is a prefix habit (not Conventional Commits), about commits; every commit is signed off", () => {
         const { rules } = extractHistoryRules(commitsOf("node"), "https://github.com/nodejs/node");
 
         expect(rules).toEqual([
             {
+                type: "conventional-commits",
+                // 6 of the 50 PR-URLs appear on more than one commit: node keeps a PR's own commits
+                details: { format: "prefix", appliesTo: "commits", allowedTypes: null },
+                confidence: "history",
+                strict: false,
+                sourceQuote: '49 of the last 49 commits (not counting merges and bots) start with a lowercase "prefix: " (like "fs: fix leak")',
+                sourceUrl: "https://github.com/nodejs/node/commits/a2a064c76afe42fedf061d976de8dff69ef2feaf",
+            },
+            {
                 type: "dco-signoff",
                 details: null,
                 confidence: "history",
+                strict: false,
                 sourceQuote: "49 of the last 49 commits (not counting merges and bots) have a Signed-off-by line",
                 sourceUrl: "https://github.com/nodejs/node/commits/a2a064c76afe42fedf061d976de8dff69ef2feaf",
             },
@@ -65,7 +76,7 @@ describe("extractHistoryRules: real repos", () => {
         const { rules } = extractHistoryRules(commitsOf("vite"), "https://github.com/vitejs/vite");
 
         expect(rules).toHaveLength(1);
-        expect(rules[0].details).toEqual({ appliesTo: "pr-title", allowedTypes: null });
+        expect(rules[0].details).toEqual({ format: "conventional", appliesTo: "pr-title", allowedTypes: null });
     });
 });
 
@@ -95,7 +106,7 @@ describe("extractHistoryRules: counting", () => {
 
     it("uses 'commits' when most messages were not written at merge time", () => {
         const [rule] = extractHistoryRules(made(20, "fix(parser): handle tabs"), REPO).rules;
-        expect(rule.details).toEqual({ appliesTo: "commits", allowedTypes: null });
+        expect(rule.details).toEqual({ format: "conventional", appliesTo: "commits", allowedTypes: null });
         expect(rule.sourceQuote).toBe("20 of the last 20 commits (not counting merges and bots) follow Conventional Commits");
     });
 
@@ -108,6 +119,31 @@ describe("extractHistoryRules: counting", () => {
         expect(extractHistoryRules(made(20, "docs: x\n\nSigned-off-by: someone"), REPO).rules.map((r) => r.type)).toEqual([
             "conventional-commits",
         ]);
+    });
+
+    it("learns a 'prefix: message' habit at 90%, and Conventional Commits wins when both fit", () => {
+        const prefix = [...made(18, "fs, stream: fix leak"), ...made(2, "Update README")];
+        expect(extractHistoryRules(prefix, REPO).rules.map((r) => r.details)).toEqual([
+            { format: "prefix", appliesTo: "commits", allowedTypes: null },
+        ]);
+        // "fix: x" fits both patterns
+        expect(extractHistoryRules(made(20, "fix: x"), REPO).rules.map((r) => r.details)).toEqual([
+            { format: "conventional", appliesTo: "commits", allowedTypes: null },
+        ]);
+        // Capitalised prefixes are not the lowercase "subsystem" style
+        expect(extractHistoryRules(made(20, "Docs: x"), REPO).rules).toEqual([]);
+    });
+
+    it("PR-URL trailers mean 'PR title', unless two commits share one PR-URL (the PR's commits were kept)", () => {
+        const squashed = Array.from({ length: 20 }, (_, i) => made(1, `fix: x\n\nPR-URL: https://github.com/a/b/pull/${i}`)[0]);
+        const kept = [...squashed.slice(0, 18), ...made(2, "fix: y\n\nPR-URL: https://github.com/a/b/pull/99")];
+        expect(extractHistoryRules(squashed, REPO).rules[0].details).toMatchObject({ appliesTo: "pr-title" });
+        expect(extractHistoryRules(kept, REPO).rules[0].details).toMatchObject({ appliesTo: "commits" });
+    });
+
+    it("history rules are never strict", () => {
+        const rules = extractHistoryRules(made(20, `feat: x${SIGNED}`), REPO).rules;
+        expect(rules.map((r) => r.strict)).toEqual([false, false]);
     });
 
     it("returns nothing for an empty repo", () => {

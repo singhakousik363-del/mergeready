@@ -1,16 +1,25 @@
 import type { CheckboxRequirement, Rule } from "./types";
 import { lineUrl, parseMarkdownBlocks, splitSentences, toPlainText, type Block } from "./sentences";
+import { CONDITIONAL, isStrict, STARTS_WITH_IF } from "./strictness";
 
 // Signals for checkbox groups (see "Rule extraction decisions" in CLAUDE.md).
 // When several match, the first one in this order wins: pick-one > optional > required.
 const PICK_ONE = /\btypes? of (?:change|pr|pull request)s?\b|\b(?:select|check|choose|pick)\s+(?:only\s+)?(?:one|1)\b|\bchoose\b/i;
-const OPTIONAL = /\boptional\b|\bif applicable\b|\ball (?:the )?(?:boxes |ones |items |options )?that apply\b/i;
+const ALL_THAT_APPLY = /\ball (?:the )?(?:boxes |ones |items |options )?that apply\b/i;
+const isOptionalText = (text: string) => CONDITIONAL.test(text) || ALL_THAT_APPLY.test(text);
 const REQUIRED = /\bchecklist\b|\bbefore submitting\b|\bI have\b|\bI confirm\b|\bmake sure\b/i;
 const REMOVE_SECTION = /\b(?:remove|delete) this section\b/i;
-const STARTS_WITH_IF = /^if\b/i;
+// A section the template clearly asks you to fill in. A bare "must" is not
+// enough: prometheus's "Release notes (ALL commits must be considered)" is
+// about what to write, not whether to write it.
+const REQUIRED_SECTION =
+    /\((?:required|mandatory)\)|\[(?:required|mandatory)\]|\b(?:required|mandatory):|\bthis section is (?:required|mandatory)\b|\b(?:do not|don['’]t) (?:remove|delete) this section\b|\bmust (?:be )?(?:fill(?:ed)?|complete[ds]?|provided?|include[ds]?)\b/i;
+// "e.g. `fixes #123`": an example of how to write it, not a field to fill in
+const EXAMPLE = /\b(?:e\.g\.|eg\.|i\.e\.|for example|for instance|such as)|\bexample:/i;
 
-// "Fixes #", "Resolves #{{TODO}}", "closes: #123": a place to write the issue number
-const ISSUE_FIELD = /\b(?:fix(?:e[sd])?|close[sd]?|resolve[sd]?)\b:?\s*#/i;
+// "Fixes #", "Resolves #{{TODO}}", "Closes #<number>": a place to write the
+// issue number. A real number ("fixes #123") is an example, not a field.
+const ISSUE_FIELD = /\b(?:fix(?:e[sd])?|close[sd]?|resolve[sd]?)\b:?\s*#(?!\d)/i;
 // "Please link to the issue", "reference the related issue"
 const ISSUE_REQUEST = /\b(?:link\s+(?:it\s+)?to|reference)\s+(?:(?:the|an|a|any)\s+)?(?:related\s+|relevant\s+|open\s+)?issues?\b/i;
 
@@ -35,6 +44,7 @@ export function extractTemplateRules(template: string, fileUrl: string): Rule[] 
         // A heading with checkboxes is covered by the checkbox rules below
         if (section.heading && !hasCheckboxes) {
             const { heading } = section;
+            const requirement = sectionRequirement(section);
             rules.push({
                 type: "pr-template",
                 details: {
@@ -44,17 +54,21 @@ export function extractTemplateRules(template: string, fileUrl: string): Rule[] 
                         .filter((b) => b.kind !== "comment")
                         .map(blockText)
                         .join("\n"),
-                    optional: isOptionalSection(section.body),
+                    requirement,
                 },
                 confidence: "template",
                 sourceQuote: heading.parts[0].raw,
                 sourceUrl: lineUrl(fileUrl, heading.parts[0].line),
+                strict: requirement === "required",
             });
         }
 
         for (const { intro, boxes } of findCheckboxGroups(section.body)) {
             groupId++;
             const groupRequirement = classifyGroup(section.heading?.text ?? "", intro);
+            // Red only when the visible words above the boxes, or the box's own
+            // words ("Your PR cannot be merged unless tests pass"), are a clear obligation
+            const groupObliges = isStrict(visibleText(section.heading, intro));
             for (const box of boxes) {
                 if (box.parts.length === 0) continue;
                 const raw = box.parts.map((p) => p.raw).join(" ");
@@ -67,17 +81,18 @@ export function extractTemplateRules(template: string, fileUrl: string): Rule[] 
                         heading: section.heading?.text ?? null,
                         groupId,
                         // "- [ ] Screenshots (if applicable)" is optional on its own
-                        requirement: OPTIONAL.test(text) ? "optional" : groupRequirement,
+                        requirement: isOptionalText(text) ? "optional" : groupRequirement,
                     },
                     confidence: "template",
                     sourceQuote: raw,
                     sourceUrl: lineUrl(fileUrl, box.parts[0].line),
+                    strict: groupObliges || isStrict(text),
                 });
             }
         }
     }
 
-    const issueRule = findIssueRule(blocks, fileUrl);
+    const issueRule = findIssueRule(splitIntoSections(blocks), fileUrl);
     if (issueRule) rules.push(issueRule);
     return rules;
 }
@@ -132,36 +147,59 @@ function classifyGroup(headingText: string, allIntro: Block[]): CheckboxRequirem
     // (comments don't count: "If you're unsure, ask" is common there)
     const lineAbove = intro[intro.length - 1];
     const conditional = lineAbove?.kind === "paragraph" && STARTS_WITH_IF.test(blockText(lineAbove));
-    if (OPTIONAL.test(signals) || conditional) return "optional";
+    if (isOptionalText(signals) || conditional) return "optional";
 
-    if (REQUIRED.test(signals)) return "required";
+    // Comments can make boxes optional, but never required
+    if (REQUIRED.test([headingText, ...visible(intro).map(blockText)].join(" "))) return "required";
     return "unknown";
 }
 
-function isOptionalSection(allBody: Block[]): boolean {
-    const body = withoutCode(allBody);
+// Comments can make a section optional ("<!-- Remove if not relevant -->"),
+// but only visible text can make it required.
+function sectionRequirement(section: Section): "required" | "optional" | "unmarked" {
+    const body = withoutCode(section.body);
     const text = body.map(blockText).join(" ");
-    if (OPTIONAL.test(text) || REMOVE_SECTION.test(text)) return true;
+    if (isOptionalText(text) || REMOVE_SECTION.test(text)) return "optional";
     // "If your PR contains a breaking change, ..." as the first sentence
     const first = body[0] ? splitSentences(body[0].parts)[0] : undefined;
-    return first !== undefined && STARTS_WITH_IF.test(first.text);
+    if (first !== undefined && STARTS_WITH_IF.test(first.text)) return "optional";
+    return REQUIRED_SECTION.test(visibleText(section.heading, section.body)) ? "required" : "unmarked";
 }
 
 // The first "Fixes #" field wins; without one, the first plain request to
-// link the issue. "If it fixes an issue, link it" is conditional, so it's skipped.
-function findIssueRule(blocks: Block[], fileUrl: string): Rule | null {
-    const sentences = withoutCode(blocks).flatMap((b) => splitSentences(b.parts));
+// link the issue. Only visible text counts (comments and examples never make
+// a rule), and "If it fixes an issue, link it" is conditional, so it's skipped.
+// The rule is strict only when its sentence or a required section says so;
+// otherwise the check just reminds the user ("manual").
+function findIssueRule(sections: Section[], fileUrl: string): Rule | null {
+    const candidates = sections.flatMap((section) =>
+        visible(section.body)
+            .flatMap((b) => splitSentences(b.parts))
+            .map((sentence) => ({ sentence, section }))
+    );
+    const usable = candidates.filter(({ sentence }) => !EXAMPLE.test(sentence.text) && !CONDITIONAL.test(sentence.text));
     const match =
-        sentences.find((s) => ISSUE_FIELD.test(s.text)) ??
-        sentences.find((s) => ISSUE_REQUEST.test(s.text) && !STARTS_WITH_IF.test(s.text));
+        usable.find(({ sentence }) => ISSUE_FIELD.test(sentence.text)) ??
+        usable.find(({ sentence }) => ISSUE_REQUEST.test(sentence.text) && !STARTS_WITH_IF.test(sentence.text));
     if (!match) return null;
+    const { sentence, section } = match;
     return {
         type: "linked-issue",
         details: null,
         confidence: "template",
-        sourceQuote: match.raw,
-        sourceUrl: lineUrl(fileUrl, match.line),
+        sourceQuote: sentence.raw,
+        sourceUrl: lineUrl(fileUrl, sentence.line),
+        strict: isStrict(sentence.text) || sectionRequirement(section) === "required",
     };
+}
+
+// Blocks a reader of the PR page sees: no HTML comments, no code
+function visible(blocks: Block[]): Block[] {
+    return blocks.filter((b) => b.kind !== "comment" && b.kind !== "code");
+}
+
+function visibleText(heading: HeadingBlock | null, blocks: Block[]): string {
+    return [heading?.text ?? "", ...visible(blocks).map(blockText)].join(" ");
 }
 
 function withoutCode(blocks: Block[]): Block[] {

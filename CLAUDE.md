@@ -26,6 +26,16 @@ Built solo for the FirstCommit hackathon (Devpost), deadline 30 Sep 2026.
   CONTRIBUTING sections are also shown to the user as "read this yourself".
 - History rules are habits, not enforcement: a failed history rule is
   shown yellow ("recommended"), never red.
+- Severity comes from the source's own words, not the file type (changed
+  28 Sep after the evaluation showed most red flags were template text
+  maintainers never enforced). Each rule has `strict`: config rules
+  always; template/prose rules only when their own words say "must",
+  "required", "mandatory", "cannot be merged", "will be closed" or "will
+  not be accepted" (and not "if ..."/"if applicable"/"optional");
+  history never. A failed strict rule is red, anything else yellow.
+  "should", "always", "make sure", "be sure to" are advice (yellow).
+  The PR's own CI results are never used (circular, and absent before
+  submitting).
 
 ## Rule extraction decisions (approved)
 - Config files (commitlint, package.json "commitlint", .github/dco.yml,
@@ -40,16 +50,37 @@ Built solo for the FirstCommit hackathon (Devpost), deadline 30 Sep 2026.
   When signals conflict: pick-one > optional > required. Only the
   nearest heading counts (a "### AI Assistance" Yes/No group under
   "## Checklist" must not become required). A visible line right above
-  the boxes starting with "If ..." makes that group optional.
+  the boxes starting with "If ..." makes that group optional. Only
+  visible text can make boxes required. A group is strict when the
+  visible words above it are strict; a box is also strict on its own
+  words ("Your PR cannot be merged unless tests pass").
+- HTML comments in a template can make things optional, never create
+  or strengthen a rule. Examples ("e.g.", "for example", "such as", or
+  a real number like "fixes #123") are never an issue field.
 - A template section is optional when it says "optional", "if
-  applicable", "remove/delete this section", or its first sentence
-  starts with "If ...".
+  applicable", "if it applies", "if relevant", "if any", "remove if",
+  "remove/delete this section", or its first sentence starts with
+  "If ...". It is required only when its visible text says so
+  ("(required)", "required:", "mandatory", "do not remove this section",
+  "must be filled/completed/provided/included"). A bare "must" is not
+  enough (prometheus: "ALL commits must be considered"). Otherwise it
+  is "unmarked".
+- A linked-issue rule (template or prose) is strict only with strict
+  words or inside a required section; otherwise the check is "manual"
+  (a reminder: "if it fixes an issue, add Fixes #N"), never a flag.
 - History: last 50 default-branch commits (one REST call). Merges and
   bots ("[bot]", "-bot", type Bot) are skipped; at least 15 must remain.
-  >= 90% Conventional Commits (real types only, not node's "subsystem:")
-  or >= 90% "Signed-off-by" -> rule. If more than half have a merge-time
-  signal (subject ends "(#123)" or a "PR-URL:" trailer), the
-  conventional rule applies to the PR title, otherwise to commits.
+  >= 90% Conventional Commits (real types only), else >= 90% lowercase
+  "prefix: message" (node's "subsystem: message", format "prefix"), or
+  >= 90% "Signed-off-by" -> rule. (Changed 28 Sep: before, node's format
+  gave no rule, and 6 of 7 commit-format objections in the evaluation
+  were node's commit linter. It's still a commit format rule, and only
+  the shape is checked, not node's list of subsystems or line length.)
+  If more than half have a merge-time signal, the format rule applies to
+  the PR title, otherwise to commits. Signals: subject ends "(#123)", or
+  a "PR-URL:" trailer, unless two commits share one PR-URL (then the
+  repo keeps each PR's commits, like nodejs/node, and PR-URL says
+  nothing about squashing).
 
 ## Check decisions (approved)
 - Pre-start: archived repo, closed issue, assigned to someone else =
@@ -60,8 +91,11 @@ Built solo for the FirstCommit hackathon (Devpost), deadline 30 Sep 2026.
   "Claimed N days ago with no PR yet" message (still yellow).
 - Status "pending" = waiting for maintainer review (merge stage).
 - One check per template section and per checkbox group. Template text
-  left unchanged (e.g. stdlib's "No.") is "manual", not a failure;
-  "{{...}}" placeholders are failures. The PR description generator
+  left unchanged (e.g. stdlib's "No.") is "manual", not a failure. A
+  missing or empty section is red only when required; "unmarked" ones
+  are "skip". A leftover "{{...}}" placeholder is red in a required
+  section, yellow otherwise. A required checkbox group is red only if
+  a strict box is still unticked. The PR description generator
   never ticks a box (it unticks pre-ticked ones).
 - howToFix is structured: { text, command? }[]. Commands are written by
   hand in each check (and tested exactly), never guessed from text: a
@@ -183,10 +217,14 @@ prose). Next (28 Sep): checks in /lib/checks, API route, UI.
   Setext headings (underlined with ===) are not recognised.
 - History rules: only the newest 50 commits, so a repo that changed its
   habits recently can mislead either way. Squash vs. commit is guessed
-  from "(#123)" / "PR-URL:"; nodejs/node lands with "PR-URL:" but keeps
-  contributor commits, so a conventional rule there would wrongly say
-  "PR title" (node has no such rule today). Bot accounts named without
-  "bot" are counted as people.
+  from "(#123)" / "PR-URL:" (shared PR-URLs = commits kept). A repo that
+  keeps commits but had only one-commit PRs in the last 50 looks
+  squashed. The "prefix" format checks only the shape: node's commit
+  linter also checks the subsystem name and line length. Bot accounts
+  named without "bot" are counted as people.
+- Strict words are English keywords. "Please ensure" or "PRs should"
+  stay yellow even when a repo really enforces them, and a template
+  that marks a section required only in an HTML comment is not seen.
 - Checks: claims are found with English patterns ("I'd like to work
   on", "can I be assigned", "/assign"). Test files are recognised by
   path/name conventions; docs/, examples/, benchmarks/ never need tests.

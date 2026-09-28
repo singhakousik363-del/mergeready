@@ -56,19 +56,19 @@ describe("sourceLabel (real rules from try-rules)", () => {
 });
 
 describe("ruleDetail", () => {
-    const base = { confidence: "template" as const, sourceQuote: "x", sourceUrl: "y" };
+    const base = { confidence: "template" as const, sourceQuote: "x", sourceUrl: "y", strict: false };
 
     it("describes commit format rules", () => {
-        expect(ruleDetail({ ...base, type: "conventional-commits", details: { appliesTo: "pr-title", allowedTypes: null } })).toBe(
+        expect(ruleDetail({ ...base, type: "conventional-commits", details: { format: "conventional", appliesTo: "pr-title", allowedTypes: null } })).toBe(
             "Applies to the PR title"
         );
-        expect(ruleDetail({ ...base, type: "conventional-commits", details: { appliesTo: "commits", allowedTypes: ["feat", "fix"] } })).toBe(
+        expect(ruleDetail({ ...base, type: "conventional-commits", details: { format: "conventional", appliesTo: "commits", allowedTypes: ["feat", "fix"] } })).toBe(
             "Applies to every commit message; types: feat, fix"
         );
     });
 
     it("describes template sections and checkboxes", () => {
-        expect(ruleDetail({ ...base, type: "pr-template", details: { kind: "section", heading: "Disclosure", templateText: "", optional: true } })).toBe(
+        expect(ruleDetail({ ...base, type: "pr-template", details: { kind: "section", heading: "Disclosure", templateText: "", requirement: "optional" } })).toBe(
             'Section "Disclosure" (optional)'
         );
         expect(

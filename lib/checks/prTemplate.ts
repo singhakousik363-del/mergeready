@@ -78,7 +78,7 @@ function readBody(markdown: string): Body {
 }
 
 function checkSection(rule: SectionRule, body: Body): Check {
-    const { heading, templateText, optional } = rule.details;
+    const { heading, templateText, requirement } = rule.details;
     const content = body.sections.get(normalize(heading));
     const result = (status: CheckStatus, message: string, howToFix: FixStep[], observed: string): Check => ({
         id: `template-section:${heading}`,
@@ -93,9 +93,13 @@ function checkSection(rule: SectionRule, body: Body): Check {
     if (content === undefined || content === "") {
         const missing = content === undefined;
         const observed = missing ? "Section not in the PR description" : "Section is empty";
-        if (optional) return result("pass", `"${heading}" is optional, and you left it out.`, [], observed);
+        if (requirement === "optional") return result("pass", `"${heading}" is optional, and you left it out.`, [], observed);
+        // The template doesn't say this section is required, so leaving it out is fine
+        if (requirement === "unmarked") {
+            return result("skip", `The template doesn't say the "${heading}" section is required.`, [], observed);
+        }
         return result(
-            failStatus(rule.confidence),
+            failStatus([rule]),
             missing ? `The "${heading}" section from the template is missing.` : `The "${heading}" section is empty.`,
             steps(`Edit the PR description and ${missing ? `add a "${heading}" section` : `write something under "${heading}"`}.`),
             observed
@@ -105,10 +109,10 @@ function checkSection(rule: SectionRule, body: Body): Check {
     if (PLACEHOLDER.test(content)) {
         const placeholder = PLACEHOLDER.exec(content)?.[0] ?? "";
         return result(
-            // Leftover placeholder in an optional section: tidy up, but not red
-            optional ? "warn" : failStatus(rule.confidence),
+            // Leftover placeholder outside a required section: tidy up, but not red
+            requirement === "required" ? failStatus([rule]) : "warn",
             `The "${heading}" section still has placeholder text from the template.`,
-            steps(`Replace ${placeholder} with your own words${optional ? ", or delete the section" : ""}.`),
+            steps(`Replace ${placeholder} with your own words${requirement === "required" ? "" : ", or delete the section"}.`),
             `Found ${placeholder}`
         );
     }
@@ -143,10 +147,10 @@ function checkGroup(groupId: number, rules: CheckboxRule[], body: Body): Check {
         stage: "pr" as const,
         evidence: { rules: evidenceOf(rules), observed: state.map(describe) },
     };
-    const failed = failStatus(rules[0].confidence);
-
     // Only the box's own "(if applicable)" can make one box optional inside a group
     const mustTick = notTicked.filter((s) => s.rule.details.requirement === "required");
+    // Red only if a box that still needs ticking is strict
+    const failed = failStatus(requirement === "required" ? mustTick.map((s) => s.rule) : rules);
 
     switch (requirement) {
         case "required":

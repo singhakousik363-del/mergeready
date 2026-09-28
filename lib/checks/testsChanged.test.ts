@@ -18,6 +18,7 @@ const STDLIB_TESTS_RULE: Rule = {
     confidence: "prose",
     sourceQuote: "Tests should accompany **all** bug fixes and features.",
     sourceUrl: "https://github.com/stdlib-js/stdlib/blob/develop/CONTRIBUTING.md?plain=1#L241",
+    strict: false,
 };
 
 describe("checkTestsChanged", () => {

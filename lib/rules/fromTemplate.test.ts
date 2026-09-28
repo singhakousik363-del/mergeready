@@ -24,6 +24,10 @@ function sections(rules: Rule[]): TemplateSection[] {
     return rules.flatMap((r) => (r.type === "pr-template" && r.details.kind === "section" ? [r.details] : []));
 }
 
+function checkboxesStrict(rules: Rule[]): boolean[] {
+    return rules.flatMap((r) => (r.type === "pr-template" && r.details.kind === "checkbox" ? [r.strict] : []));
+}
+
 function requirementOf(rules: Rule[], textStart: string): string | undefined {
     return checkboxes(rules).find((c) => c.text.startsWith(textStart))?.requirement;
 }
@@ -55,18 +59,19 @@ describe("extractTemplateRules: stdlib-js/stdlib", () => {
     });
 
     it("lists sections without checkboxes, with their template text", () => {
-        expect(sections(rules).map((s) => [s.heading, s.optional])).toEqual([
-            ["Description", false],
-            ["Related Issues", false],
-            ["Questions", false],
-            ["Other", false],
+        // Nothing visible says a section is required, so they are "unmarked"
+        expect(sections(rules).map((s) => [s.heading, s.requirement])).toEqual([
+            ["Description", "unmarked"],
+            ["Related Issues", "unmarked"],
+            ["Questions", "unmarked"],
+            ["Other", "unmarked"],
             // First sentence: "If you answered "yes" to using AI assistance, ..."
-            ["Disclosure", true],
+            ["Disclosure", "optional"],
         ]);
         expect(sections(rules)[2].templateText).toBe("Any questions for reviewers of this pull request?\nNo.");
     });
 
-    it("finds the 'Resolves #' field", () => {
+    it("finds the 'Resolves #' field, not strict (no 'must' or 'required')", () => {
         expect(rules.filter((r) => r.type === "linked-issue")).toEqual([
             {
                 type: "linked-issue",
@@ -74,8 +79,14 @@ describe("extractTemplateRules: stdlib-js/stdlib", () => {
                 confidence: "template",
                 sourceQuote: "Resolves #{{TODO: add issue number}}.",
                 sourceUrl: `${URL}?plain=1#L1`,
+                strict: false,
             },
         ]);
+    });
+
+    it("the Checklist box is not strict: 'Please ensure...' is advice, not 'must'", () => {
+        const box = rules.find((r) => r.sourceQuote.startsWith("Read, understood"));
+        expect(box?.strict).toBe(false);
     });
 });
 
@@ -121,6 +132,11 @@ describe("extractTemplateRules: home-assistant/core ('Type of change' template)"
         expect(requirementOf(rules, "Tests have been added")).toBe("required");
     });
 
+    it("only the box that says 'cannot be merged' is strict", () => {
+        const strict = rules.filter((r) => r.strict).map((r) => r.sourceQuote);
+        expect(strict).toEqual(["Local tests pass. **Your PR cannot be merged unless tests pass**"]);
+    });
+
     it("boxes under 'If ...:' lines inside the Checklist are optional", () => {
         expect(requirementOf(rules, "Documentation added/updated")).toBe("optional");
         expect(requirementOf(rules, "The manifest file has all fields")).toBe("optional");
@@ -141,10 +157,10 @@ describe("extractTemplateRules: home-assistant/core ('Type of change' template)"
     });
 
     it("marks 'Remove this section if...' and 'if applicable' sections optional", () => {
-        expect(sections(rules).map((s) => [s.heading, s.optional])).toEqual([
-            ["Breaking change", true],
-            ["Proposed change", false],
-            ["Additional information", true],
+        expect(sections(rules).map((s) => [s.heading, s.requirement])).toEqual([
+            ["Breaking change", "optional"],
+            ["Proposed change", "unmarked"],
+            ["Additional information", "optional"],
         ]);
     });
 
@@ -152,6 +168,29 @@ describe("extractTemplateRules: home-assistant/core ('Type of change' template)"
         const issue = rules.find((r) => r.type === "linked-issue");
         expect(issue?.sourceQuote).toBe("This PR fixes or closes issue: fixes #");
         expect(issue?.sourceUrl).toBe(`${URL}?plain=1#L46`);
+    });
+});
+
+describe("extractTemplateRules: prometheus/prometheus", () => {
+    const rules = extractTemplateRules(fixture("prometheus-pr-template.md"), URL);
+
+    it("the 'Fixes #<issue number>' usage line is in a comment (and says 'If it applies'), so it is no rule", () => {
+        expect(rules.some((r) => r.type === "linked-issue")).toBe(false);
+    });
+
+    it("'(ALL commits must be considered)' is about what to write, so the release notes section is not required", () => {
+        expect(sections(rules).map((s) => [s.heading, s.requirement])).toEqual([
+            // The comment says "If it applies": comments may make a section optional
+            ["Which issue(s) does the PR fix:", "optional"],
+            ["Release notes for end users (ALL commits must be considered).", "unmarked"],
+        ]);
+        expect(rules.every((r) => !r.strict)).toBe(true);
+    });
+});
+
+describe("extractTemplateRules: vitejs/vite", () => {
+    it("finds nothing: the whole template is a comment, and 'e.g. `fixes #123`' is an example", () => {
+        expect(extractTemplateRules(fixture("vite-pr-template.md"), URL)).toEqual([]);
     });
 });
 
@@ -181,6 +220,38 @@ describe("extractTemplateRules: small cases", () => {
     it("pick-one beats required: 'Checklist' + 'select one'", () => {
         const rules = extractTemplateRules("## Checklist\n\nSelect one:\n\n- [ ] A\n- [ ] B", URL);
         expect(checkboxes(rules).map((c) => c.requirement)).toEqual(["pick-at-least-one", "pick-at-least-one"]);
+    });
+
+    it("comments and examples never make a rule; a real number is an example, not a field", () => {
+        expect(extractTemplateRules("<!-- Fixes # -->", URL)).toEqual([]);
+        expect(extractTemplateRules("Link the issue it solves, e.g. Fixes #", URL)).toEqual([]);
+        expect(extractTemplateRules("Fixes #123", URL)).toEqual([]);
+        expect(extractTemplateRules("Closes #<issue number>", URL)).toEqual([expect.objectContaining({ type: "linked-issue" })]);
+    });
+
+    it("an issue field is strict only with clear words, and never when it says 'if it applies'", () => {
+        const strictOf = (template: string) => extractTemplateRules(template, URL).find((r) => r.type === "linked-issue")?.strict;
+        expect(strictOf("Fixes #")).toBe(false);
+        expect(strictOf("You must link an issue: Fixes #")).toBe(true);
+        expect(strictOf("## Related issue (required)\n\nFixes #")).toBe(true);
+        expect(strictOf("Fixes # (if it applies)")).toBeUndefined();
+    });
+
+    it("a section is required only when its visible text says so", () => {
+        const requirementOfSection = (template: string) => sections(extractTemplateRules(template, URL))[0]?.requirement;
+        expect(requirementOfSection("## Description (required)\n\nDescribe it.")).toBe("required");
+        expect(requirementOfSection("## Description\n\nThis section must be filled in.")).toBe("required");
+        expect(requirementOfSection("## Description\n\n<!-- required -->")).toBe("unmarked");
+        expect(requirementOfSection("## Screenshots\n\n<!-- Remove if not relevant -->")).toBe("optional");
+        expect(requirementOfSection("## Notes\n\nAll changes must be tested.")).toBe("unmarked");
+    });
+
+    it("a required checkbox group is strict only with clear words above it", () => {
+        const strictOf = (template: string) => checkboxesStrict(extractTemplateRules(template, URL));
+        expect(strictOf("## Checklist\n\n- [ ] Tests pass")).toEqual([false]);
+        expect(strictOf("## Checklist\n\nAll boxes must be ticked.\n\n- [ ] Tests pass")).toEqual([true]);
+        // Only visible text: "<!-- checklist -->" can't make boxes required
+        expect(checkboxes(extractTemplateRules("<!-- Checklist -->\n- [ ] Tests pass", URL)).map((c) => c.requirement)).toEqual(["unknown"]);
     });
 
     it("a plain request to link the issue is a linked-issue rule", () => {

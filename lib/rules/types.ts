@@ -25,6 +25,10 @@ export const CONFIDENCE_RANK: Record<Confidence, number> = { config: 0, template
 export type CheckboxRequirement = "required" | "pick-at-least-one" | "optional" | "unknown";
 
 export type ConventionalCommitsDetails = {
+    // "conventional": "type(scope): description" with real Conventional Commits types.
+    // "prefix": any lowercase "prefix: message", like nodejs/node's "fs: fix leak"
+    // (only learned from commit history).
+    format: "conventional" | "prefix";
     // commitlint checks commit messages; semantic PR actions check only the PR title
     appliesTo: "commits" | "pr-title";
     // Allowed types like ["feat", "fix"], or null when the source doesn't list them
@@ -38,8 +42,11 @@ export type PrTemplateDetails =
           // The template's own text under the heading (comments removed), so a
           // check can tell whether the author replaced it with real content
           templateText: string;
-          // e.g. "Remove this section if this PR is NOT a breaking change"
-          optional: boolean;
+          // "required": the template's visible text says so, e.g. "(required)".
+          // "optional": e.g. "Remove this section if this PR is NOT a breaking change".
+          // "unmarked": the template doesn't say. A missing or empty unmarked
+          // section is not a problem (only a leftover "{{...}}" placeholder is).
+          requirement: "required" | "optional" | "unmarked";
       }
     | {
           kind: "checkbox";
@@ -59,6 +66,10 @@ type RuleBase = {
     // Link to the file, pointing at the line when we know it
     // (for "history" rules: the commit list we counted)
     sourceUrl: string;
+    // true: breaking the rule is red. Config rules always; template and prose
+    // rules only when their own words are a clear obligation ("must",
+    // "required", ...; see strictness.ts); history rules never.
+    strict: boolean;
 };
 
 export type Rule =

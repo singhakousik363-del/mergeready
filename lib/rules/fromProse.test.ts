@@ -38,7 +38,11 @@ describe("extractProseRules: nodejs/node", () => {
                 "Your commit must contain the `Signed-off-by` line with your name and email " +
                 "address as an acknowledgement that you agree to the [Developer Certificate of Origin][].",
             sourceUrl: `${FILE_URL}?plain=1#L201`,
+            // "must": a clear obligation, so breaking it is red
+            strict: true,
         });
+        // "Use the `Fixes:` prefix..." (no "must") and "should" sentences are not strict
+        expect(rules.map((r) => r.strict)).toEqual([false, true, false, false]);
     });
 
     it("does not treat reviewer 'sign off' as DCO", () => {
@@ -116,8 +120,8 @@ describe("extractProseRules: small cases", () => {
     it("knows when Conventional Commits is about the PR title only", () => {
         const [commits] = rulesFor("Commit messages must follow Conventional Commits.");
         const [title] = rulesFor("PR titles must follow Conventional Commits.");
-        expect(commits.details).toEqual({ appliesTo: "commits", allowedTypes: null });
-        expect(title.details).toEqual({ appliesTo: "pr-title", allowedTypes: null });
+        expect(commits.details).toEqual({ format: "conventional", appliesTo: "commits", allowedTypes: null });
+        expect(title.details).toEqual({ format: "conventional", appliesTo: "pr-title", allowedTypes: null });
     });
 
     describe("obligation phrases", () => {

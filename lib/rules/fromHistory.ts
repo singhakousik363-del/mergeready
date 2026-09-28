@@ -10,13 +10,16 @@ export const THRESHOLD = 0.9;
 
 // "feat: x", "fix(parser)!: y". Only real Conventional Commits types count:
 // nodejs/node writes "test: ..." and "src: ...", which is its own
-// "subsystem: message" format, not Conventional Commits.
+// "subsystem: message" format (learned separately as "prefix" below).
 const CONVENTIONAL_SUBJECT = new RegExp(`^(?:${CONVENTIONAL_TYPES.join("|")})(?:\\([^)]*\\))?!?: \\S`);
+// "fs: fix leak", "test,stream: add case": a lowercase prefix (or several,
+// joined by commas), a colon and a space. nodejs/node calls it "subsystem: message".
+const PREFIX_SUBJECT = /^[a-z0-9_./-]+(?:, ?[a-z0-9_./-]+)*: \S/;
 // Signs that a commit was written when the PR was merged, not by the author:
 // GitHub's squash merge adds " (#123)" to the title; some repos' landing
 // tools add a "PR-URL:" trailer (stdlib, nodejs/node)
 const PR_NUMBER_SUFFIX = /\(#\d+\)$/;
-const PR_URL_TRAILER = /^PR-URL: /m;
+const PR_URL_TRAILER = /^PR-URL: *(\S+)/m;
 
 export type HistoryRules = { rules: Rule[]; warnings: string[] };
 
@@ -44,19 +47,30 @@ export function extractHistoryRules(commits: RecentCommit[], repoUrl: string): H
     const rules: Rule[] = [];
     const isHabit = (matching: number) => matching / total >= THRESHOLD;
 
+    const fromMerges = writtenAtMerge(counted);
+    // Messages written at merge time are usually the PR title
+    const appliesTo = fromMerges ? "pr-title" : "commits";
+    const mergeNote = fromMerges ? "; most were written when the PR was merged, so the PR title matters most" : "";
+    // Conventional Commits is the more exact format, so it wins when both fit
     const conventional = counted.filter((c) => CONVENTIONAL_SUBJECT.test(subject(c))).length;
+    const prefixed = counted.filter((c) => PREFIX_SUBJECT.test(subject(c))).length;
     if (isHabit(conventional)) {
-        const mergeTime = counted.filter((c) => PR_NUMBER_SUFFIX.test(subject(c)) || PR_URL_TRAILER.test(c.message));
-        const fromMerges = mergeTime.length > total / 2;
         rules.push({
             type: "conventional-commits",
-            // Messages written at merge time are usually the PR title
-            details: { appliesTo: fromMerges ? "pr-title" : "commits", allowedTypes: null },
+            details: { format: "conventional", appliesTo, allowedTypes: null },
             confidence: "history",
-            sourceQuote:
-                `${conventional} of the last ${total} commits (not counting merges and bots) follow Conventional Commits` +
-                (fromMerges ? "; most were written when the PR was merged, so the PR title matters most" : ""),
+            sourceQuote: `${conventional} of the last ${total} commits (not counting merges and bots) follow Conventional Commits${mergeNote}`,
             sourceUrl,
+            strict: false,
+        });
+    } else if (isHabit(prefixed)) {
+        rules.push({
+            type: "conventional-commits",
+            details: { format: "prefix", appliesTo, allowedTypes: null },
+            confidence: "history",
+            sourceQuote: `${prefixed} of the last ${total} commits (not counting merges and bots) start with a lowercase "prefix: " (like "fs: fix leak")${mergeNote}`,
+            sourceUrl,
+            strict: false,
         });
     }
 
@@ -68,9 +82,23 @@ export function extractHistoryRules(commits: RecentCommit[], repoUrl: string): H
             confidence: "history",
             sourceQuote: `${signedOff} of the last ${total} commits (not counting merges and bots) have a Signed-off-by line`,
             sourceUrl,
+            strict: false,
         });
     }
     return { rules, warnings: [] };
+}
+
+// Were most commit messages written when the PR was merged (so they come from
+// the PR title)? A " (#123)" suffix means a squash merge. A "PR-URL:" trailer
+// only means a landing tool was used: if two commits share one PR-URL, the
+// PR's own commits were kept (nodejs/node), so the commits matter, not the title.
+function writtenAtMerge(commits: RecentCommit[]): boolean {
+    const prUrls = commits.flatMap((c) => PR_URL_TRAILER.exec(c.message)?.[1] ?? []);
+    const commitsKept = new Set(prUrls).size < prUrls.length;
+    const mergeTime = commits.filter(
+        (c) => PR_NUMBER_SUFFIX.test(subject(c)) || (!commitsKept && PR_URL_TRAILER.test(c.message))
+    );
+    return mergeTime.length > commits.length / 2;
 }
 
 function subject(commit: RecentCommit): string {

@@ -9,6 +9,8 @@ in tests. Copyright stays with each project; licenses below.
 | commitlint-pr-template.md | https://github.com/conventional-changelog/commitlint/blob/master/.github/PULL_REQUEST_TEMPLATE.md | 9741cee8f521b70c0fb154c1fdb398dbcc056359 | MIT |
 | home-assistant-pr-template.md | https://github.com/home-assistant/core/blob/dev/.github/PULL_REQUEST_TEMPLATE.md | c314545d0ae0ea4894c410631771d96479a22766 | Apache-2.0 |
 | node-pr-template.md | https://github.com/nodejs/node/blob/main/.github/PULL_REQUEST_TEMPLATE.md | 51376380627ef1ec1db20fb53a0547e2a23995f0 | MIT (see repo LICENSE) |
+| prometheus-pr-template.md | https://github.com/prometheus/prometheus/blob/main/.github/PULL_REQUEST_TEMPLATE.md | dff7878b9e3c236605e597297e0e61c4b0eff48f | Apache-2.0 |
+| vite-pr-template.md | https://github.com/vitejs/vite/blob/main/.github/PULL_REQUEST_TEMPLATE.md | afaf48b7327e09564048821b2e7eb772d59e7f80 | MIT |
 | stdlib-contributing.md | https://github.com/stdlib-js/stdlib/blob/develop/CONTRIBUTING.md | 0695f035b77cb48eb223ed45f430e1e94cfe2554 | Apache-2.0 |
 | node-contributing.md | https://github.com/nodejs/node/blob/main/CONTRIBUTING.md | 51376380627ef1ec1db20fb53a0547e2a23995f0 | MIT (see repo LICENSE) |
 | node-pull-requests.md | https://github.com/nodejs/node/blob/main/doc/contributing/pull-requests.md | 51376380627ef1ec1db20fb53a0547e2a23995f0 | MIT (see repo LICENSE) |

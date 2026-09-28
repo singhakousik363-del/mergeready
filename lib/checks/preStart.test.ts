@@ -33,6 +33,7 @@ const ASSIGN_RULE: Rule = {
     confidence: "prose",
     sourceQuote: "Get Assigned Before Working on an Issue",
     sourceUrl: "https://github.com/processing/p5.js/blob/main/CONTRIBUTING.md?plain=1#L15",
+    strict: false,
 };
 
 describe("checkPreStart: real stdlib issue #12959 (good first issue, two competing PRs)", () => {

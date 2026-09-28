@@ -71,7 +71,9 @@ describe("runChecks: real stdlib PR #15585", () => {
     });
 
     it("the merge stage asks to fix red items first when there are any", () => {
-        const broken = runChecks({ mode: "pr", rules: STDLIB_RULES, pr: { ...PR, linkedIssues: [] }, linkedIssue: null });
+        // stdlib's own rules are all advice (no "must"), so make the issue rule strict to get a red item
+        const strictRules = STDLIB_RULES.map((r) => (r.type === "linked-issue" ? { ...r, strict: true } : r));
+        const broken = runChecks({ mode: "pr", rules: strictRules, pr: { ...PR, linkedIssues: [] }, linkedIssue: null });
         expect(broken.checks.find((c) => c.id === "merge-state")?.message).toBe(
             "Fix the red items first, then wait for a maintainer to review."
         );

@@ -63,15 +63,16 @@ describe("checkPrTemplate: real stdlib PR #15585 against stdlib's real template"
 describe("checkPrTemplate: stdlib's template pasted in without changes", () => {
     const checks = checkPrTemplate(STDLIB_RULES, withBody(STDLIB_TEMPLATE));
 
-    it("red for {{TODO}} placeholders, manual when the text is just the template's, yellow for an optional placeholder", () => {
+    it("yellow for {{TODO}} placeholders (no section is marked required), manual when the text is just the template's", () => {
         expect(statuses(checks)).toEqual([
-            ["template-section:Description", "fail"],
-            ["template-section:Related Issues", "fail"],
+            ["template-section:Description", "warn"],
+            ["template-section:Related Issues", "warn"],
             // The template already answers "No.", which may be the right answer
             ["template-section:Questions", "manual"],
             ["template-section:Other", "manual"],
             ["template-section:Disclosure", "warn"],
-            ["template-checkboxes:1", "fail"],
+            // Required box, but "Please ensure..." is advice, not "must": yellow
+            ["template-checkboxes:1", "warn"],
             ["template-checkboxes:2", "manual"],
             ["template-checkboxes:3", "pass"],
         ]);
@@ -80,7 +81,7 @@ describe("checkPrTemplate: stdlib's template pasted in without changes", () => {
     it("names the placeholder to replace", () => {
         const description = checks.find((c) => c.id === "template-section:Description");
         expect(description?.howToFix).toEqual([
-            { text: "Replace {{TODO: add description describing what this pull request does}} with your own words." },
+            { text: "Replace {{TODO: add description describing what this pull request does}} with your own words, or delete the section." },
         ]);
     });
 
@@ -95,15 +96,15 @@ describe("checkPrTemplate: stdlib's template pasted in without changes", () => {
 });
 
 describe("checkPrTemplate: commitlint's template (comment-only sections, pick-one group)", () => {
-    it("empty sections are red, and nothing ticked in 'Types of changes' is red", () => {
+    it("empty unmarked sections are skipped; nothing ticked in 'Types of changes' is yellow (no 'must')", () => {
         const checks = checkPrTemplate(COMMITLINT_RULES, withBody(COMMITLINT_TEMPLATE));
         expect(statuses(checks)).toEqual([
-            ["template-section:Description", "fail"],
-            ["template-section:Motivation and Context", "fail"],
+            ["template-section:Description", "skip"],
+            ["template-section:Motivation and Context", "skip"],
             // Its code example is plain text, not a comment, and it's unchanged
             ["template-section:Usage examples", "manual"],
-            ["template-section:How Has This Been Tested?", "fail"],
-            ["template-checkboxes:1", "fail"],
+            ["template-section:How Has This Been Tested?", "skip"],
+            ["template-checkboxes:1", "warn"],
             ["template-checkboxes:2", "pass"],
         ]);
     });
@@ -116,15 +117,35 @@ describe("checkPrTemplate: commitlint's template (comment-only sections, pick-on
 });
 
 describe("checkPrTemplate: edge cases", () => {
-    it("a deleted section is 'missing', a deleted box is shown as missing", () => {
+    it("a deleted unmarked section is fine, a deleted box is shown as missing", () => {
         const checks = checkPrTemplate(STDLIB_RULES, withBody("## Description\n\nFixes a bug."));
-        expect(checks.find((c) => c.id === "template-section:Other")?.message).toBe(
-            'The "Other" section from the template is missing.'
-        );
+        expect(checks.find((c) => c.id === "template-section:Other")).toMatchObject({
+            status: "skip",
+            message: 'The template doesn\'t say the "Other" section is required.',
+        });
         expect(checks.find((c) => c.id === "template-section:Disclosure")?.status).toBe("pass");
         expect(checks.find((c) => c.id === "template-checkboxes:1")?.evidence.observed).toEqual([
             "(missing) Read, understood, and followed the contributing guidelines.",
         ]);
+    });
+
+    it("a section marked '(required)' is red when missing or empty, and for a leftover placeholder", () => {
+        const rules = extractTemplateRules("## Description (required)\n\n{{TODO: describe}}", "https://github.com/acme/app/blob/main/.github/PULL_REQUEST_TEMPLATE.md");
+        const status = (body: string) => checkPrTemplate(rules, withBody(body))[0];
+        expect(status("Fixes a bug.")).toMatchObject({ status: "fail", message: 'The "Description (required)" section from the template is missing.' });
+        expect(status("## Description (required)\n\n").status).toBe("fail");
+        expect(status("## Description (required)\n\n{{TODO: describe}}").status).toBe("fail");
+        expect(status("## Description (required)\n\nFixes a bug.").status).toBe("pass");
+    });
+
+    it("a required group is red only when a strict box is still unticked", () => {
+        const rules = extractTemplateRules(
+            "## Checklist\n\n- [ ] Local tests pass. Your PR cannot be merged unless tests pass\n- [ ] Docs updated",
+            "https://github.com/acme/app/blob/main/.github/PULL_REQUEST_TEMPLATE.md"
+        );
+        const group = (body: string) => checkPrTemplate(rules, withBody(body))[0].status;
+        expect(group("- [ ] Local tests pass. Your PR cannot be merged unless tests pass\n- [x] Docs updated")).toBe("fail");
+        expect(group("- [x] Local tests pass. Your PR cannot be merged unless tests pass\n- [ ] Docs updated")).toBe("warn");
     });
 
     it("skips when there are no template rules", () => {

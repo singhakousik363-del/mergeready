@@ -29,12 +29,29 @@ export function checkLinkedIssue(rules: Rule[], pr: PullRequestData): Check[] {
             howToFix: [],
             evidence: { rules: evidenceOf(issueRules), observed: [`Closing keyword found for ${linked}`] },
         });
+    } else if (!issueRules.some((r) => r.strict)) {
+        // The repo mentions issue links but doesn't clearly require one: a reminder, not a flag
+        checks.push({
+            id: "linked-issue",
+            ruleType: "linked-issue",
+            stage: "pr",
+            status: "manual",
+            message: 'This PR doesn\'t link an issue. The repo doesn\'t say it\'s required, but if your PR fixes one, add a line like "Fixes #123".',
+            howToFix: steps(
+                'If it fixes an issue: edit the PR description and add a line like "Fixes #123" (with your issue number).',
+                'Only closing words work: "Fixes", "Closes" or "Resolves". A plain "#123" or "Refs #123" doesn\'t link it.',
+            ),
+            evidence: {
+                rules: evidenceOf(issueRules),
+                observed: ['No "Fixes/Closes/Resolves #number" for an issue in this repo'],
+            },
+        });
     } else {
         checks.push({
             id: "linked-issue",
             ruleType: "linked-issue",
             stage: "pr",
-            status: failStatus(issueRules[0].confidence),
+            status: failStatus(issueRules),
             // Many rules only apply "if your PR fixes an issue", so say it that way
             message: 'This PR doesn\'t link an issue. If it fixes one, add a line like "Fixes #123".',
             howToFix: steps(

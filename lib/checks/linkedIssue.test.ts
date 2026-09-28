@@ -18,6 +18,8 @@ const STDLIB_ISSUE_FIELD: Rule = {
     confidence: "template",
     sourceQuote: "Resolves #{{TODO: add issue number}}.",
     sourceUrl: "https://github.com/stdlib-js/stdlib/blob/develop/.github/PULL_REQUEST_TEMPLATE.md?plain=1#L1",
+    // No "must"/"required": a reminder only
+    strict: false,
 };
 
 describe("checkLinkedIssue", () => {
@@ -38,8 +40,17 @@ describe("checkLinkedIssue", () => {
         ]);
     });
 
-    it("red when a template rule asks for it and the PR links nothing", () => {
+    it("only a reminder ('manual') when the rule isn't strict and the PR links nothing", () => {
         const [check] = checkLinkedIssue([STDLIB_ISSUE_FIELD], { ...REAL_PR, linkedIssues: [] });
+        expect(check.status).toBe("manual");
+        expect(check.message).toBe(
+            'This PR doesn\'t link an issue. The repo doesn\'t say it\'s required, but if your PR fixes one, add a line like "Fixes #123".'
+        );
+    });
+
+    it("red when a strict rule asks for it and the PR links nothing", () => {
+        const strict: Rule = { ...STDLIB_ISSUE_FIELD, sourceQuote: "You must link an issue: Fixes #", strict: true };
+        const [check] = checkLinkedIssue([strict], { ...REAL_PR, linkedIssues: [] });
         expect(check.status).toBe("fail");
         expect(check.message).toBe('This PR doesn\'t link an issue. If it fixes one, add a line like "Fixes #123".');
     });

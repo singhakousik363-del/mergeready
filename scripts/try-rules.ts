@@ -14,11 +14,11 @@ function describeDetails(rule: Rule): string {
     switch (rule.type) {
         case "conventional-commits": {
             const types = rule.details.allowedTypes?.join(", ") ?? "any (not listed)";
-            return `applies to ${rule.details.appliesTo}; types: ${types}`;
+            return `${rule.details.format}, applies to ${rule.details.appliesTo}; types: ${types}`;
         }
         case "pr-template":
             return rule.details.kind === "section"
-                ? `section${rule.details.optional ? " (optional)" : ""}`
+                ? `section (${rule.details.requirement})`
                 : `checkbox, group ${rule.details.groupId}: ${rule.details.requirement}`;
         default:
             return "";
@@ -42,7 +42,7 @@ async function showRules(owner: string, repo: string): Promise<void> {
     console.log(`  RULES: ${result.rules.length}`);
     for (const rule of result.rules) {
         const details = describeDetails(rule);
-        console.log(`  - [${rule.confidence}] ${rule.type}${details ? ` (${details})` : ""}`);
+        console.log(`  - [${rule.confidence}${rule.strict ? ", strict" : ""}] ${rule.type}${details ? ` (${details})` : ""}`);
         console.log(`      "${rule.sourceQuote}"`);
         console.log(`      ${rule.sourceUrl}`);
     }

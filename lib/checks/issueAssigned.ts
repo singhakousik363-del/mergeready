@@ -36,7 +36,7 @@ export function checkIssueAssigned(rules: Rule[], pr: PullRequestData, linkedIss
         );
     }
 
-    const failed = failStatus(assignRules[0].confidence);
+    const failed = failStatus(assignRules);
     const observed = [`Issue #${linkedIssue.number} assignees: ${linkedIssue.assignees.join(", ") || "none"}`];
     const isAuthor = (login: string) => login.toLowerCase() === pr.author.toLowerCase();
 

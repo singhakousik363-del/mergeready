@@ -25,8 +25,9 @@ describe("extractConfigRules: commitlint configs", () => {
         expect(rules).toEqual([
             {
                 type: "conventional-commits",
-                details: { appliesTo: "commits", allowedTypes: CONVENTIONAL_TYPES },
+                details: { format: "conventional", appliesTo: "commits", allowedTypes: CONVENTIONAL_TYPES },
                 confidence: "config",
+                strict: true,
                 // Line 50 has the same text inside devDependencies
                 sourceQuote: '"@commitlint/config-conventional",',
                 sourceUrl: "https://github.com/acme/app/blob/main/package.json?plain=1#L81",
@@ -39,6 +40,7 @@ describe("extractConfigRules: commitlint configs", () => {
 
         expect(rules).toHaveLength(1);
         expect(rules[0].details).toEqual({
+            format: "conventional",
             appliesTo: "commits",
             allowedTypes: ["chore", "ci", "docs", "feat", "fix", "perf", "refactor", "revert", "style", "test", "theme"],
         });
@@ -52,6 +54,7 @@ describe("extractConfigRules: commitlint configs", () => {
 
         expect(warnings).toEqual([]);
         expect(rules[0].details).toEqual({
+            format: "conventional",
             appliesTo: "commits",
             allowedTypes: ["feat", "fix", "docs", "style", "refactor", "perf", "test", "build", "ci", "chore", "revert"],
         });
@@ -63,7 +66,7 @@ describe("extractConfigRules: commitlint configs", () => {
         const config = "const types = require('./types');\nmodule.exports = { extends: ['@commitlint/config-conventional'], rules: { 'type-enum': [2, 'always', types] } };";
         const { rules, warnings } = extractConfigRules([inline("commitlint.config.js", config)]);
 
-        expect(rules[0].details).toEqual({ appliesTo: "commits", allowedTypes: null });
+        expect(rules[0].details).toEqual({ format: "conventional", appliesTo: "commits", allowedTypes: null });
         expect(warnings).toEqual(["commitlint.config.js could only be partly read (JS configs are read as text, never run)."]);
     });
 
@@ -82,6 +85,7 @@ describe("extractConfigRules: commitlint configs", () => {
             inline(".commitlintrc.json", '{\n  "extends": ["@commitlint/config-angular"]\n}'),
         ]);
         expect(rules[0].details).toEqual({
+            format: "conventional",
             appliesTo: "commits",
             allowedTypes: ["build", "ci", "docs", "feat", "fix", "perf", "refactor", "revert", "style", "test"],
         });
@@ -91,7 +95,7 @@ describe("extractConfigRules: commitlint configs", () => {
         const { rules } = extractConfigRules([
             inline(".commitlintrc.yml", "extends: ['@commitlint/config-conventional']\nrules:\n  type-enum: [0]"),
         ]);
-        expect(rules[0].details).toEqual({ appliesTo: "commits", allowedTypes: null });
+        expect(rules[0].details).toEqual({ format: "conventional", appliesTo: "commits", allowedTypes: null });
     });
 
     it("makes no rule for a commitlint config that isn't about Conventional Commits", () => {
@@ -125,7 +129,7 @@ describe("extractConfigRules: workflows", () => {
         expect(rules).toEqual([
             expect.objectContaining({
                 type: "conventional-commits",
-                details: { appliesTo: "commits", allowedTypes: null },
+                details: { format: "conventional", appliesTo: "commits", allowedTypes: null },
                 // Not the "Print versions" step, which runs "commitlint --version"
                 sourceQuote: "run: node @commitlint/cli/cli.js --last --verbose",
             }),
@@ -138,7 +142,7 @@ describe("extractConfigRules: workflows", () => {
         ]);
 
         expect(rules).toHaveLength(1);
-        expect(rules[0].details).toEqual({ appliesTo: "pr-title", allowedTypes: CONVENTIONAL_TYPES });
+        expect(rules[0].details).toEqual({ format: "conventional", appliesTo: "pr-title", allowedTypes: CONVENTIONAL_TYPES });
         expect(rules[0].sourceQuote).toBe(
             "uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50 # v6.1.1"
         );
@@ -156,7 +160,7 @@ describe("extractConfigRules: workflows", () => {
             feat
 `;
         const { rules } = extractConfigRules([inline(".github/workflows/pr.yml", workflow)]);
-        expect(rules[0].details).toEqual({ appliesTo: "pr-title", allowedTypes: ["fix", "feat"] });
+        expect(rules[0].details).toEqual({ format: "conventional", appliesTo: "pr-title", allowedTypes: ["fix", "feat"] });
     });
 
     it("sees a script that checks 'Signed-off-by' as a DCO rule (moby/moby)", () => {
@@ -205,6 +209,7 @@ describe("extractConfigRules: DCO app", () => {
                 type: "dco-signoff",
                 details: null,
                 confidence: "config",
+                strict: true,
                 sourceQuote: "require:",
                 sourceUrl: "https://github.com/acme/app/blob/main/.github/dco.yml?plain=1#L1",
             },

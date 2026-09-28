@@ -157,7 +157,7 @@ function commitlintRule(file: ConfigFile, settings: CommitlintSettings, fromLine
 // really installed: GitHub doesn't show that to other users.)
 function readDcoApp(file: ConfigFile): Rule {
     const { line, raw } = firstLine(file);
-    return { type: "dco-signoff", details: null, confidence: "config", sourceQuote: raw, sourceUrl: lineUrl(file.url, line) };
+    return { type: "dco-signoff", details: null, confidence: "config", sourceQuote: raw, sourceUrl: lineUrl(file.url, line), strict: true };
 }
 
 // ---------- workflows ----------
@@ -203,7 +203,7 @@ function readWorkflow(file: ConfigFile, warnings: string[]): Rule[] {
                 const snippet = DCO_ACTION.test(uses) ? uses : run.split("\n").find((l) => l.includes("Signed-off-by"));
                 if (snippet) {
                     const { line, raw } = lineWith(file, snippet.trim());
-                    rules.push({ type: "dco-signoff", details: null, confidence: "config", sourceQuote: raw, sourceUrl: lineUrl(file.url, line) });
+                    rules.push({ type: "dco-signoff", details: null, confidence: "config", sourceQuote: raw, sourceUrl: lineUrl(file.url, line), strict: true });
                 }
             }
         }
@@ -215,13 +215,15 @@ function readWorkflow(file: ConfigFile, warnings: string[]): Rule[] {
 
 type FoundLine = { line: number; raw: string };
 
-function conventionalRule(file: ConfigFile, found: FoundLine, details: ConventionalCommitsDetails): Rule {
+// Config rules are always strict: the repo's own tools enforce them
+function conventionalRule(file: ConfigFile, found: FoundLine, details: Omit<ConventionalCommitsDetails, "format">): Rule {
     return {
         type: "conventional-commits",
-        details,
+        details: { format: "conventional", ...details },
         confidence: "config",
         sourceQuote: found.raw,
         sourceUrl: lineUrl(file.url, found.line),
+        strict: true,
     };
 }
 

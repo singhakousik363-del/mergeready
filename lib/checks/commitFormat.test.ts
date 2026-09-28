@@ -13,8 +13,9 @@ const REAL_PR: PullRequestData = JSON.parse(
 // The real rule try-rules found for stdlib (from its commit history)
 const STDLIB_HISTORY_RULE: Rule = {
     type: "conventional-commits",
-    details: { appliesTo: "pr-title", allowedTypes: null },
+    details: { format: "conventional", appliesTo: "pr-title", allowedTypes: null },
     confidence: "history",
+    strict: false,
     sourceQuote:
         "41 of the last 41 commits (not counting merges and bots) follow Conventional Commits; " +
         "most were written when the PR was merged, so the PR title matters most",
@@ -24,8 +25,9 @@ const STDLIB_HISTORY_RULE: Rule = {
 // A commitlint config rule (checks every commit, red when broken)
 const COMMITLINT_RULE: Rule = {
     type: "conventional-commits",
-    details: { appliesTo: "commits", allowedTypes: ["feat", "fix", "docs"] },
+    details: { format: "conventional", appliesTo: "commits", allowedTypes: ["feat", "fix", "docs"] },
     confidence: "config",
+    strict: true,
     sourceQuote: '"@commitlint/config-conventional",',
     sourceUrl: "https://github.com/acme/app/blob/main/package.json?plain=1#L81",
 };
@@ -117,10 +119,43 @@ describe("checkCommitFormat: failures", () => {
     });
 
     it("uses the type list from the strongest rule that has one", () => {
-        const noList: Rule = { ...COMMITLINT_RULE, details: { appliesTo: "commits", allowedTypes: null } };
+        const noList: Rule = { ...COMMITLINT_RULE, details: { format: "conventional", appliesTo: "commits", allowedTypes: null } };
         const [check] = checkCommitFormat([noList], pr({ commits: [commit("a1b2c3d", "feature: x")] }));
         // No list anywhere: any lowercase type is fine
         expect(check.status).toBe("pass");
+    });
+
+    it("checks node's 'prefix: message' habit on commits, yellow, with a hand-written amend command", () => {
+        const nodeRule: Rule = {
+            type: "conventional-commits",
+            details: { format: "prefix", appliesTo: "commits", allowedTypes: null },
+            confidence: "history",
+            strict: false,
+            sourceQuote: '49 of the last 49 commits (not counting merges and bots) start with a lowercase "prefix: " (like "fs: fix leak")',
+            sourceUrl: "https://github.com/nodejs/node/commits/a2a064c76afe42fedf061d976de8dff69ef2feaf",
+        };
+        const [bad] = checkCommitFormat([nodeRule], pr({ commits: [commit("a1b2c3d", "Fix typo in fs docs")] }));
+        expect(bad).toMatchObject({
+            id: "commit-format:commits",
+            status: "warn",
+            message: '1 of 1 commit message doesn\'t follow the repo\'s "prefix: message" style ("prefix: message").',
+        });
+        expect(bad.evidence.observed).toEqual([
+            'Commit a1b2c3d "Fix typo in fs docs": it should start with a lowercase prefix, a colon and a space, like "doc: ..."',
+        ]);
+        expect(bad.howToFix[0]).toEqual({
+            text: "Rewrite the message (replace the example with your own words):",
+            command: 'git commit --amend -m "prefix: short description"',
+        });
+        const [good] = checkCommitFormat([nodeRule], pr({ commits: [commit("a1b2c3d", "doc,fs: fix typo")] }));
+        expect(good.status).toBe("pass");
+    });
+
+    it("a Conventional Commits rule wins over a prefix habit", () => {
+        const prefix: Rule = { ...COMMITLINT_RULE, confidence: "history", strict: false, details: { format: "prefix", appliesTo: "commits", allowedTypes: null } };
+        const [check] = checkCommitFormat([COMMITLINT_RULE, prefix], pr({ commits: [commit("a1b2c3d", "src: x")] }));
+        expect(check.status).toBe("fail");
+        expect(check.evidence.rules).toHaveLength(1);
     });
 
     it("skips when there is no format rule", () => {

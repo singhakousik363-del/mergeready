@@ -1,5 +1,6 @@
 import type { Rule } from "./types";
 import { lineUrl, parseMarkdownBlocks, splitSentences, type Block } from "./sentences";
+import { isStrict } from "./strictness";
 
 // A guideline file to search: CONTRIBUTING or a doc it links to
 export type ProseDoc = { text: string; fileUrl: string };
@@ -77,11 +78,12 @@ export function extractProseRules(docs: ProseDoc[]): Rule[] {
                     const key = `${topic.type}|${sourceUrl}|${sentence.raw}`;
                     if (seen.has(key)) continue;
                     seen.add(key);
-                    const base = { confidence: "prose" as const, sourceQuote: sentence.raw, sourceUrl };
+                    // Strict only when the sentence itself says "must", "required", ...
+                    const base = { confidence: "prose" as const, sourceQuote: sentence.raw, sourceUrl, strict: isStrict(text) };
                     if (topic.type === "conventional-commits") {
                         // "PR titles must follow Conventional Commits" is about the title only
                         const appliesTo = PR_TITLE.test(text) ? "pr-title" : "commits";
-                        rules.push({ ...base, type: topic.type, details: { appliesTo, allowedTypes: null } });
+                        rules.push({ ...base, type: topic.type, details: { format: "conventional", appliesTo, allowedTypes: null } });
                     } else {
                         rules.push({ ...base, type: topic.type, details: null });
                     }

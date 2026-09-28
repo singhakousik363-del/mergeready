@@ -4,8 +4,8 @@ import { CONFIDENCE_RANK, type Confidence, type Rule, type RuleType } from "../r
 export type Stage = "issue" | "work" | "commit" | "pr" | "merge";
 
 // - "pass":    done right
-// - "fail":    red, breaks a rule the repo enforces (config or template)
-// - "warn":    yellow, breaks a habit or a written guideline (history or prose)
+// - "fail":    red, breaks a strict rule (a config the repo runs, or "must"/"required" wording)
+// - "warn":    yellow, breaks a habit or advice (history, or "should"-style wording)
 // - "manual":  we can't tell: the user has to look (e.g. an "unknown" checkbox group)
 // - "pending": waiting for maintainers (e.g. PR is open and ready for review)
 // - "skip":    nothing to check (no rule for it, or no PR yet)
@@ -42,11 +42,10 @@ export type Check = {
     };
 };
 
-// How bad breaking a rule is (see CLAUDE.md): the repo's tools and template
-// enforce config/template rules, so those are red. History and prose rules
-// are habits or advice, so those are yellow.
-export function failStatus(confidence: Confidence): "fail" | "warn" {
-    return confidence === "config" || confidence === "template" ? "fail" : "warn";
+// How bad breaking these rules is (see CLAUDE.md): red when any of them is
+// strict (a config the repo runs, or words like "must"), otherwise yellow.
+export function failStatus(rules: Pick<Rule, "strict">[]): "fail" | "warn" {
+    return rules.some((rule) => rule.strict) ? "fail" : "warn";
 }
 
 // All rules of one type, strongest first.

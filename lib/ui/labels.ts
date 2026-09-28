@@ -82,12 +82,13 @@ export function ruleDetail(rule: Rule): string {
     switch (rule.type) {
         case "conventional-commits": {
             const where = rule.details.appliesTo === "pr-title" ? "the PR title" : "every commit message";
+            if (rule.details.format === "prefix") return `Applies to ${where}; format "prefix: message"`;
             const types = rule.details.allowedTypes ? `; types: ${rule.details.allowedTypes.join(", ")}` : "";
             return `Applies to ${where}${types}`;
         }
         case "pr-template":
             return rule.details.kind === "section"
-                ? `Section "${rule.details.heading}"${rule.details.optional ? " (optional)" : ""}`
+                ? `Section "${rule.details.heading}"${rule.details.requirement === "unmarked" ? "" : ` (${rule.details.requirement})`}`
                 : `Checkbox "${rule.details.text}": ${REQUIREMENT_LABEL[rule.details.requirement]}`;
         default:
             return RULE_TYPE_LABEL[rule.type];

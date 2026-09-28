@@ -4,6 +4,12 @@ import { evidenceOf, failStatus, plural, rulesOfType, shortSha, steps, type Chec
 
 // "type(scope)!: description" with a lowercase type, e.g. "fix(parser): handle tabs"
 const CONVENTIONAL = /^([a-z]+)(?:\([^)]*\))?!?: \S/;
+// "fs: fix leak", "test,stream: add case" (same pattern as in fromHistory.ts)
+const PREFIX = /^[a-z0-9_./-]+(?:, ?[a-z0-9_./-]+)*: \S/;
+
+type Format = ConventionalRule["details"]["format"];
+const FORMAT_NAME: Record<Format, string> = { conventional: "Conventional Commits", prefix: 'the repo\'s "prefix: message" style' };
+const FORMAT_SHAPE: Record<Format, string> = { conventional: '"type: description"', prefix: '"prefix: message"' };
 
 type ConventionalRule = Rule & { type: "conventional-commits" };
 
@@ -25,21 +31,24 @@ export function checkCommitFormat(rules: Rule[], pr: PullRequestData): Check[] {
         ];
     }
 
-    const forCommits = conventional.filter((r) => r.details.appliesTo === "commits");
-    const forTitle = conventional.filter((r) => r.details.appliesTo === "pr-title");
+    // A Conventional Commits rule (config, template, docs) beats a "prefix" habit
+    const format: Format = conventional.some((r) => r.details.format === "conventional") ? "conventional" : "prefix";
+    const used = conventional.filter((r) => r.details.format === format);
+    const forCommits = used.filter((r) => r.details.appliesTo === "commits");
+    const forTitle = used.filter((r) => r.details.appliesTo === "pr-title");
     const checks: Check[] = [];
-    if (forCommits.length > 0) checks.push(checkCommits(forCommits, pr));
-    if (forTitle.length > 0) checks.push(checkTitle(forTitle, pr));
+    if (forCommits.length > 0) checks.push(checkCommits(forCommits, pr, format));
+    if (forTitle.length > 0) checks.push(checkTitle(forTitle, pr, format));
     return checks;
 }
 
-function checkCommits(rules: ConventionalRule[], pr: PullRequestData): Check {
+function checkCommits(rules: ConventionalRule[], pr: PullRequestData, format: Format): Check {
     const allowed = allowedTypes(rules);
     // Merge commits ("Merge branch 'main' into ...") are made by git, not written
     const commits = pr.commits.filter((c) => !c.message.startsWith("Merge "));
     const problems = commits.flatMap((c) => {
         const subject = firstLine(c.message);
-        const problem = findProblem(subject, allowed);
+        const problem = findProblem(subject, allowed, format);
         return problem ? [`Commit ${shortSha(c.sha)} "${subject}": ${problem}`] : [];
     });
 
@@ -48,33 +57,35 @@ function checkCommits(rules: ConventionalRule[], pr: PullRequestData): Check {
         id: "commit-format:commits",
         ruleType: "conventional-commits",
         stage: "commit",
-        status: ok ? "pass" : failStatus(rules[0].confidence),
+        status: ok ? "pass" : failStatus(rules),
         message: ok
             ? commits.length === 1
-                ? "The commit message follows Conventional Commits."
-                : `All ${commits.length} commit messages follow Conventional Commits.`
-            : `${problems.length} of ${plural(commits.length, "commit message")} ${problems.length === 1 ? "doesn't" : "don't"} follow Conventional Commits ("type: description").`,
-        howToFix: ok ? [] : fixCommitsSteps(problems.length, commits.length, allowed),
+                ? `The commit message follows ${FORMAT_NAME[format]}.`
+                : `All ${commits.length} commit messages follow ${FORMAT_NAME[format]}.`
+            : `${problems.length} of ${plural(commits.length, "commit message")} ${problems.length === 1 ? "doesn't" : "don't"} follow ${FORMAT_NAME[format]} (${FORMAT_SHAPE[format]}).`,
+        howToFix: ok ? [] : fixCommitsSteps(problems.length, commits.length, allowed, format),
         evidence: { rules: evidenceOf(rules), observed: ok ? [`${plural(commits.length, "commit message")} checked`] : problems },
     };
 }
 
-function checkTitle(rules: ConventionalRule[], pr: PullRequestData): Check {
+function checkTitle(rules: ConventionalRule[], pr: PullRequestData, format: Format): Check {
     const allowed = allowedTypes(rules);
-    const problem = findProblem(pr.title, allowed);
+    const problem = findProblem(pr.title, allowed, format);
     return {
         id: "commit-format:pr-title",
         ruleType: "conventional-commits",
         stage: "pr",
-        status: problem ? failStatus(rules[0].confidence) : "pass",
+        status: problem ? failStatus(rules) : "pass",
         message: problem
-            ? `The PR title doesn't follow Conventional Commits ("type: description").`
-            : "The PR title follows Conventional Commits.",
+            ? `The PR title doesn't follow ${FORMAT_NAME[format]} (${FORMAT_SHAPE[format]}).`
+            : `The PR title follows ${FORMAT_NAME[format]}.`,
         howToFix: problem
             ? [
                   ...steps(
                       'On the PR page, click "Edit" next to the title.',
-                      `Change it to "type: description", e.g. "fix: correct typo in README".`
+                      format === "conventional"
+                          ? `Change it to "type: description", e.g. "fix: correct typo in README".`
+                          : `Change it to "prefix: message", using the same prefixes as the repo's recent commits (e.g. "doc: fix typo").`
                   ),
                   ...allowedTypesHint(allowed),
               ]
@@ -89,20 +100,26 @@ function allowedTypes(rules: ConventionalRule[]): string[] | null {
 }
 
 // null when the message is fine, otherwise what's wrong in plain English
-function findProblem(subject: string, allowed: string[] | null): string | null {
+function findProblem(subject: string, allowed: string[] | null, format: Format): string | null {
+    if (format === "prefix") {
+        return PREFIX.test(subject) ? null : 'it should start with a lowercase prefix, a colon and a space, like "doc: ..."';
+    }
     const match = CONVENTIONAL.exec(subject);
     if (!match) return 'it should start with a lowercase type, a colon and a space, like "fix: ..."';
     if (allowed && !allowed.includes(match[1])) return `type "${match[1]}" is not allowed here`;
     return null;
 }
 
-function fixCommitsSteps(badCount: number, total: number, allowed: string[] | null): FixStep[] {
+function fixCommitsSteps(badCount: number, total: number, allowed: string[] | null, format: Format): FixStep[] {
     const reword: FixStep[] =
         total === 1
             ? [
                   {
                       text: "Rewrite the message (replace the example with your own words):",
-                      command: 'git commit --amend -m "fix: short description"',
+                      command:
+                          format === "conventional"
+                              ? 'git commit --amend -m "fix: short description"'
+                              : 'git commit --amend -m "prefix: short description"',
                   },
               ]
             : [

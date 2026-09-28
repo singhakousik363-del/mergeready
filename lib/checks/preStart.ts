@@ -123,7 +123,7 @@ function checkAssignment(issue: IssueData, rules: Rule[], isMe: (login: string) 
     // Nobody is assigned: only a problem when the repo asks you to get assigned first
     if (strongest) {
         return result(
-            failStatus(strongest.confidence),
+            failStatus(assignRules),
             "This repo asks you to be assigned before you start, and nobody is assigned yet.",
             steps(
                 'Comment on the issue, e.g. "Hi! I\'d like to work on this. Could you assign it to me?"',

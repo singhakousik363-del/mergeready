@@ -18,6 +18,8 @@ const NODE_PROSE_RULE: Rule = {
     sourceQuote:
         "Your commit must contain the `Signed-off-by` line with your name and email address as an acknowledgement that you agree to the [Developer Certificate of Origin][].",
     sourceUrl: "https://github.com/nodejs/node/blob/main/doc/contributing/pull-requests.md?plain=1#L201",
+    // "must": a clear obligation
+    strict: true,
 };
 const FLYTE_CONFIG_RULE: Rule = {
     type: "dco-signoff",
@@ -25,6 +27,7 @@ const FLYTE_CONFIG_RULE: Rule = {
     confidence: "config",
     sourceQuote: "require:",
     sourceUrl: "https://github.com/flyteorg/flyte/blob/main/.github/dco.yml?plain=1#L1",
+    strict: true,
 };
 
 describe("checkDcoSignoff", () => {
@@ -50,11 +53,16 @@ describe("checkDcoSignoff", () => {
         ]);
     });
 
-    it("is yellow for a prose rule and suggests --amend for one commit", () => {
+    it("is red for a prose rule that says 'must', and suggests --amend for one commit", () => {
         const one = { ...REAL_PR, commits: REAL_PR.commits.slice(0, 1) };
         const check = checkDcoSignoff([NODE_PROSE_RULE], one);
-        expect(check.status).toBe("warn");
+        expect(check.status).toBe("fail");
         expect(check.howToFix[1]).toEqual({ text: "Add the sign-off to your commit:", command: "git commit --amend -s --no-edit" });
+    });
+
+    it("is yellow when no rule is strict (prometheus: 'Be sure to sign off on the DCO.')", () => {
+        const advice: Rule = { ...NODE_PROSE_RULE, sourceQuote: "Be sure to sign off on the [DCO](https://github.com/probot/dco#how-it-works).", strict: false };
+        expect(checkDcoSignoff([advice], REAL_PR).status).toBe("warn");
     });
 
     it("passes when every commit is signed off, ignoring merge commits", () => {

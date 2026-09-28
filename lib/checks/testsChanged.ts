@@ -40,7 +40,7 @@ export function checkTestsChanged(rules: Rule[], pr: PullRequestData): Check {
     const shown = code.slice(0, 5).map((f) => `Code changed: ${f.filename}`);
     return {
         ...base,
-        status: failStatus(testRules[0].confidence),
+        status: failStatus(testRules),
         message: `You changed ${plural(code.length, "code file")} but no test files.`,
         howToFix: steps(
             "Add or update a test that fails without your change and passes with it.",
