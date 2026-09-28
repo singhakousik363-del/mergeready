@@ -73,6 +73,10 @@ describe("checkPreStart: real stdlib issue #12959 (good first issue, two competi
             "Someone else said in the comments that they want to work on this."
         );
         expect(byId(mine, "open-pull-requests")?.evidence.observed).toHaveLength(1);
+        // Found on the live site: one PR needs "mentions", not "mention"
+        expect(byId(mine, "open-pull-requests")?.message).toBe(
+            "There is already 1 open pull request that mentions this issue."
+        );
     });
 });
 

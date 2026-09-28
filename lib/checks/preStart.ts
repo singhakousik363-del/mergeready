@@ -222,7 +222,9 @@ function checkOpenPullRequests(issue: IssueData, isMe: (login: string) => boolea
         message:
             others.length === 0
                 ? "No one else has an open pull request for this issue."
-                : `There ${others.length === 1 ? "is already 1 open pull request" : `are already ${others.length} open pull requests`} that mention this issue.`,
+                : others.length === 1
+                  ? "There is already 1 open pull request that mentions this issue."
+                  : `There are already ${others.length} open pull requests that mention this issue.`,
         howToFix:
             others.length === 0
                 ? []
