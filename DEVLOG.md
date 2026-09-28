@@ -7,7 +7,7 @@
 **Tomorrow:** Parse GitHub links and fetch data from the GitHub API.
 
 ## Day 1: 26 Sep 2026
-**What I did:** Committed the tests for `parseUrl` before the code. The code itself was written by Claude chat and I pasted it; I decided it should also accept links like `/pull/456/files`, because beginners often copy links from that tab. Created a GitHub token and kept it in `.env.local`. Upgraded from Node 20 to Node 24 with nvm.
+**What I did:** Wrote the `parseUrl` code; its tests had been committed the day before (25 Sep), before the code. The code itself was written by Claude chat and I pasted it; I decided it should also accept links like `/pull/456/files`, because beginners often copy links from that tab. Created a GitHub token and kept it in `.env.local`. Upgraded from Node 20 to Node 24 with nvm.
 **What I learned:** Node 20 had reached end of life. With nvm, global tools like Claude Code must be reinstalled for each Node version, and npm 11 blocks install scripts until you allow them.
 **What confused me:** Why `claude` stopped working after the Node upgrade.
 **Tomorrow:** Fetch CONTRIBUTING files and PR templates.
@@ -20,6 +20,6 @@
 
 ## Day 3: 28 Sep 2026
 **What I did:** Built the checks, including awareness of the user's own username, old claims with no PR, and a rule that the tool never ticks checkboxes for users. Built the API with a rate limit high enough for classmates on one college Wi-Fi, and tested it live. Built the "Maintainer's desk" UI. Designed an evaluation: selection rules committed before running, 80 real PRs rebuilt as first submitted, labels locked before scoring.
-**What I learned:** The first evaluation scored 10% precision: 90 flags, only 9 real. Most false alarms came from template and doc text that wasn't a real requirement (examples, HTML comments, "if it applies" lines). I fixed this with general rules instead of special cases, froze the tool, and tested it on 19 new PRs it had never seen: 3 of 5 objections caught, 3 of 7 flags correct. Being honest about a bad number taught me more than a good one would have. I labeled the first 4 PRs one by one; for the rest, Claude chat drafted labels from neutral summaries and I approved them.
+**What I learned:** The first evaluation scored 10% precision: 90 flags, only 9 real. Most false alarms came from template and doc text that wasn't a real requirement: examples, HTML comments and "If it applies" lines, and Prometheus's "ALL commits must be considered", which made a template section look required. I fixed this with general rules instead of special cases, froze the tool, and tested it on 19 new PRs it had never seen: 3 of 5 objections caught, 3 of 7 flags correct. Being honest about a bad number taught me more than a good one would have. I labeled the first 4 PRs one by one; for the rest, Claude chat drafted labels from neutral summaries and I approved them.
 **What confused me:** How to improve a tool using an evaluation without fooling myself. The answer was a held-out test.
 **Tomorrow:** Classmate testing, README, video script.
