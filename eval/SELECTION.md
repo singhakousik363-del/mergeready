@@ -103,3 +103,34 @@ or before the cutoff", so PRs after the cutoff no longer count toward the
 limit. This applies to all four repos; prometheus and vite already had 20 and
 don't change. The first run's numbers (stdlib 3, node 17) are reported in
 REPORT.md.
+
+## Addendum: held-out test (written 2026-09-28, before selecting any held-out PR)
+
+After the first evaluation, MergeReady was changed (severity from the
+source's words, template comments/examples never make rules, a "prefix:
+message" history rule). Those changes were designed by looking at the 80 PRs
+above, so re-scoring those same PRs is optimistic. It is reported separately
+as "after fixes (optimistic, same data)". **The held-out numbers below are
+the main result.**
+
+1. **Frozen tool.** MergeReady is frozen at commit `3a8c9bb` (the last commit
+   that changed `lib/`). No change to `lib/` is allowed until the held-out
+   result is written. If the tool crashes on a held-out PR, that PR is
+   reported as a failure; any fix would be a deviation reported in REPORT.md.
+2. **Which PRs.** Same rules 2-5 as above, and the same rebuild rules. Rule 1
+   becomes: created between **2026-09-15 00:00:00 UTC and 2026-09-18
+   23:59:59 UTC**. Keep the **5** newest per repo that pass (20 in total).
+   **If fewer than 5 pass in a repo, take what exists; the window is never
+   widened.** The same 400-PR scan limit applies.
+3. **Labels.** Same categories and suggestion rules as above. The assistant
+   that runs this evaluation writes neutral summaries of maintainer and bot
+   activity (no recommendations, no MergeReady output; MergeReady is not run
+   on these PRs before the labels are locked). A separate assistant (Claude
+   chat) drafts labels from those summaries using the same written criteria
+   as the first evaluation (listed in REPORT.md). The project author reads
+   the draft and approves it; the approved labels are recorded exactly.
+4. **Lock, then run.** The held-out dataset is committed before summaries are
+   written, and the labels are committed before MergeReady runs on them.
+5. **Known weakness, stated now.** These PRs are only 10-13 days old, so some
+   maintainer objections may not have happened yet, and 20 PRs give wide
+   intervals.

@@ -1,10 +1,11 @@
 // Runs the evaluation one stage at a time. Uses your real GITHUB_TOKEN; every
 // GitHub answer is cached in eval/.cache, so running a stage again is free.
-//   node --env-file=.env.local --import tsx eval/run.ts select
+//   node --env-file=.env.local --import tsx eval/run.ts select [main|heldout]
+//   ... eval/run.ts evaluate main after-fixes   (writes eval/results.after-fixes.json)
 import { execSync } from "child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import path from "path";
-import { CUTOFF, DATA_DIR, EVAL_DIR, PER_REPO, REPOS, repoKey } from "./config";
+import { CUTOFF, DATA_DIR, EVAL_DIR, HELDOUT, PER_REPO, REPOS, repoKey } from "./config";
 import { createCachedGitHub } from "./github";
 import { labelingMarkdown, labelsTemplate, type LabelsFile } from "./labelingDoc";
 import { CATEGORY_RULE, finalCategories, score, type Pair, type Scores } from "./metrics";
@@ -17,6 +18,8 @@ import type { Snapshots } from "./types";
 
 export type Results = {
     labelsCommit: string;
+    // The MergeReady version that was run (lib/ must have no uncommitted changes)
+    toolCommit: string;
     tool: ToolResult[];
     pairs: Pair[];
     overall: Scores;
@@ -25,27 +28,40 @@ export type Results = {
     notCheckableByRepo: Record<string, number>;
 };
 
-export const RESULTS_FILE = path.join(EVAL_DIR, "results.json");
 const REPORT_FILE = path.join(EVAL_DIR, "REPORT.md");
 
-export type Dataset = { rules: string; cutoff: string; perRepo: number; repos: RepoSelection[] };
+export type Dataset = { rules: string; cutoff: string; perRepo: number; repos: RepoSelection[]; windowStart?: string };
 
-const DATASET_FILE = path.join(DATA_DIR, "dataset.json");
-export const SNAPSHOTS_FILE = path.join(DATA_DIR, "snapshots.json");
-const SUGGESTED_FILE = path.join(DATA_DIR, "labels.suggested.json");
-export const LABELS_FILE = path.join(DATA_DIR, "labels.json");
-const LABELING_FILE = path.join(DATA_DIR, "..", "LABELING.md");
+// "main": the 80 PRs up to 14 Sep. "heldout": PRs from 15-18 Sep, chosen
+// after MergeReady was frozen (see the addendum in SELECTION.md).
+type SetName = "main" | "heldout";
+const SET: SetName = process.argv[3] === "heldout" ? "heldout" : "main";
+const SET_DIR = SET === "main" ? DATA_DIR : path.join(DATA_DIR, "heldout");
+const DATASET_FILE = path.join(SET_DIR, "dataset.json");
+const SNAPSHOTS_FILE = path.join(SET_DIR, "snapshots.json");
+const SUGGESTED_FILE = path.join(SET_DIR, "labels.suggested.json");
+const LABELS_FILE = path.join(SET_DIR, "labels.json");
+const LABELING_FILE = path.join(EVAL_DIR, SET === "main" ? "LABELING.md" : "LABELING-heldout.md");
+// results.json, results.after-fixes.json, results.heldout.json
+const RESULTS_NAME = [SET === "main" ? null : SET, process.argv[4] ?? null].filter(Boolean).join(".");
+const RESULTS_FILE = path.join(EVAL_DIR, RESULTS_NAME ? `results.${RESULTS_NAME}.json` : "results.json");
 
 async function stageSelect(): Promise<void> {
     const gh = createCachedGitHub();
     const repos: RepoSelection[] = [];
     for (const repo of REPOS) {
         console.log(`\n${repoKey(repo)}`);
-        const selection = await selectRepo(gh, repo);
+        const selection =
+            SET === "main"
+                ? await selectRepo(gh, repo)
+                : await selectRepo(gh, repo, { perRepo: HELDOUT.perRepo, start: HELDOUT.start, end: HELDOUT.end });
         console.log(`  kept ${selection.prs.length} of ${selection.scanned} scanned; skipped ${JSON.stringify(selection.skipped)}`);
         repos.push(selection);
     }
-    const dataset: Dataset = { rules: "eval/SELECTION.md", cutoff: CUTOFF, perRepo: PER_REPO, repos };
+    const dataset: Dataset =
+        SET === "main"
+            ? { rules: "eval/SELECTION.md", cutoff: CUTOFF, perRepo: PER_REPO, repos }
+            : { rules: "eval/SELECTION.md (held-out addendum)", windowStart: HELDOUT.start, cutoff: HELDOUT.end, perRepo: HELDOUT.perRepo, repos };
     writeJson(DATASET_FILE, dataset);
     console.log(`\nwrote ${DATASET_FILE} (GitHub: ${gh.stats.fetched} fetched, ${gh.stats.cached} from cache)`);
 }
@@ -108,6 +124,11 @@ async function stageEvaluate(): Promise<void> {
         throw new Error("labels.json has changes that are not committed. Lock (commit) the labels first.");
     }
     const labelsCommit = execSync(`git log -1 --format=%h -- ${LABELS_FILE}`).toString().trim();
+    // The tool must be a committed version, so the result names exactly what was run
+    if (execSync("git status --porcelain -- lib").toString().trim() !== "") {
+        throw new Error("lib/ has changes that are not committed. Commit (freeze) MergeReady first.");
+    }
+    const toolCommit = execSync("git log -1 --format=%h -- lib").toString().trim();
 
     const gh = createCachedGitHub();
     const { snapshots } = readJson<Snapshots>(SNAPSHOTS_FILE);
@@ -137,6 +158,7 @@ async function stageEvaluate(): Promise<void> {
         Object.fromEntries([...new Set(pairs.map(key))].map((k) => [k, score(pairs.filter((p) => key(p) === k))]));
     const results: Results = {
         labelsCommit,
+        toolCommit,
         tool,
         pairs,
         overall: score(pairs),
@@ -145,7 +167,7 @@ async function stageEvaluate(): Promise<void> {
         notCheckableByRepo,
     };
     writeJson(RESULTS_FILE, results);
-    console.log(`\nwrote ${RESULTS_FILE} (labels from commit ${labelsCommit}; GitHub: ${gh.stats.fetched} fetched, ${gh.stats.cached} from cache)`);
+    console.log(`\nwrote ${RESULTS_FILE} (labels from commit ${labelsCommit}, MergeReady ${toolCommit}; GitHub: ${gh.stats.fetched} fetched, ${gh.stats.cached} from cache)`);
 }
 
 // No GitHub calls: turns results.json into REPORT.md

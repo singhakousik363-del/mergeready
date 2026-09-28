@@ -15,6 +15,10 @@ export const PER_REPO = 20;
 export const MAX_SCANNED_PER_REPO = 400;
 export const CUTOFF = "2026-09-14T23:59:59Z";
 
+// Held-out set (addendum in SELECTION.md): chosen after MergeReady was frozen.
+// Fewer than perRepo in a repo: take what exists, never widen the window.
+export const HELDOUT = { start: "2026-09-15T00:00:00Z", end: "2026-09-18T23:59:59Z", perRepo: 5 };
+
 // Commits dated up to this long after the PR was opened count as "first submission"
 export const FIRST_PUSH_GRACE_MS = 10 * 60 * 1000;
 // An author change this soon after a trigger (failing check, maintainer comment) counts as a fix

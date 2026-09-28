@@ -60,19 +60,34 @@ type ListResult = {
     repository: { pullRequests: { pageInfo: { hasNextPage: boolean; endCursor: string | null }; nodes: ListedPr[] } };
 };
 
-export async function selectRepo(gh: CachedGitHub, repo: RepoRef): Promise<RepoSelection> {
+// window: the main set uses PER_REPO and CUTOFF; the held-out set passes its
+// own window. PRs come newest first, so the scan stops at the first PR
+// created before window.start.
+type Window = { perRepo: number; start: string | null; end: string };
+
+export async function selectRepo(
+    gh: CachedGitHub,
+    repo: RepoRef,
+    window: Window = { perRepo: PER_REPO, start: null, end: CUTOFF }
+): Promise<RepoSelection> {
+    const { perRepo } = window;
     const skipped = { "after-cutoff": 0, bot: 0, maintainer: 0, "not-looked-at": 0, "not-new": 0 };
     const prs: SelectedPr[] = [];
     let scanned = 0;
     let after: string | null = null;
 
-    while (prs.length < PER_REPO && scanned < MAX_SCANNED_PER_REPO) {
+    let beforeWindow = false;
+    while (prs.length < perRepo && scanned < MAX_SCANNED_PER_REPO && !beforeWindow) {
         const page: ListResult = await gh.graphql<ListResult>(LIST_QUERY, { owner: repo.owner, name: repo.repo, after });
         const { nodes, pageInfo } = page.repository.pullRequests;
 
         for (const pr of nodes) {
-            if (prs.length >= PER_REPO || scanned >= MAX_SCANNED_PER_REPO) break;
-            const verdict = classifyPr(pr);
+            if (prs.length >= perRepo || scanned >= MAX_SCANNED_PER_REPO) break;
+            if (window.start !== null && pr.createdAt < window.start) {
+                beforeWindow = true;
+                break;
+            }
+            const verdict = classifyPr(pr, window.end);
             // Change 1 in SELECTION.md: PRs after the cutoff don't use up the scan limit
             if (verdict === "after-cutoff") {
                 skipped[verdict]++;
@@ -94,7 +109,7 @@ export async function selectRepo(gh: CachedGitHub, repo: RepoRef): Promise<RepoS
                 continue;
             }
             prs.push({ number: pr.number, title: pr.title, url: pr.url, createdAt: pr.createdAt, state: pr.state, author });
-            console.log(`  ${repoKey(repo)}#${pr.number} by @${author} (${prs.length}/${PER_REPO})`);
+            console.log(`  ${repoKey(repo)}#${pr.number} by @${author} (${prs.length}/${perRepo})`);
         }
         if (!pageInfo.hasNextPage) break;
         after = pageInfo.endCursor;
