@@ -6,7 +6,7 @@ import { mkdirSync, readFileSync, writeFileSync, existsSync } from "fs";
 import path from "path";
 import type { Octokit } from "@octokit/rest";
 import { createOctokit } from "../lib/github/client";
-import { RateLimitError, toGitHubError } from "../lib/github/errors";
+import { GitHubTimeoutError, GitHubUnavailableError, RateLimitError, toGitHubError } from "../lib/github/errors";
 import { CACHE_DIR } from "./config";
 
 // GitHub's search API allows 30 requests per minute
@@ -52,17 +52,26 @@ export function createCachedGitHub(octokit: Octokit = createOctokit({ timeoutMs:
     };
 }
 
-// Waits out a rate limit once instead of losing the whole run
-async function withRetry<T>(load: () => Promise<T>): Promise<T> {
+// Waits out a rate limit, and retries short hiccups (timeouts, GitHub 5xx)
+// twice, instead of losing the whole run
+async function withRetry<T>(load: () => Promise<T>, attempt = 1): Promise<T> {
     try {
         return await load();
     } catch (err) {
         const error = toGitHubError(err);
-        if (!(error instanceof RateLimitError)) throw err;
-        const waitMs = error.resetAt ? Math.max(1000, error.resetAt.getTime() - Date.now() + 1000) : 60_000;
-        console.log(`  rate limited, waiting ${Math.round(waitMs / 1000)}s…`);
-        await sleep(waitMs);
-        return load();
+        if (error instanceof RateLimitError && attempt <= 2) {
+            const waitMs = error.resetAt ? Math.max(1000, error.resetAt.getTime() - Date.now() + 1000) : 60_000;
+            console.log(`  rate limited, waiting ${Math.round(waitMs / 1000)}s…`);
+            await sleep(waitMs);
+            return withRetry(load, attempt + 1);
+        }
+        if ((error instanceof GitHubTimeoutError || error instanceof GitHubUnavailableError) && attempt <= 2) {
+            console.log(`  ${error.code}, retrying (${attempt}/2)…`);
+            await sleep(3000 * attempt);
+            return withRetry(load, attempt + 1);
+        }
+        // Our friendly error only: the raw one carries request details
+        throw error;
     }
 }
 
