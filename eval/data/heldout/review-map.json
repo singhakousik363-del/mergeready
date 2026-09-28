@@ -1,0 +1,100 @@
+{
+  "H1": {
+    "pr": "stdlib-js/stdlib#15330",
+    "suggestions": {}
+  },
+  "H2": {
+    "pr": "stdlib-js/stdlib#15317",
+    "suggestions": {
+      "H2a": "stdlib-js/stdlib#15317:template",
+      "H2b": "stdlib-js/stdlib#15317:not-checkable"
+    }
+  },
+  "H3": {
+    "pr": "stdlib-js/stdlib#15297",
+    "suggestions": {}
+  },
+  "H4": {
+    "pr": "stdlib-js/stdlib#15293",
+    "suggestions": {
+      "H4a": "stdlib-js/stdlib#15293:tests",
+      "H4b": "stdlib-js/stdlib#15293:not-checkable",
+      "H4c": "stdlib-js/stdlib#15293:commit-format"
+    }
+  },
+  "H5": {
+    "pr": "stdlib-js/stdlib#15289",
+    "suggestions": {
+      "H5": "stdlib-js/stdlib#15289:not-checkable"
+    }
+  },
+  "H6": {
+    "pr": "nodejs/node#66113",
+    "suggestions": {
+      "H6": "nodejs/node#66113:commit-format"
+    }
+  },
+  "H7": {
+    "pr": "nodejs/node#66088",
+    "suggestions": {
+      "H7": "nodejs/node#66088:commit-format"
+    }
+  },
+  "H8": {
+    "pr": "nodejs/node#66085",
+    "suggestions": {
+      "H8": "nodejs/node#66085:not-checkable"
+    }
+  },
+  "H9": {
+    "pr": "nodejs/node#66082",
+    "suggestions": {}
+  },
+  "H10": {
+    "pr": "nodejs/node#66077",
+    "suggestions": {
+      "H10": "nodejs/node#66077:commit-format"
+    }
+  },
+  "H11": {
+    "pr": "prometheus/prometheus#19746",
+    "suggestions": {}
+  },
+  "H12": {
+    "pr": "prometheus/prometheus#19736",
+    "suggestions": {}
+  },
+  "H13": {
+    "pr": "prometheus/prometheus#19722",
+    "suggestions": {
+      "H13a": "prometheus/prometheus#19722:not-checkable",
+      "H13b": "prometheus/prometheus#19722:template"
+    }
+  },
+  "H14": {
+    "pr": "prometheus/prometheus#19713",
+    "suggestions": {
+      "H14": "prometheus/prometheus#19713:tests"
+    }
+  },
+  "H15": {
+    "pr": "vitejs/vite#23519",
+    "suggestions": {}
+  },
+  "H16": {
+    "pr": "vitejs/vite#23517",
+    "suggestions": {}
+  },
+  "H17": {
+    "pr": "vitejs/vite#23516",
+    "suggestions": {}
+  },
+  "H18": {
+    "pr": "vitejs/vite#23509",
+    "suggestions": {}
+  },
+  "H19": {
+    "pr": "vitejs/vite#23507",
+    "suggestions": {}
+  }
+}
