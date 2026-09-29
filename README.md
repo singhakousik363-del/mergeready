@@ -6,6 +6,10 @@ Live: https://mergeready-three.vercel.app
 
 Paste a link to a GitHub issue or pull request. MergeReady reads that repository's own contribution rules and tells a first-time contributor what could block their first PR, before they start work and before they ask for review. Every rule comes with proof: the exact sentence, config file or commit history it was taken from.
 
+![MergeReady start page with a field for a GitHub issue or PR link](docs/screenshots/hero.png)
+
+![Results for stdlib-js/stdlib#15585: a journey map from Issue to Merge](docs/screenshots/pr-15585.png)
+
 Built solo for the [FirstCommit hackathon](https://firstcommit.devpost.com) (25 to 30 September 2026).
 
 ## The problem
